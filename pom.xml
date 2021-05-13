@@ -11,12 +11,12 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 
-	<groupId>pe.izipay</groupId>
-	<artifactId>apirest</artifactId>
+	<groupId>pe.gob.muni</groupId>
+	<artifactId>apiMercado</artifactId>
 	<packaging>war</packaging>	
 	<version>1.0.0</version>
-	<name>apirest</name>
-	<description>Plantilla para api rest</description>
+	<name>apimercado</name>
+	<description>Api REST para cobranza de tributos en mercados de 26 de octubre.</description>
 
 	<properties>
 		<java.version>1.8</java.version>
