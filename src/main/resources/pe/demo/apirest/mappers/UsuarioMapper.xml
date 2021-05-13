@@ -1,0 +1,139 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.demo.apirest.mapper.IUsuarioMapper">
+
+	<resultMap id="UsuarioResultMap" type="Usuario" />
+
+	<select id="findByUsername" resultMap="UsuarioResultMap">
+		select idUsuario,
+		usuario,
+		password,
+		nombres,
+		apellidos,
+		tipoDoc,
+		nroDoc,
+		telefono,
+		direccion,
+		correo,
+		fechaNac,
+		fechaUltAcc,
+		codigoPerfil,
+		activo,
+		fechaReg,
+		fechaMod,
+		usuarioReg,
+		usuarioMod from mercado.usuarios where usuario = #{username}
+	</select>
+	
+	<select id="getEntity" resultMap="UsuarioResultMap">
+		select idUsuario,
+		usuario,
+		password,
+		nombres,
+		apellidos,
+		tipoDoc,
+		nroDoc,
+		telefono,
+		direccion,
+		correo,
+		fechaNac,
+		fechaUltAcc,
+		codigoPerfil,
+		activo,
+		fechaReg,
+		fechaMod,
+		usuarioReg,
+		usuarioMod from mercado.usuarios where idUsuario = #{idUsuario}
+	</select>
+	
+	<insert id="saveEntity" parameterType="Usuario" >
+        insert into mercado.usuarios(
+        idUsuario,usuario,password,nombres,
+		apellidos,tipoDoc,nroDoc,telefono,
+		direccion,correo,fechaNac,fechaUltAcc,
+		codigoPerfil,activo,
+		fechaReg,fechaMod,usuarioReg,usuarioMod) 
+		values( 
+		#{idUsuario},#{usuario},#{password},#{nombres},
+		#{apellidos},#{tipoDoc},#{nroDoc},#{telefono},
+		#{direccion},#{correo},#{fechaNac},#{fechaUltAcc},
+		#{codigoPerfil},#{activo},
+		#{fechaReg},#{fechaMod},#{usuarioReg},#{usuarioMod})
+    </insert>
+    
+    <update id="disabledUserbyUsername">
+     Update mercado.usuarios
+      set activo = 0
+      where usuario = #{username}
+    </update>
+    
+    <update id="deleteEntity">
+     Update mercado.usuarios
+      set activo = 0
+      where idUsuario = #{idUsuario}
+    </update>
+    
+    <update id="actualizarUserByUsername" parameterType="Usuario" >
+      Update mercado.usuarios
+      set 
+      idUsuario = #{idUsuario},
+      password = #{password}, nombres = #{nombres},
+	  apellidos = #{apellidos}, tipoDoc = #{tipoDoc},
+	  nroDoc = #{nroDoc}, telefono = #{telefono},
+	  direccion = #{direccion}, correo = #{correo},
+	  fechaNac = #{fechaNac}, fechaUltAcc = #{fechaUltAcc},
+	  codigoPerfil = #{codigoPerfil}, activo = #{activo},
+	  fechaReg = #{fechaReg}, fechaMod = #{fechaMod},
+	  usuarioReg = #{usuarioReg}, usuarioMod = #{usuarioReg}
+      where usuario = #{usuario}
+    </update>
+    
+     <update id="updateEntity" parameterType="Usuario" >
+      Update mercado.usuarios
+      set 
+      usuario = #{usuario},
+      password = #{password}, nombres = #{nombres},
+	  apellidos = #{apellidos}, tipoDoc = #{tipoDoc},
+	  nroDoc = #{nroDoc}, telefono = #{telefono},
+	  direccion = #{direccion}, correo = #{correo},
+	  fechaNac = #{fechaNac}, fechaUltAcc = #{fechaUltAcc},
+	  codigoPerfil = #{codigoPerfil}, activo = #{activo},
+	  fechaReg = #{fechaReg}, fechaMod = #{fechaMod},
+	  usuarioReg = #{usuarioReg}, usuarioMod = #{usuarioReg}
+      where idUsuario = #{idUsuario}
+    </update>
+    
+    <select id="pagingEntitys" resultMap="UsuarioResultMap">
+		select idUsuario,
+		usuario,
+		password,
+		nombres,
+		apellidos,
+		tipoDoc,
+		nroDoc,
+		telefono,
+		direccion,
+		correo,
+		fechaNac,
+		fechaUltAcc,
+		codigoPerfil,
+		activo,
+		fechaReg,
+		fechaMod,
+		usuarioReg,
+		usuarioMod 
+		from mercado.usuarios
+		where apellidos like CONCAT(#{valorBusqueda},'%')  
+		limit #{inicio},#{fin}
+	</select>
+	
+	<select id="totalRecordEntity" resultType="int">
+		select count(A.idUsuario) 
+		from mercado.usuarios A
+		where A.apellidos like CONCAT(#{valorBusqueda},'%')  
+	</select>
+    
+</mapper>

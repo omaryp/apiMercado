@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.demo.apirest.mapper.IModuloMapper">
+
+	<resultMap id="ModuloResultMap" type="Modulo" />
+
+	<select id="getAllEntitys" resultMap="ModuloResultMap">
+		select A.codigo,
+		A.nombre,
+		A.descripcion 
+		from mercado.modulos A
+	</select>
+	
+	<select id="getModulosByUsuario" resultMap="ModuloResultMap">
+		select D.codigo,
+		D.nombre,
+		D.descripcion
+		from mercado.usuarios A
+		inner join mercado.perfiles_Moduloes B on A.codigoPerfil = B.perfiles_codigo
+		inner join mercado.roles C on C.codigo = B.roles_codigo
+		inner join mercado.modulos D on D.codigo = C.modulos_codigo
+		where A.usuario = #{usuario}
+	</select>
+	
+</mapper>
