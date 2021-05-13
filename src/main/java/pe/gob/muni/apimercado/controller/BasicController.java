@@ -20,13 +20,14 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import pe.gob.muni.apimercado.model.BasicEntity;
 import pe.gob.muni.apimercado.model.RptaDataModel;
 import pe.gob.muni.apimercado.service.IBasicService;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 
-public class BasicController<T,E extends IBasicService<T>>{
+public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 	
 	private final Logger logger = LogManager.getLogger(this.getClass());
 

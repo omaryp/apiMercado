@@ -6,8 +6,10 @@ import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
+import pe.gob.muni.apimercado.model.BasicEntity;
+
 @Mapper
-public interface IBasicMapper<T> {
+public interface IBasicMapper<T extends BasicEntity> {
 
 	T getEntity(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 	

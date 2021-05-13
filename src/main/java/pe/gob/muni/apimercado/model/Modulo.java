@@ -3,7 +3,7 @@ package pe.gob.muni.apimercado.model;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 
-public class Modulo {
+public class Modulo extends BasicEntity {
 	
 
 	private int codigo;
@@ -12,8 +12,6 @@ public class Modulo {
 	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
 	private String nombre;
 	private String descripcion;
-	private boolean estado;
-
 
 	public int getCodigo() {
 		return codigo;
@@ -39,12 +37,5 @@ public class Modulo {
 		this.descripcion = descripcion;
 	}
 
-	public boolean getEstado() {
-		return estado;
-	}
 
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-	
 }

@@ -7,9 +7,10 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import pe.gob.muni.apimercado.mapper.IBasicMapper;
+import pe.gob.muni.apimercado.model.BasicEntity;
 import pe.gob.muni.apimercado.utils.ApiException;
 
-public class BasicRepository<T,M extends IBasicMapper<T>> {
+public class BasicRepository<T extends BasicEntity,M extends IBasicMapper<T>> {
 
 	@Autowired
 	protected M mapper;

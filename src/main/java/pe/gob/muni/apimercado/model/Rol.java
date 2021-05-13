@@ -6,7 +6,7 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
-public class Rol implements GrantedAuthority{
+public class Rol extends BasicEntity implements GrantedAuthority{
 	
 	/**
 	 * 
@@ -23,8 +23,6 @@ public class Rol implements GrantedAuthority{
 	@Min(value=1, message="Atributo módulo debe ser != 0")
 	@Digits(fraction = 0, integer = 11, message="Atributo módulo debe contener solo números")
 	private int modulos_codigo;
-	private boolean estado ;
-
 
 	public int getCodigo() {
 		return codigo;
@@ -64,13 +62,5 @@ public class Rol implements GrantedAuthority{
 		this.modulos_codigo = modulos_codigo;
 	}
 
-	public boolean getEstado() {
-		return estado;
-	}
-
-	public void setEstado(boolean estado) {
-		this.estado = estado;
-	}
-	
 	
 }
