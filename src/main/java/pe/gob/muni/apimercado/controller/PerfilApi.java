@@ -1,11 +1,11 @@
-package pe.demo.apirest.controller;
+package pe.gob.muni.apimercado.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
-import pe.demo.apirest.model.Perfil;
-import pe.demo.apirest.service.IPerfilService;
+import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.service.IPerfilService;
 
 @RestController
 @RequestMapping("/perfil")

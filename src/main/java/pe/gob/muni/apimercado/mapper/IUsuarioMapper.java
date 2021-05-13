@@ -1,10 +1,10 @@
-package pe.demo.apirest.mapper;
+package pe.gob.muni.apimercado.mapper;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.apache.ibatis.annotations.Mapper;
-import pe.demo.apirest.model.Usuario;
+import pe.gob.muni.apimercado.model.Usuario;
 
 @Mapper
 public interface IUsuarioMapper extends IBasicMapper<Usuario> {

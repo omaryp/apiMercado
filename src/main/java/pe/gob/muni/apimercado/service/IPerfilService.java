@@ -1,10 +1,10 @@
-package pe.demo.apirest.service;
+package pe.gob.muni.apimercado.service;
 
 import java.util.List;
 
-import pe.demo.apirest.model.Perfil;
-import pe.demo.apirest.model.Rol;
-import pe.demo.apirest.utils.ApiException;
+import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.model.Rol;
+import pe.gob.muni.apimercado.utils.ApiException;
 
 public interface IPerfilService extends IBasicService<Perfil> {
 	

@@ -1,4 +1,4 @@
-package pe.demo.apirest.model.dto;
+package pe.gob.muni.apimercado.model.dto;
 
 import java.util.Collection;
 

@@ -1,6 +1,6 @@
-package pe.demo.apirest.config.security;
+package pe.gob.muni.apimercado.config.security;
 
-import static pe.demo.apirest.utils.Constants.LOGIN_URL;
+import static pe.gob.muni.apimercado.utils.Constants.LOGIN_URL;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;

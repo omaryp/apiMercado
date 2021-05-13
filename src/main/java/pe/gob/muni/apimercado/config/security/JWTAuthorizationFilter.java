@@ -1,8 +1,8 @@
-package pe.demo.apirest.config.security;
+package pe.gob.muni.apimercado.config.security;
 
-import static pe.demo.apirest.utils.Constants.HEADER_AUTHORIZACION_KEY;
-import static pe.demo.apirest.utils.Constants.SUPER_SECRET_KEY;
-import static pe.demo.apirest.utils.Constants.TOKEN_BEARER_PREFIX;
+import static pe.gob.muni.apimercado.utils.Constants.HEADER_AUTHORIZACION_KEY;
+import static pe.gob.muni.apimercado.utils.Constants.SUPER_SECRET_KEY;
+import static pe.gob.muni.apimercado.utils.Constants.TOKEN_BEARER_PREFIX;
 
 import java.io.IOException;
 import java.util.ArrayList;

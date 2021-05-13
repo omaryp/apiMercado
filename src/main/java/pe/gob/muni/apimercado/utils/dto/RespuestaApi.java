@@ -1,4 +1,4 @@
-package pe.demo.apirest.utils.dto;
+package pe.gob.muni.apimercado.utils.dto;
 
 
 public class RespuestaApi<T> {

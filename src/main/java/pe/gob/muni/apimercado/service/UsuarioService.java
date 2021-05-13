@@ -1,10 +1,10 @@
-package pe.demo.apirest.service;
+package pe.gob.muni.apimercado.service;
 
 import static java.util.Collections.emptyList;
-import static pe.demo.apirest.utils.Constants.POR_CODIGO;
-import static pe.demo.apirest.utils.Constants.POR_USUARIO;
-import static pe.demo.apirest.utils.Constants.RESPONSE_LIST;
-import static pe.demo.apirest.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Constants.POR_CODIGO;
+import static pe.gob.muni.apimercado.utils.Constants.POR_USUARIO;
+import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
+import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.util.List;
 import java.util.Map;
@@ -18,16 +18,16 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Service;
 
-import pe.demo.apirest.model.Perfil;
-import pe.demo.apirest.model.Rol;
-import pe.demo.apirest.model.RptaDataModel;
-import pe.demo.apirest.model.Usuario;
-import pe.demo.apirest.model.dto.UsuarioDto;
-import pe.demo.apirest.repository.UsuarioRespository;
-import pe.demo.apirest.utils.ApiException;
-import pe.demo.apirest.utils.Util;
-import pe.demo.apirest.utils.Validador;
-import pe.demo.apirest.utils.ValidatorException;
+import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.model.Rol;
+import pe.gob.muni.apimercado.model.RptaDataModel;
+import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.repository.UsuarioRespository;
+import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.Util;
+import pe.gob.muni.apimercado.utils.Validador;
+import pe.gob.muni.apimercado.utils.ValidatorException;
 
 @Service
 public class UsuarioService implements UserDetailsService, IUsuarioService {

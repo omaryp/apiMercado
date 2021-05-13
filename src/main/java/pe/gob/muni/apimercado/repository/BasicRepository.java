@@ -1,4 +1,4 @@
-package pe.demo.apirest.repository;
+package pe.gob.muni.apimercado.repository;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
@@ -6,8 +6,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import pe.demo.apirest.mapper.IBasicMapper;
-import pe.demo.apirest.utils.ApiException;
+import pe.gob.muni.apimercado.mapper.IBasicMapper;
+import pe.gob.muni.apimercado.utils.ApiException;
 
 public class BasicRepository<T,M extends IBasicMapper<T>> {
 

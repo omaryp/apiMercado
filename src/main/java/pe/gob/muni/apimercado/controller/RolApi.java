@@ -1,12 +1,12 @@
-package pe.demo.apirest.controller;
+package pe.gob.muni.apimercado.controller;
 
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 
 
-import pe.demo.apirest.model.Rol;
-import pe.demo.apirest.service.IRolService;
+import pe.gob.muni.apimercado.model.Rol;
+import pe.gob.muni.apimercado.service.IRolService;
 
 @RestController
 @RequestMapping("/rol")

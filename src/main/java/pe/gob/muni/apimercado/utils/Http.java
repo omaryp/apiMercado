@@ -1,4 +1,4 @@
-package pe.demo.apirest.utils;
+package pe.gob.muni.apimercado.utils;
 
 public class Http {
 	public final static Integer CONTINUE=100;

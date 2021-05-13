@@ -1,12 +1,12 @@
-package pe.demo.apirest.repository;
+package pe.gob.muni.apimercado.repository;
 
 
 import java.sql.SQLException;
 import org.springframework.stereotype.Repository;
 
-import pe.demo.apirest.mapper.IUsuarioMapper;
-import pe.demo.apirest.model.Usuario;
-import pe.demo.apirest.utils.ApiException;
+import pe.gob.muni.apimercado.mapper.IUsuarioMapper;
+import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.utils.ApiException;
 
 @Repository
 public class UsuarioRespository extends BasicRepository<Usuario, IUsuarioMapper> {

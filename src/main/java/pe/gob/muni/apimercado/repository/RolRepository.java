@@ -1,13 +1,13 @@
-package pe.demo.apirest.repository;
+package pe.gob.muni.apimercado.repository;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
 
-import pe.demo.apirest.mapper.IRolMapper;
-import pe.demo.apirest.model.Rol;
-import pe.demo.apirest.utils.ApiException;
+import pe.gob.muni.apimercado.mapper.IRolMapper;
+import pe.gob.muni.apimercado.model.Rol;
+import pe.gob.muni.apimercado.utils.ApiException;
 
 @Repository
 public class RolRepository extends BasicRepository<Rol, IRolMapper> {

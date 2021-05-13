@@ -1,4 +1,4 @@
-package pe.demo.apirest;
+package pe.gob.muni.apimercado;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

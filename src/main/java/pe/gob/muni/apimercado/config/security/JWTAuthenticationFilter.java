@@ -1,14 +1,14 @@
-package pe.demo.apirest.config.security;
+package pe.gob.muni.apimercado.config.security;
 
-import static pe.demo.apirest.utils.Constants.HEADER_AUTHORIZACION_KEY;
-import static pe.demo.apirest.utils.Constants.ISSUER_INFO;
-import static pe.demo.apirest.utils.Constants.SUPER_SECRET_KEY;
-import static pe.demo.apirest.utils.Constants.TOKEN_BEARER_PREFIX;
-import static pe.demo.apirest.utils.Constants.TOKEN_EXPIRATION_TIME;
+import static pe.gob.muni.apimercado.utils.Constants.HEADER_AUTHORIZACION_KEY;
+import static pe.gob.muni.apimercado.utils.Constants.ISSUER_INFO;
+import static pe.gob.muni.apimercado.utils.Constants.SUPER_SECRET_KEY;
+import static pe.gob.muni.apimercado.utils.Constants.TOKEN_BEARER_PREFIX;
+import static pe.gob.muni.apimercado.utils.Constants.TOKEN_EXPIRATION_TIME;
 
-import static pe.demo.apirest.utils.Constants.TRANSACCION_OK;
-import static pe.demo.apirest.utils.Constants.ERROR_AL_PROCESAR_PETICION;
-import static pe.demo.apirest.utils.Constants.ERROR_INTERNO;
+import static pe.gob.muni.apimercado.utils.Constants.TRANSACCION_OK;
+import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
+import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
 
 import java.io.IOException;
 import java.io.PrintWriter;
@@ -27,11 +27,11 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
-import pe.demo.apirest.model.Usuario;
-import pe.demo.apirest.model.dto.UsuarioDto;
-import pe.demo.apirest.utils.Util;
-import pe.demo.apirest.utils.dto.Jwt;
-import pe.demo.apirest.utils.dto.RespuestaApi;
+import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.utils.Util;
+import pe.gob.muni.apimercado.utils.dto.Jwt;
+import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
 

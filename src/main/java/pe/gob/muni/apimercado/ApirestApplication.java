@@ -1,4 +1,4 @@
-package pe.demo.apirest;
+package pe.gob.muni.apimercado;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.core.LoggerContext;
@@ -16,12 +16,12 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
 
-import pe.demo.apirest.config.ParametrosApiRest;
-import pe.demo.apirest.utils.Environment;
+import pe.gob.muni.apimercado.config.ParametrosApiRest;
+import pe.gob.muni.apimercado.utils.Environment;
 
 @SpringBootApplication
-@ComponentScan({"pe.demo.apirest"})
-@MapperScan("pe.demo.apirest.mapper")
+@ComponentScan({"pe.gob.muni.apimercado"})
+@MapperScan("pe.gob.muni.apimercado.mapper")
 @PropertySource("file:${user.home}/aplicativos/apirest/config/application.properties")
 public class ApirestApplication {
 	

@@ -1,6 +1,6 @@
-package pe.demo.apirest.utils.dto;
+package pe.gob.muni.apimercado.utils.dto;
 
-import pe.demo.apirest.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.model.dto.UsuarioDto;
 
 public class Jwt {
 

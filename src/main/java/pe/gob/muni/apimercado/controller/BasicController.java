@@ -1,10 +1,10 @@
-package pe.demo.apirest.controller;
+package pe.gob.muni.apimercado.controller;
 
-import static pe.demo.apirest.utils.Constants.DATOS_NO_VALIDOS;
-import static pe.demo.apirest.utils.Constants.ERROR_AL_PROCESAR_PETICION;
-import static pe.demo.apirest.utils.Constants.ERROR_INTERNO;
-import static pe.demo.apirest.utils.Constants.TRANSACCION_OK;
-import static pe.demo.apirest.utils.Util.respuestaApi;
+import static pe.gob.muni.apimercado.utils.Constants.DATOS_NO_VALIDOS;
+import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
+import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
+import static pe.gob.muni.apimercado.utils.Constants.TRANSACCION_OK;
+import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 
 import java.util.Map;
 
@@ -20,11 +20,11 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import pe.demo.apirest.model.RptaDataModel;
-import pe.demo.apirest.service.IBasicService;
-import pe.demo.apirest.utils.ApiException;
-import pe.demo.apirest.utils.Util;
-import pe.demo.apirest.utils.ValidatorException;
+import pe.gob.muni.apimercado.model.RptaDataModel;
+import pe.gob.muni.apimercado.service.IBasicService;
+import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.Util;
+import pe.gob.muni.apimercado.utils.ValidatorException;
 
 public class BasicController<T,E extends IBasicService<T>>{
 	

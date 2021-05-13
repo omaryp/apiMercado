@@ -1,4 +1,4 @@
-package pe.demo.apirest.model;
+package pe.gob.muni.apimercado.model;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;

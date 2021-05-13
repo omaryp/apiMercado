@@ -1,8 +1,8 @@
-package pe.demo.apirest.service;
+package pe.gob.muni.apimercado.service;
 
-import pe.demo.apirest.model.Usuario;
-import pe.demo.apirest.utils.ApiException;
-import pe.demo.apirest.utils.ValidatorException;
+import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ValidatorException;
 
 public interface IUsuarioService extends IBasicService<Usuario>{
 

@@ -1,9 +1,9 @@
-package pe.demo.apirest.utils;
+package pe.gob.muni.apimercado.utils;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
-import pe.demo.apirest.utils.dto.RespuestaApi;
+import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;

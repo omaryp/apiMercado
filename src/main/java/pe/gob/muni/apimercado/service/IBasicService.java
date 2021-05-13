@@ -1,11 +1,11 @@
-package pe.demo.apirest.service;
+package pe.gob.muni.apimercado.service;
 
 import java.util.List;
 import java.util.Map;
 
-import pe.demo.apirest.model.RptaDataModel;
-import pe.demo.apirest.utils.ApiException;
-import pe.demo.apirest.utils.ValidatorException;
+import pe.gob.muni.apimercado.model.RptaDataModel;
+import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ValidatorException;
 
 public interface IBasicService<T> {
 	

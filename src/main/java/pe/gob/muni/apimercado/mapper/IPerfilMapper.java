@@ -1,9 +1,9 @@
-package pe.demo.apirest.mapper;
+package pe.gob.muni.apimercado.mapper;
 
 import java.sql.SQLException;
 
-import pe.demo.apirest.model.Perfil;
-import pe.demo.apirest.model.RolPerfil;
+import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.model.RolPerfil;
 
 public interface IPerfilMapper extends IBasicMapper<Perfil> {
 	

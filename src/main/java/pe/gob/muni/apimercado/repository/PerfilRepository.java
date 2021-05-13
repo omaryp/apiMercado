@@ -1,13 +1,13 @@
-package pe.demo.apirest.repository;
+package pe.gob.muni.apimercado.repository;
 
 import java.sql.SQLException;
 
 import org.springframework.stereotype.Repository;
 
-import pe.demo.apirest.mapper.IPerfilMapper;
-import pe.demo.apirest.model.Perfil;
-import pe.demo.apirest.model.RolPerfil;
-import pe.demo.apirest.utils.ApiException;
+import pe.gob.muni.apimercado.mapper.IPerfilMapper;
+import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.model.RolPerfil;
+import pe.gob.muni.apimercado.utils.ApiException;
         
 @Repository
 public class PerfilRepository extends BasicRepository<Perfil, IPerfilMapper> {

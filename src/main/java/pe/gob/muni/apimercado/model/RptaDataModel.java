@@ -1,4 +1,4 @@
-package pe.demo.apirest.model;
+package pe.gob.muni.apimercado.model;
 
 import java.util.List;
 

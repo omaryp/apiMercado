@@ -1,11 +1,11 @@
-package pe.demo.apirest.mapper;
+package pe.gob.muni.apimercado.mapper;
 
 import java.sql.SQLException;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
 
-import pe.demo.apirest.model.Rol;
+import pe.gob.muni.apimercado.model.Rol;
 
 @Mapper
 public interface IRolMapper extends IBasicMapper<Rol> {
