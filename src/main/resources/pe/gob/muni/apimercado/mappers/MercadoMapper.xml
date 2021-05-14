@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.IMercadoMapper">
+
+	<resultMap id="MercadoResultMap" type="Mercado" />
+
+	<select id="getEntity" resultMap="MercadoResultMap">
+		select id,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por,
+		estado,
+		nombre,
+		descripcion,
+		direccion,
+		zona
+		from mercado.mercados where id = #{id}
+	</select>
+
+	<insert id="saveEntity" parameterType="Mercado">
+		insert into mercado.mercados(
+		id,	fecha_creacion,	creado_por,
+		fecha_modificacion,	modificado_por,	eliminado_por,
+		estado,	nombre,	descripcion,direccion,zona)
+		values(
+		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por},#{estado},
+		#{nombre},#{descripcion},#{direccion},#{zona})
+	</insert>
+
+	<update id="deleteEntity">
+		Update mercado.mercados
+		set estado = 0
+		where id = #{id}
+	</update>
+
+	<update id="updateEntity" parameterType="Mercado">
+		Update mercado.mercados
+		set
+		id = #{id},fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
+		estado = #{estado},
+		nombre = #{nombre}, descripcion = #{descripcion},
+		direccion = #{direccion},zona = #{zona}
+		where id = #{id}
+	</update>
+
+	<select id="pagingEntitys" resultMap="MercadoResultMap">
+		select id,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por,
+		estado,
+		nombre,
+		descripcion,
+		direccion,
+		zona
+		from mercado.mercados
+		where nombre like CONCAT(#{valorBusqueda},'%')
+		limit #{inicio},#{fin}
+	</select>
+
+	<select id="totalRecordEntity" resultType="int">
+		select count(A.id)
+		from mercado.mercados A
+		where A.nombre like
+		CONCAT(#{valorBusqueda},'%')
+	</select>
+
+</mapper>

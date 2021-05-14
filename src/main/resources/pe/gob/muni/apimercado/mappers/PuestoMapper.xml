@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.IPuestoMapper">
+
+	<resultMap id="PuestoResultMap" type="Puesto" />
+
+	<select id="getEntity" resultMap="PuestoResultMap">
+		select
+		id,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por,
+		estado,
+		codigo,
+		mercado_id,
+		comerciantes_id,
+		tarifas_id
+		from mercado.puestos where id = #{id}
+	</select>
+
+	<insert id="saveEntity" parameterType="Puesto">
+		insert into mercado.puestos(
+		id,	fecha_creacion,	creado_por,	fecha_modificacion,
+		modificado_por,	eliminado_por,	estado,	codigo,
+		mercado_id,	comerciantes_id,tarifas_id)
+		values(
+		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por},#{estado},
+		#{codigo},#{mercado_id},#{comerciantes_id},#{tarifas_id})
+	</insert>
+
+	<update id="deleteEntity">
+		Update mercado.puestos
+		set estado = 0
+		where id = #{id}
+	</update>
+
+
+	<update id="updateEntity" parameterType="Puesto">
+		Update mercado.puestos
+		set
+		id = #{id},fecha_creacion = #{fecha_creacion},
+		creado_por =
+		#{creado_por}, fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
+		estado = #{estado}, codigo = #{codigo},
+		mercado_id = #{mercado_id}, comerciantes_id = #{comerciantes_id},
+		tarifas_id = #{tarifas_id}
+		where id = #{id}
+	</update>
+
+	<select id="pagingEntitys" resultMap="PuestoResultMap">
+		select idPuesto,
+		id,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por,
+		estado,
+		codigo,
+		mercado_id,
+		comerciantes_id,
+		tarifas_id
+		from mercado.puestos
+		limit #{inicio},#{fin}
+	</select>
+
+	<select id="totalRecordEntity" resultType="int">
+		select
+		count(A.id)
+		from mercado.puestos A
+	</select>
+
+</mapper>

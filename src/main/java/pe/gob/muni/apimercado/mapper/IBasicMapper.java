@@ -19,9 +19,9 @@ public interface IBasicMapper<T extends BasicEntity> {
 	
 	int totalRecordEntity(String valorBusqueda) throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	void saveEntity(T perfil) throws SQLException,SQLIntegrityConstraintViolationException;
+	void saveEntity(T entity) throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	void updateEntity(T perfil) throws SQLException,SQLIntegrityConstraintViolationException;
+	void updateEntity(T entity) throws SQLException,SQLIntegrityConstraintViolationException;
 		
 	void deleteEntity(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 }
