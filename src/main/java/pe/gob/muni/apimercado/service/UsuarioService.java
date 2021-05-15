@@ -59,7 +59,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		try {
 			user = usuarioRepository.findByUsername(username);
 			if (user == null) {
-				throw new UsernameNotFoundException(username);
+				throw new UsernameNotFoundException(username + "no existe.");
 			}
 			logger.info("Cargando usuario {}", Util.objectToJson(user));
 			roles = rolService.getRolesByUsuario(username);
@@ -73,6 +73,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			userDto.setNombrePerfil(perfil.getNombre());
 		} catch (Exception e) {
 			logger.info("Error al momento de la autenticación {}", e);
+			throw new UsernameNotFoundException("Error interno al iniciar session.",e);
 		}
 		return userDto;
 	}
