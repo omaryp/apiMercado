@@ -22,7 +22,7 @@ import pe.gob.muni.apimercado.utils.Environment;
 @SpringBootApplication
 @ComponentScan({"pe.gob.muni.apimercado"})
 @MapperScan("pe.gob.muni.apimercado.mapper")
-@PropertySource("file:${user.home}/aplicativos/apirest/config/application.properties")
+@PropertySource("file:${user.home}/apimercado/config/application.properties")
 public class ApirestApplication {
 	
 	private final Logger logger = LoggerFactory.getLogger(this.getClass());
