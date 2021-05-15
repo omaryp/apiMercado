@@ -3,7 +3,7 @@
     <Properties>
         <Property name="LOG_PATTERN1">%d{yyyy-MM-dd'T'HH:mm:ss.SSSZ} %p %m%n</Property>
         <Property name="LOG_PATTERN2">%d{yyyy-MM-dd HH:mm:ss.SSS} [%t] [%-5level] %logger{36} - %msg%n</Property>
-        <Property name="APP_LOG_ROOT">${sys:user.home}/aplicativos/apirest/logs</Property>
+        <Property name="APP_LOG_ROOT">${sys:user.home}/apimercado/logs</Property>
     </Properties>
     
     <Appenders>
@@ -12,8 +12,8 @@
         </Console>
  
         <RollingFile name="AppFileLog"
-            fileName="${APP_LOG_ROOT}/apirest.log"
-            filePattern="${APP_LOG_ROOT}/apirest-%d{yyyy-MM-dd}-%i.log">
+            fileName="${APP_LOG_ROOT}/apimercado.log"
+            filePattern="${APP_LOG_ROOT}/apimercado-%d{yyyy-MM-dd}-%i.log">
             <PatternLayout pattern="${LOG_PATTERN2}" />
             <Policies>
                 <SizeBasedTriggeringPolicy size="19500KB" />
