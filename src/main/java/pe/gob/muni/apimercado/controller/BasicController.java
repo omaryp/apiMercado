@@ -41,14 +41,14 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			service.saveEntity(entity);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		} catch (ValidatorException e) {
-			logger.info("Errores de validacion en la solicitud de  guardar perfil - {}",Util.objectToJson(entity));
+			logger.error("Errores de validacion en la solicitud de  guardar  - {}",Util.objectToJson(entity));
 			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		} catch (ApiException e) {
-			logger.info("Error al procesar peticion - {}",e.getMessage());
+			logger.error("Error de api al procesar peticion guardar - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.info("Error interno de la aplicación - {}",e.getMessage());
+			logger.error("Error interno de api al procesar guardar - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}
@@ -60,11 +60,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			Object rpta = service.searchEntity(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
-			logger.info("Error al procesar peticion - {}",e.getMessage());
+			logger.error("Error al procesar peticion get - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.info("Error interno de la aplicación - {}",e.getMessage());
+			logger.error("Error interno de la aplicación get - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -80,11 +80,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			RptaDataModel<T> rpta = service.pagingEntitys(valor, tipo, inicio, fin);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
-			logger.info("Error al procesar peticion - {}",e.getMessage());
+			logger.error("Error al procesar peticion paginacion - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.info("Error interno de la aplicación - {}",e.getMessage());
+			logger.error("Error interno de la aplicación paginacion - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -94,33 +94,34 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 		logger.info("Se recibió perfil - {}",Util.objectToJson(entity));
 		try {
 			service.updateEntity(entity);
+			logger.info("Se procesó correctamente solicitud actualizar");
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		} catch (ValidatorException e) {
-			logger.info("Errores de validacion en la solicitud al actualizar perfil - {}",Util.objectToJson(entity));
+			logger.error("Errores de validacion en la solicitud al actualizar  - {}",Util.objectToJson(entity));
 			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		} catch (ApiException e) {
-			logger.info("Error api al actualizar perfil peticion - {}",e.getMessage());
+			logger.error("Error api peticion actualizar - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.info("Error interno de la aplicación actualizar perfil - {}",e.getMessage());
+			logger.error("Error interno de la aplicación actualizar  - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
 	
 	@DeleteMapping
 	public ResponseEntity<?> deleteEntity(@RequestBody int codigo) {
-		logger.info("Se recibio código de perfil - {}",codigo);
+		logger.info("Se recibio código  - {}",codigo);
 		try {
 			service.deleteEntity(codigo);
-			logger.info("Se procesó correctamente solicitud deshabilitar perfil - {}",codigo);
+			logger.info("Se procesó correctamente solicitud deshabilitar  - {}",codigo);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		} catch (ApiException e) {
-			logger.info("Error api al procesar solicitud deshabilitar perfil - {}",e.getMessage());
+			logger.error("Error api al procesar solicitud deshabilitar  - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.info("Error interno de la aplicación solicitud deshabilitar perfil - {}",e.getMessage());
+			logger.error("Error interno de la aplicación solicitud deshabilitar  - {}",e.getMessage());
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}

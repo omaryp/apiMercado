@@ -26,7 +26,7 @@
         <AsyncLogger name="com.journaldev" level="INFO"/>			
 		<AsyncLogger name="org.springframework" level="INFO"/>
     	<AsyncLogger name="org.hibernate" level="INFO"/>
-    	<AsyncLogger name="pe.izipay" level="INFO"/>
+    	<AsyncLogger name="pe.gob.muni" level="INFO"/>
         <AsyncRoot>
             <AppenderRef ref="Console" level="ALL" />
             <AppenderRef ref="AppFileLog" level="DEBUG"/>
