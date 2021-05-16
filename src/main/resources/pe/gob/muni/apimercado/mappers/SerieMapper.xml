@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.ISerieMapper">
+<mapper namespace="pe.gob.muni.apimapper.ISerieMapper">
 
 	<resultMap id="SerieResultMap" type="Serie" />
 
@@ -17,11 +17,11 @@
 		estado,
 		descripcion,
 		mercados_id,
-		partidas_id from mercado.series where id = #{id}
+		partidas_id from series where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Serie">
-		insert into mercado.series(
+		insert into series(
 		id,	fecha_creacion,	creado_por,
 		fecha_modificacion,	modificado_por,	eliminado_por,
 		estado,	descripcion,mercados_id,partidas_id )
@@ -31,13 +31,13 @@
 	</insert>
 
 	<update id="deleteEntity">
-		Update mercado.series
+		Update series
 		set estado = 0
 		where id = #{id}
 	</update>
 
 	<update id="updateEntity" parameterType="Serie">
-		Update mercado.series
+		Update series
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
 		creado_por =
@@ -59,14 +59,14 @@
 		descripcion,
 		mercados_id,
 		partidas_id 
-		from mercado.series
+		from series
 		limit #{inicio},#{fin}
 	</select>
 
 	<select id="totalRecordEntity" resultType="int">
 		select
 		count(A.id)
-		from mercado.series A
+		from series A
 	</select>
 
 </mapper>

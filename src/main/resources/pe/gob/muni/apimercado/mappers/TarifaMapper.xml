@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.ITarifaMapper">
+<mapper namespace="pe.gob.muni.apimapper.ITarifaMapper">
 
 	<resultMap id="TarifaResultMap" type="Tarifa" />
 
@@ -14,11 +14,11 @@
 		fecha_modificacion,
 		modificado_por,
 		eliminado_por,
-		estado,codigo,monto from mercado.tarifas where idTarifa = #{idTarifa}
+		estado,codigo,monto from tarifas where idTarifa = #{idTarifa}
 	</select>
 
 	<insert id="saveEntity" parameterType="Tarifa">
-		insert into mercado.tarifas(
+		insert into tarifas(
 		id,fecha_creacion,creado_por,fecha_modificacion,
 		modificado_por,eliminado_por,estado,codigo,monto)
 		values(
@@ -27,13 +27,13 @@
 	</insert>
 
 	<update id="deleteEntity">
-		Update mercado.tarifas
+		Update tarifas
 		set estado = 0
 		where id = #{id}
 	</update>
 
 	<update id="updateEntity" parameterType="Tarifa">
-		Update mercado.tarifas
+		Update tarifas
 		set
 		id = #{id}, fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
@@ -50,14 +50,14 @@
 		modificado_por,
 		eliminado_por,
 		estado,codigo,monto
-		from mercado.tarifas
+		from tarifas
 		limit #{inicio},#{fin}
 	</select>
 
 	<select id="totalRecordEntity" resultType="int">
 		select
 		count(A.id)
-		from mercado.tarifas A
+		from tarifas A
 		
 	</select>
 

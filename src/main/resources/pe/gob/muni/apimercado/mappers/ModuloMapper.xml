@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IModuloMapper">
+<mapper namespace="pe.gob.muni.apimapper.IModuloMapper">
 
 	<resultMap id="ModuloResultMap" type="Modulo" />
 
@@ -11,17 +11,17 @@
 		select A.codigo,
 		A.nombre,
 		A.descripcion 
-		from mercado.modulos A
+		from modulos A
 	</select>
 	
 	<select id="getModulosByUsuario" resultMap="ModuloResultMap">
 		select D.codigo,
 		D.nombre,
 		D.descripcion
-		from mercado.usuarios A
-		inner join mercado.perfiles_Moduloes B on A.codigoPerfil = B.perfiles_codigo
-		inner join mercado.roles C on C.codigo = B.roles_codigo
-		inner join mercado.modulos D on D.codigo = C.modulos_codigo
+		from usuarios A
+		inner join perfiles_Moduloes B on A.codigoPerfil = B.perfiles_codigo
+		inner join roles C on C.codigo = B.roles_codigo
+		inner join modulos D on D.codigo = C.modulos_codigo
 		where A.usuario = #{usuario}
 	</select>
 	

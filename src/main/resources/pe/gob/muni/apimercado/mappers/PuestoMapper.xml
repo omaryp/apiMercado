@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IPuestoMapper">
+<mapper namespace="pe.gob.muni.apimapper.IPuestoMapper">
 
 	<resultMap id="PuestoResultMap" type="Puesto" />
 
@@ -20,11 +20,11 @@
 		mercado_id,
 		comerciantes_id,
 		tarifas_id
-		from mercado.puestos where id = #{id}
+		from puestos where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Puesto">
-		insert into mercado.puestos(
+		insert into puestos(
 		id,	fecha_creacion,	creado_por,	fecha_modificacion,
 		modificado_por,	eliminado_por,	estado,	codigo,
 		mercado_id,	comerciantes_id,tarifas_id)
@@ -35,14 +35,14 @@
 	</insert>
 
 	<update id="deleteEntity">
-		Update mercado.puestos
+		Update puestos
 		set estado = 0
 		where id = #{id}
 	</update>
 
 
 	<update id="updateEntity" parameterType="Puesto">
-		Update mercado.puestos
+		Update puestos
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
 		creado_por =
@@ -67,14 +67,14 @@
 		mercado_id,
 		comerciantes_id,
 		tarifas_id
-		from mercado.puestos
+		from puestos
 		limit #{inicio},#{fin}
 	</select>
 
 	<select id="totalRecordEntity" resultType="int">
 		select
 		count(A.id)
-		from mercado.puestos A
+		from puestos A
 	</select>
 
 </mapper>

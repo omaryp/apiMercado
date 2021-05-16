@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IPerfilMapper">
+<mapper namespace="pe.gob.muni.apimapper.IPerfilMapper">
 
 	<resultMap id="PerfilResultMap" type="Perfil" />
 	<resultMap id="RolPerfilResultMap" type="RolPerfil" />
@@ -13,7 +13,7 @@
 		A.nombre,
 		A.descripcion,
 		A.estado
-		from mercado.perfiles A
+		from perfiles A
 		where A.codigo =
 		#{codigoPerfil}
 	</select>
@@ -23,29 +23,29 @@
 		A.nombre,
 		A.descripcion,
 		A.estado
-		from mercado.perfiles A
+		from perfiles A
 		where A.estado = 1
 	</select>
 
 	<insert id="saveEntity" parameterType="Perfil">
-		insert into mercado.perfiles(nombre,descripcion,estado)
+		insert into perfiles(nombre,descripcion,estado)
 		values(#{nombre},#{descripcion},#{estado})
 	</insert>
 
 	<insert id="guardarRolesPerfil" parameterType="RolPerfil">
-		insert into mercado.perfiles_roles(codigoPerfil,codigoRol)
+		insert into perfiles_roles(codigoPerfil,codigoRol)
 		values(#{codigoPerfil},#{codigoRol})
 	</insert>
 
 	<delete id="deleteEntity">
-		Update mercado.perfiles
+		Update perfiles
 		set estado = 0
 		where codigo = #{codigoPerfil}
 
 	</delete>
 
 	<update id="updateEntity" parameterType="Perfil">
-		Update mercado.perfiles
+		Update perfiles
 		set nombre = #{nombre} ,descripcion = #{descripcion},estado = #{estado}
 		where codigo = #{codigo}
 	</update>
@@ -55,14 +55,14 @@
 		A.nombre,
 		A.descripcion,
 		A.estado
-		from mercado.perfiles A
+		from perfiles A
 		where A.nombre like CONCAT(#{valorBusqueda},'%')  
 		limit #{inicio},#{fin}
 	</select>
 	
 	<select id="totalRecordEntity" resultType="int">
 		select count(A.codigo) 
-		from mercado.perfiles A
+		from perfiles A
 		where A.nombre like CONCAT(#{valorBusqueda},'%')
 	</select>
 

@@ -4,7 +4,7 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper
-	namespace="pe.gob.muni.apimercado.mapper.IComercianteMapper">
+	namespace="pe.gob.muni.apimapper.IComercianteMapper">
 
 	<resultMap id="ComercianteResultMap" type="Comerciante" />
 
@@ -25,12 +25,12 @@
 		correo,
 		direccion
 		from
-		mercado.comerciantes where id = #{id}
+		comerciantes where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Comerciante">
 		insert into
-		mercado.comerciantes(
+		comerciantes(
 		id,fecha_creacion,creado_por,fecha_modificacion,
 		modificado_por,eliminado_por,estado,dni,
 		ruc,nombres,apellidos,razon_social,
@@ -43,7 +43,7 @@
 	</insert>
 
 	<update id="deleteEntity">
-		Update mercado.comerciantes
+		Update comerciantes
 		set estado = 0
 		where id =
 		#{id}
@@ -51,7 +51,7 @@
 
 	<update id="updateEntity" parameterType="Comerciante">
 		Update
-		mercado.comerciantes
+		comerciantes
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
@@ -80,7 +80,7 @@
 		telefono,
 		correo,
 		direccion
-		from mercado.comerciantes
+		from comerciantes
 		where apellidos like
 		CONCAT(#{valorBusqueda},'%')
 		limit #{inicio},#{fin}
@@ -88,7 +88,7 @@
 
 	<select id="totalRecordEntity" resultType="int">
 		select count(A.id)
-		from mercado.comerciantes A
+		from comerciantes A
 		where A.apellidos like
 		CONCAT(#{valorBusqueda},'%')
 	</select>

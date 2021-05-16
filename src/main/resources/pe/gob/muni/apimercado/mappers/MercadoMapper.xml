@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IMercadoMapper">
+<mapper namespace="pe.gob.muni.apimapper.IMercadoMapper">
 
 	<resultMap id="MercadoResultMap" type="Mercado" />
 
@@ -19,11 +19,11 @@
 		descripcion,
 		direccion,
 		zona
-		from mercado.mercados where id = #{id}
+		from mercados where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Mercado">
-		insert into mercado.mercados(
+		insert into mercados(
 		id,	fecha_creacion,	creado_por,
 		fecha_modificacion,	modificado_por,	eliminado_por,
 		estado,	nombre,	descripcion,direccion,zona)
@@ -34,13 +34,13 @@
 	</insert>
 
 	<update id="deleteEntity">
-		Update mercado.mercados
+		Update mercados
 		set estado = 0
 		where id = #{id}
 	</update>
 
 	<update id="updateEntity" parameterType="Mercado">
-		Update mercado.mercados
+		Update mercados
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
@@ -63,14 +63,14 @@
 		descripcion,
 		direccion,
 		zona
-		from mercado.mercados
+		from mercados
 		where nombre like CONCAT(#{valorBusqueda},'%')
 		limit #{inicio},#{fin}
 	</select>
 
 	<select id="totalRecordEntity" resultType="int">
 		select count(A.id)
-		from mercado.mercados A
+		from mercados A
 		where A.nombre like
 		CONCAT(#{valorBusqueda},'%')
 	</select>

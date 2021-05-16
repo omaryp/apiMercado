@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IRolMapper">
+<mapper namespace="pe.gob.muni.apimapper.IRolMapper">
 
 	<resultMap id="RolResultMap" type="Rol" />
 
@@ -11,8 +11,8 @@
 		select A.codigo,
 		A.nombre,
 		A.descripcion
-		from mercado.roles A
-		inner join mercado.perfiles_roles B on A.codigo = B.roles_codigo
+		from roles A
+		inner join perfiles_roles B on A.codigo = B.roles_codigo
 		where A.perfil = #{codigoPerfil} and A.estado = 1
 	</select>
 	
@@ -21,7 +21,7 @@
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo
-		from mercado.roles A
+		from roles A
 		where A.codigo = #{codigo}
 	</select>
 	
@@ -31,7 +31,7 @@
 		A.descripcion,
 		A.modulos_codigo,
 		A.estado
-		from mercado.roles A
+		from roles A
 	</select>
 	
 	<select id="pagingEntitys" resultMap="RolResultMap">
@@ -40,14 +40,14 @@
 		A.descripcion,
 		A.modulos_codigo,
 		A.estado
-		from mercado.roles A
+		from roles A
 		where A.nombre like CONCAT(#{valorBusqueda},'%')  
 		limit #{inicio},#{fin}
 	</select>
 	
 	<select id="totalRecordEntity" resultType="int">
 		select count(A.codigo) 
-		from mercado.roles A
+		from roles A
 		where A.nombre like CONCAT(#{valorBusqueda},'%')
 	</select>
 	
@@ -57,25 +57,25 @@
 		C.descripcion,
 		C.modulos_codigo,
 		C.estado
-		from mercado.usuarios A
-		inner join mercado.perfiles_roles B on A.codigoPerfil = B.perfiles_codigo
-		inner join mercado.roles C on C.codigo = B.roles_codigo
+		from usuarios A
+		inner join perfiles_roles B on A.codigoPerfil = B.perfiles_codigo
+		inner join roles C on C.codigo = B.roles_codigo
 		where A.usuario = #{usuario} and C.estado = 1
 	</select>
 	
 	<insert id="saveEntity" parameterType="Rol" >
-        insert into mercado.roles(nombre,descripcion,modulos_codigo,estado) 
+        insert into roles(nombre,descripcion,modulos_codigo,estado) 
 		values(#{nombre},#{descripcion},#{modulos_codigo},#{estado})
     </insert>
     
     <delete id="deleteEntity">
-     Update mercado.roles
+     Update roles
       set estado = 0
       where codigo = #{codigoRol}
     </delete>
     
     <update id="updateEntity" parameterType="Rol" >
-      Update mercado.roles
+      Update roles
       set nombre = #{nombre} ,
           descripcion = #{descripcion},
           modulos_codigo = #{modulos_codigo},

@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.IUsuarioMapper">
+<mapper namespace="pe.gob.muni.apimapper.IUsuarioMapper">
 
 	<resultMap id="UsuarioResultMap" type="Usuario" />
 
@@ -25,7 +25,7 @@
 		fechaReg,
 		fechaMod,
 		usuarioReg,
-		usuarioMod from mercado.usuarios where usuario = #{username}
+		usuarioMod from usuarios where usuario = #{username}
 	</select>
 	
 	<select id="getEntity" resultMap="UsuarioResultMap">
@@ -46,11 +46,11 @@
 		fechaReg,
 		fechaMod,
 		usuarioReg,
-		usuarioMod from mercado.usuarios where idUsuario = #{idUsuario}
+		usuarioMod from usuarios where idUsuario = #{idUsuario}
 	</select>
 	
 	<insert id="saveEntity" parameterType="Usuario" >
-        insert into mercado.usuarios(
+        insert into usuarios(
         idUsuario,usuario,password,nombres,
 		apellidos,tipoDoc,nroDoc,telefono,
 		direccion,correo,fechaNac,fechaUltAcc,
@@ -65,19 +65,19 @@
     </insert>
     
     <update id="disabledUserbyUsername">
-     Update mercado.usuarios
+     Update usuarios
       set activo = 0
       where usuario = #{username}
     </update>
     
     <update id="deleteEntity">
-     Update mercado.usuarios
+     Update usuarios
       set activo = 0
       where idUsuario = #{idUsuario}
     </update>
     
     <update id="actualizarUserByUsername" parameterType="Usuario" >
-      Update mercado.usuarios
+      Update usuarios
       set 
       idUsuario = #{idUsuario},
       password = #{password}, nombres = #{nombres},
@@ -92,7 +92,7 @@
     </update>
     
      <update id="updateEntity" parameterType="Usuario" >
-      Update mercado.usuarios
+      Update usuarios
       set 
       usuario = #{usuario},
       password = #{password}, nombres = #{nombres},
@@ -125,14 +125,14 @@
 		fechaMod,
 		usuarioReg,
 		usuarioMod 
-		from mercado.usuarios
+		from usuarios
 		where apellidos like CONCAT(#{valorBusqueda},'%')  
 		limit #{inicio},#{fin}
 	</select>
 	
 	<select id="totalRecordEntity" resultType="int">
 		select count(A.idUsuario) 
-		from mercado.usuarios A
+		from usuarios A
 		where A.apellidos like CONCAT(#{valorBusqueda},'%')  
 	</select>
     
