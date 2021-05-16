@@ -44,11 +44,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			logger.error("Errores de validacion en la solicitud de  guardar  - {}",Util.objectToJson(entity));
 			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		} catch (ApiException e) {
-			logger.error("Error de api al procesar peticion guardar - {}",e.getMessage());
+			logger.error("Error de api al procesar peticion guardar - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de api al procesar guardar - {}",e.getMessage());
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}
@@ -60,11 +60,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			Object rpta = service.searchEntity(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
-			logger.error("Error al procesar peticion get - {}",e.getMessage());
+			logger.error("Error al procesar peticion get - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de la aplicación get - {}",e.getMessage());
+			logger.error("Error interno de la aplicación get - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -80,11 +80,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			RptaDataModel<T> rpta = service.pagingEntitys(valor, tipo, inicio, fin);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
-			logger.error("Error al procesar peticion paginacion - {}",e.getMessage());
+			logger.error("Error al procesar peticion paginacion - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de la aplicación paginacion - {}",e.getMessage());
+			logger.error("Error interno de la aplicación paginacion - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -100,11 +100,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			logger.error("Errores de validacion en la solicitud al actualizar  - {}",Util.objectToJson(entity));
 			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		} catch (ApiException e) {
-			logger.error("Error api peticion actualizar - {}",e.getMessage());
+			logger.error("Error api peticion actualizar - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de la aplicación actualizar  - {}",e.getMessage());
+			logger.error("Error interno de la aplicación actualizar  - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
@@ -117,11 +117,11 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 			logger.info("Se procesó correctamente solicitud deshabilitar  - {}",codigo);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		} catch (ApiException e) {
-			logger.error("Error api al procesar solicitud deshabilitar  - {}",e.getMessage());
+			logger.error("Error api al procesar solicitud deshabilitar  - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de la aplicación solicitud deshabilitar  - {}",e.getMessage());
+			logger.error("Error interno de la aplicación solicitud deshabilitar  - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
 		}
 	}
