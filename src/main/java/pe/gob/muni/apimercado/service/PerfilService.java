@@ -145,20 +145,22 @@ public class PerfilService implements IPerfilService {
 	public Object searchEntity(Map<String, String> params) throws ApiException, Exception {
 		Object rpta = null;
 		try {
-			int tipo = Integer.parseInt(params.get("tipo"));
-			int valor = Integer.parseInt(params.get("valor"));
-			switch (tipo) {
-				case RESPONSE_LIST:
-					//colocar funcionalidad  de ser necesario
-					break;
+			if(!params.isEmpty()) {
+				int tipo = Integer.parseInt(params.get("tipo"));
+				int valor = Integer.parseInt(params.get("valor"));
+				switch (tipo) {
+					case RESPONSE_LIST:
+						//colocar funcionalidad  de ser necesario
+						break;
 
-				case RESPONSE_OBJECT:
-					rpta = repository.getEntity(valor);
-					break;
-			}
-		}catch(NullPointerException e) {
-			rpta = repository.getAllEntitys();
-		} 
+					case RESPONSE_OBJECT:
+						rpta = repository.getEntity(valor);
+						break;
+				}
+			}else
+				rpta = repository.getAllEntitys();
+			
+		}
 		catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {

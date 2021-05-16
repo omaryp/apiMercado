@@ -184,31 +184,32 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		String usuario = "";
 		int codigo = 0;
 		try {
-			int tipo = Integer.parseInt(params.get("tipo"));
-			int busqueda = Integer.parseInt(params.get("bus"));
-			switch (tipo) {
-				case RESPONSE_LIST:
-					//colocar aqui funcionalidad, si es necesaria
-					break;
-				case RESPONSE_OBJECT:
-					switch (busqueda) {
-						case POR_USUARIO:
-							usuario = params.get("user");
-							logger.info("Buscando usuario por username - {}", usuario);
-							rpta = usuarioRepository.findByUsername(usuario);
-							break;
-						case POR_CODIGO:
-							codigo = Integer.parseInt(params.get("codigo"));
-							logger.info("Buscando usuario por codigo - {}", codigo);
-							rpta = usuarioRepository.getEntity(codigo);
-							break;
-						}
-					break;
-			}
-		}catch(NullPointerException e) {
-			rpta = usuarioRepository.getAllEntitys();
-		} 
-		catch (ApiException e) {
+			if(!params.isEmpty()) {
+				int tipo = Integer.parseInt(params.get("tipo"));
+				int busqueda = Integer.parseInt(params.get("bus"));
+				switch (tipo) {
+					case RESPONSE_LIST:
+						//colocar aqui funcionalidad, si es necesaria
+						break;
+					case RESPONSE_OBJECT:
+						switch (busqueda) {
+							case POR_USUARIO:
+								usuario = params.get("user");
+								logger.info("Buscando usuario por username - {}", usuario);
+								rpta = usuarioRepository.findByUsername(usuario);
+								break;
+							case POR_CODIGO:
+								codigo = Integer.parseInt(params.get("codigo"));
+								logger.info("Buscando usuario por codigo - {}", codigo);
+								rpta = usuarioRepository.getEntity(codigo);
+								break;
+							}
+						break;
+				}
+			}else
+				rpta = usuarioRepository.getAllEntitys();
+			
+		}catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
 			throw e;

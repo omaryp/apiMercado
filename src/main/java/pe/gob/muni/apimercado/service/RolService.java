@@ -162,21 +162,22 @@ public class RolService implements IRolService {
 	public Object searchEntity(Map<String, String> params) throws ApiException, Exception {
 		Object rpta = null;
 		try {
-			int tipo = Integer.parseInt(params.get("tipo"));
-			int valor = Integer.parseInt(params.get("valor"));
-			switch (tipo) {
-				case RESPONSE_LIST:
-					rpta = rolRepository.getRolesByPerfil(valor);
-					break;
+			if(!params.isEmpty()) {
+				int tipo = Integer.parseInt(params.get("tipo"));
+				int valor = Integer.parseInt(params.get("valor"));
+				switch (tipo) {
+					case RESPONSE_LIST:
+						rpta = rolRepository.getRolesByPerfil(valor);
+						break;
 
-				case RESPONSE_OBJECT:
-					rpta = rolRepository.getEntity(valor);
-					break;
-			}
-		}catch(NullPointerException e) {
-			rpta = rolRepository.getAllEntitys();
-		} 
-		catch (ApiException e) {
+					case RESPONSE_OBJECT:
+						rpta = rolRepository.getEntity(valor);
+						break;
+				}
+			}else 
+				rpta = rolRepository.getAllEntitys();
+			
+		}catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
 			throw e;
