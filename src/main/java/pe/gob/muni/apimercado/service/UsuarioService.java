@@ -72,8 +72,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			userDto.setPerfil(user.getCodigoPerfil());
 			userDto.setNombrePerfil(perfil.getNombre());
 		} catch (Exception e) {
-			logger.info("Error al momento de la autenticación {}", e);
-			throw new UsernameNotFoundException("Error interno al iniciar session.",e);
+			logger.error("Error al momento de la autenticación {}", e);
+			throw new UsernameNotFoundException("Error interno al iniciar session. "+e.getMessage(),e);
 		}
 		return userDto;
 	}

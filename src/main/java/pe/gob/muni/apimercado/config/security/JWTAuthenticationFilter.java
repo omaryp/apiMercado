@@ -113,7 +113,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		response.setContentType("application/json");
 		RespuestaApi<String> rpta = new RespuestaApi<String>();
 		rpta.setCodigo(ERROR_AL_PROCESAR_PETICION);
-		rpta.setMensaje("Usuario no autorizado, no existe usuario.");
+		rpta.setMensaje("Usuario no autorizado, "+failed.getMessage());
 		rpta.setContenido("");
 		response.setStatus(HttpStatus.UNAUTHORIZED.value());
 		writer.println(Util.objectToJson(rpta));
