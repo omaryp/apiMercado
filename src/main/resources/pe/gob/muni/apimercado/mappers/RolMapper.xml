@@ -3,7 +3,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimapper.IRolMapper">
+<mapper namespace="pe.gob.muni.apimercado.mapper.IRolMapper">
 
 	<resultMap id="RolResultMap" type="Rol" />
 
