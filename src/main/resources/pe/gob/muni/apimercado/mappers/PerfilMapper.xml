@@ -56,14 +56,14 @@
 		A.descripcion,
 		A.estado
 		from perfiles A
-		where A.nombre like CONCAT(#{valorBusqueda},'%')  
-		limit #{inicio},#{fin}
+		<where>
+			<if test="search != null">
+				CONCAT(A.nombre,' ',A.descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 	
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.codigo) 
-		from perfiles A
-		where A.nombre like CONCAT(#{valorBusqueda},'%')
-	</select>
-
 </mapper>

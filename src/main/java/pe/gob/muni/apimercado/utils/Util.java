@@ -5,6 +5,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
+import java.util.Map;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.http.HttpStatus;
@@ -38,6 +40,15 @@ public class Util {
         	logger.error(e.toString());
         }
         return obj;
+    }
+    
+    public static <T> T mapToObject(Map<String, String> aMap, Class<T> t) throws Exception {
+    	ObjectMapper mapper = new ObjectMapper();
+        try {
+            return mapper.convertValue(aMap, mapper.getTypeFactory().constructType(t));
+        } catch (Exception e) {
+            throw e;
+        }
     }
     
     public static <T> ResponseEntity<RespuestaApi<T>> respuestaApi(T contenido,String mensaje,int codigo,HttpStatus status) {

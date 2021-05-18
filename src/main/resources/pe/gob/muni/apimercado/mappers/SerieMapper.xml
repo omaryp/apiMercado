@@ -60,7 +60,9 @@
 		mercados_id,
 		partidas_id 
 		from series
-		limit #{inicio},#{fin}
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
 	<select id="totalRecordEntity" resultType="int">

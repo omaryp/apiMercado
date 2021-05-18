@@ -3,8 +3,9 @@ package pe.gob.muni.apimercado.service;
 import java.util.List;
 import java.util.Map;
 
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.BasicEntity;
-import pe.gob.muni.apimercado.model.RptaDataModel;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 
@@ -16,7 +17,7 @@ public interface IBasicService<T extends BasicEntity> {
 	
 	List<T> getAllEntitys() throws ApiException,Exception;
 	
-	RptaDataModel<T> pagingEntitys(String valorBusqueda,int tipoBusqueda, int inicio, int fin ) throws ApiException,Exception;
+	PageInfo<T> pagingEntitys(Map<String, String> params) throws ApiException,Exception;
 	
 	void saveEntity(T entity) throws ApiException,Exception,ValidatorException;
 	

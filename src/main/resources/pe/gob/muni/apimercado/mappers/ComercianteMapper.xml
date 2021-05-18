@@ -53,18 +53,25 @@
 		Update
 		comerciantes
 		set
-		id = #{id},fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
-		estado = #{estado},dni = #{dni},
+		id
+		= #{id},fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por},
+		fecha_modificacion = #{fecha_modificacion},
+		modificado_por =
+		#{modificado_por},eliminado_por = #{eliminado_por},
+		estado =
+		#{estado},dni = #{dni},
 		ruc = #{ruc},nombres = #{nombres},
-		apellidos = #{apellidos},razon_social = #{razon_social},
-		telefono = #{telefono},correo = #{correo},
+		apellidos =
+		#{apellidos},razon_social = #{razon_social},
+		telefono =
+		#{telefono},correo = #{correo},
 		direccion = #{direccion}
-		where id = #{id}
+		where id =
+		#{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="ComercianteResultMap">
+	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select id,
 		fecha_creacion,
 		creado_por,
@@ -81,16 +88,14 @@
 		correo,
 		direccion
 		from comerciantes
-		where apellidos like
-		CONCAT(#{valorBusqueda},'%')
-		limit #{inicio},#{fin}
-	</select>
-
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.id)
-		from comerciantes A
-		where A.apellidos like
-		CONCAT(#{valorBusqueda},'%')
+		<where>
+			<if test="search != null">
+				CONCAT(nombres,' ',apellidos) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
 </mapper>

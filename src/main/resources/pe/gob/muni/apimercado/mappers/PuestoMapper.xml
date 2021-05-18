@@ -68,13 +68,10 @@
 		comerciantes_id,
 		tarifas_id
 		from puestos
-		limit #{inicio},#{fin}
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
-	<select id="totalRecordEntity" resultType="int">
-		select
-		count(A.id)
-		from puestos A
-	</select>
 
 </mapper>

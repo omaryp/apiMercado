@@ -20,8 +20,9 @@ import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.BasicEntity;
-import pe.gob.muni.apimercado.model.RptaDataModel;
 import pe.gob.muni.apimercado.service.IBasicService;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
@@ -70,14 +71,10 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 	}
 	
 	@GetMapping(path = "/pag")
-	public ResponseEntity<?> pagingEntitys(@RequestParam Map<String, String> parmas) {
+	public ResponseEntity<?> pagingEntitys(@RequestParam Map<String, String> params) {
 		logger.info("Obteniendo roles por filtro");
 		try {
-			int fin = Integer.parseInt(parmas.get("fin"));
-			int inicio = Integer.parseInt(parmas.get("inicio"));
-			int tipo = Integer.parseInt(parmas.get("tipo"));
-			String valor = parmas.get("valor");
-			RptaDataModel<T> rpta = service.pagingEntitys(valor, tipo, inicio, fin);
+			PageInfo<T> rpta = service.pagingEntitys(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
 			logger.error("Error al procesar peticion paginacion - {} - {}",e.getMessage(),e);

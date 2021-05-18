@@ -8,16 +8,20 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.Rol;
-import pe.gob.muni.apimercado.model.RptaDataModel;
 import pe.gob.muni.apimercado.repository.RolRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
+import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Service
 public class RolService implements IRolService {
@@ -31,30 +35,24 @@ public class RolService implements IRolService {
 
 	@Override
 	public List<Rol> getRolesByPerfil(int perfil) throws ApiException, Exception {
-		// TODO Auto-generated method stub
 		logger.info("obteniendo roles del perfil {}", perfil);
 		try {
 			return rolRepository.getRolesByPerfil(perfil);
 		} catch (ApiException e) {
-			// TODO: handle exception
 			throw new ApiException(e.getMessage(), e);
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw new Exception(e.getMessage(), e);
 		}
 	}
 
 	@Override
 	public List<Rol> getRolesByUsuario(String usuario) throws ApiException, Exception {
-		// TODO Auto-generated method stub
 		logger.info("obteniendo roles del usuario {}", usuario);
 		try {
 			return rolRepository.getRolesByUsuario(usuario);
 		} catch (ApiException e) {
-			// TODO: handle exception
 			throw new ApiException(e.getMessage(), e);
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw new Exception(e.getMessage(), e);
 		}
 
@@ -66,10 +64,8 @@ public class RolService implements IRolService {
 		try {
 			return rolRepository.getEntity(id);
 		} catch (ApiException e) {
-			// TODO: handle exception
 			throw new ApiException(e.getMessage(), e);
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw e;
 		}
 	}
@@ -80,35 +76,28 @@ public class RolService implements IRolService {
 		try {
 			return rolRepository.getAllEntitys();
 		} catch (ApiException e) {
-			// TODO: handle exception
 			throw new ApiException(e.getMessage(), e);
 		} catch (Exception e) {
-			// TODO: handle exception
 			throw new Exception(e.getMessage(), e);
 		}
 	}
 
 	@Override
-	public RptaDataModel<Rol> pagingEntitys(String valorBusqueda, int tipoBusqueda, int inicio, int fin)
+	public PageInfo<Rol> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
-		logger.info("obteniendo roles para busqueda {}.", valorBusqueda);
+		logger.info("obteniendo roles para busqueda {}.", params);
 		try {
-			RptaDataModel<Rol> rpta = new RptaDataModel<Rol>();
 			List<Rol> rptaData = null;
-			int totalReg = 0;
-			totalReg = rolRepository.totalRecordsEntity(valorBusqueda);
-			rpta.setTotal(totalReg);
-			if (totalReg != 0) {
-				rptaData = rolRepository.pagingEntitys(valorBusqueda, inicio, fin);
-				rpta.setDatos(rptaData);
-			}
-			return rpta;
+			PageTable pagData = mapToObject(params, PageTable.class);
+			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
+			
+			rptaData = rolRepository.pagingEntitys(pagData);
+				
+			return new PageInfo<Rol>(rptaData);
 		} catch (ApiException e) {
-			// TODO: handle exception
-			throw new ApiException(e.getMessage(), e);
-		} catch (Exception e) {
-			// TODO: handle exception
-			throw new Exception(e.getMessage(), e);
+			throw e;
+		}catch (Exception e) {
+			throw e;
 		}
 	}
 

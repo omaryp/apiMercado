@@ -2,6 +2,7 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
 import java.util.List;
 import java.util.Map;
@@ -11,12 +12,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.gob.muni.apimercado.model.RptaDataModel;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.Puesto;
 import pe.gob.muni.apimercado.repository.PuestoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
+import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Service
 public class PuestoService implements IPuestoService {
@@ -30,20 +34,17 @@ public class PuestoService implements IPuestoService {
 	private Validador<Puesto> validadorPuesto;
 	
 	@Override
-	public RptaDataModel<Puesto> pagingEntitys(String valorBusqueda, int tipoBusqueda, int inicio, int fin)
+	public PageInfo<Puesto> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
-		logger.info("obteniendo roles para busqueda {}.",valorBusqueda);
+		logger.info("paginando puestos con parámetros {}.",params);
 		try {
-			RptaDataModel<Puesto> rpta = new RptaDataModel<Puesto>();
 			List<Puesto> rptaData = null;
-			int totalReg = 0;
-			totalReg = repository.totalRecordsEntity(valorBusqueda);
-			rpta.setTotal(totalReg);
-			if(totalReg != 0) {
-				rptaData = repository.pagingEntitys(valorBusqueda, inicio, fin);
-				rpta.setDatos(rptaData);
-			}
-			return rpta;
+			PageTable pagData = mapToObject(params, PageTable.class);
+			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
+			
+			rptaData = repository.pagingEntitys(pagData);
+				
+			return new PageInfo<Puesto>(rptaData);
 		} catch (ApiException e) {
 			throw e;
 		}catch (Exception e) {

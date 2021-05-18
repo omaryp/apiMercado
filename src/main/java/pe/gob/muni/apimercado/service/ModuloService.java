@@ -11,8 +11,9 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.Modulo;
-import pe.gob.muni.apimercado.model.RptaDataModel;
 import pe.gob.muni.apimercado.repository.ModuloRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ValidatorException;
@@ -42,7 +43,7 @@ public class ModuloService implements IModuloService {
 	}
 
 	@Override
-	public RptaDataModel<Modulo> pagingEntitys(String valorBusqueda, int tipoBusqueda, int inicio, int fin)
+	public PageInfo<Modulo> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
 		// TODO Auto-generated method stub
 		return null;

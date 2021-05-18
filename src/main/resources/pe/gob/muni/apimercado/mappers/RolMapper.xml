@@ -13,7 +13,7 @@
 		A.descripcion
 		from roles A
 		inner join perfiles_roles B on A.codigo = B.roles_codigo
-		where A.perfil = #{codigoPerfil} and A.estado = 1
+		where B.perfiles_codigo = #{codigoPerfil} and A.estado = 1
 	</select>
 	
 	<select id="getEntity" resultMap="RolResultMap">
@@ -41,14 +41,14 @@
 		A.modulos_codigo,
 		A.estado
 		from roles A
-		where A.nombre like CONCAT(#{valorBusqueda},'%')  
-		limit #{inicio},#{fin}
-	</select>
-	
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.codigo) 
-		from roles A
-		where A.nombre like CONCAT(#{valorBusqueda},'%')
+		<where>
+			<if test="search != null">
+				CONCAT(A.nombre,' ',A.descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 	
 	<select id="getRolesByUsuario" resultMap="RolResultMap">

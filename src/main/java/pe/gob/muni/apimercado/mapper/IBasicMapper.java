@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import pe.gob.muni.apimercado.model.BasicEntity;
+import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Mapper
 public interface IBasicMapper<T extends BasicEntity> {
@@ -15,7 +16,7 @@ public interface IBasicMapper<T extends BasicEntity> {
 	
 	List<T> getAllEntitys() throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	List<T> pagingEntitys(String valorBusqueda, int inicio, int fin) throws SQLException,SQLIntegrityConstraintViolationException;
+	List<T> pagingEntitys(PageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	int totalRecordEntity(String valorBusqueda) throws SQLException,SQLIntegrityConstraintViolationException;
 	

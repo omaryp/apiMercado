@@ -64,15 +64,14 @@
 		direccion,
 		zona
 		from mercados
-		where nombre like CONCAT(#{valorBusqueda},'%')
-		limit #{inicio},#{fin}
-	</select>
-
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.id)
-		from mercados A
-		where A.nombre like
-		CONCAT(#{valorBusqueda},'%')
+		<where>
+			<if test="search != null">
+				CONCAT(nombre,' ',descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
 </mapper>

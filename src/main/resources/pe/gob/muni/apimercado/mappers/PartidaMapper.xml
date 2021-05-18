@@ -63,15 +63,15 @@
 		codigo,
 		descripcion
 		from partidas
-		where descripcion like CONCAT(#{valorBusqueda},'%')
-		limit #{inicio},#{fin}
+		<where>
+			<if test="search != null">
+				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.id)
-		from partidas A
-		where A.descripcion like
-		CONCAT(#{valorBusqueda},'%')
-	</select>
 
 </mapper>

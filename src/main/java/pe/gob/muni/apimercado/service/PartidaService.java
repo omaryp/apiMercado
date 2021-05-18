@@ -2,6 +2,8 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Util.mapToObject;
+import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
 import java.util.List;
 import java.util.Map;
@@ -11,12 +13,15 @@ import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import pe.gob.muni.apimercado.model.RptaDataModel;
+import com.github.pagehelper.PageHelper;
+import com.github.pagehelper.PageInfo;
+
 import pe.gob.muni.apimercado.model.Partida;
 import pe.gob.muni.apimercado.repository.PartidaRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
+import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Service
 public class PartidaService implements IPartidaService {
@@ -30,20 +35,17 @@ public class PartidaService implements IPartidaService {
 	private Validador<Partida> validadorPartida;
 	
 	@Override
-	public RptaDataModel<Partida> pagingEntitys(String valorBusqueda, int tipoBusqueda, int inicio, int fin)
+	public PageInfo<Partida> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
-		logger.info("obteniendo roles para busqueda {}.",valorBusqueda);
+		logger.info("obteniendo partidas con los filtros {}.",objectToJson(params));
 		try {
-			RptaDataModel<Partida> rpta = new RptaDataModel<Partida>();
 			List<Partida> rptaData = null;
-			int totalReg = 0;
-			totalReg = repository.totalRecordsEntity(valorBusqueda);
-			rpta.setTotal(totalReg);
-			if(totalReg != 0) {
-				rptaData = repository.pagingEntitys(valorBusqueda, inicio, fin);
-				rpta.setDatos(rptaData);
-			}
-			return rpta;
+			PageTable pagData = mapToObject(params, PageTable.class);
+			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
+			
+			rptaData = repository.pagingEntitys(pagData);
+				
+			return new PageInfo<Partida>(rptaData);
 		} catch (ApiException e) {
 			throw e;
 		}catch (Exception e) {

@@ -126,8 +126,36 @@
 		usuarioReg,
 		usuarioMod 
 		from usuarios
-		where apellidos like CONCAT(#{valorBusqueda},'%')  
-		limit #{inicio},#{fin}
+		<where>
+			<if test="search != null">
+				CONCAT(nombres,' ',apellidos) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
+	</select>
+	
+	<select id="getAllEntitys" resultMap="UsuarioResultMap">
+		select idUsuario,
+		usuario,
+		password,
+		nombres,
+		apellidos,
+		tipoDoc,
+		nroDoc,
+		telefono,
+		direccion,
+		correo,
+		fechaNac,
+		fechaUltAcc,
+		codigoPerfil,
+		activo,
+		fechaReg,
+		fechaMod,
+		usuarioReg,
+		usuarioMod 
+		from usuarios
 	</select>
 	
 	<select id="totalRecordEntity" resultType="int">
