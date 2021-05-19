@@ -11,7 +11,7 @@ public class Constants {
 	// JWT
 
 	public static final String ISSUER_INFO = "Sistema de pagos de impuestos del mercado de Piura.";
-	public static final String SUPER_SECRET_KEY = "@ITHg%JaxPw0Z#g&@7#sKpkIcu#6XUjy#RH@^nPFyF3f%%0DcY";
+	public static final String SUPER_SECRET_KEY = "@ITHg%JaxPw0Z#g&@7#$&KpkIcq48asYu#6XUjy#RH@^nPFyF3f%%0DcY";
 	public static final long TOKEN_EXPIRATION_TIME = 86400000; //24 horas
 	
 	// Aplicacion
@@ -26,5 +26,9 @@ public class Constants {
 	
 	public final static int RESPONSE_LIST = 1; 
 	public final static int RESPONSE_OBJECT = 2; 
+	
+	public final static int PUESTO_DISPONIBLE = 1; 
+	public final static int PUESTO_OCUPADO = 2; 
+	public final static int PUESTO_CERRADO = 3;  
 	
 }
