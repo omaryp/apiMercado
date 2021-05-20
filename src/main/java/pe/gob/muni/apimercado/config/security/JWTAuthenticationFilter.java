@@ -25,6 +25,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.core.authority.AuthorityUtils;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import pe.gob.muni.apimercado.model.Usuario;
@@ -68,11 +69,12 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 			UsuarioDto usuario;
 			usuario = (UsuarioDto)auth.getPrincipal();
 			
+			AuthorityUtils.commaSeparatedStringToAuthorityList("ROL");
 			token = Jwts.builder()
 					.setHeaderParam("typ", "JWT")
-					.setIssuedAt(new Date())
 					.setIssuer(ISSUER_INFO)
 					.setSubject(usuario.getUsername())
+					.setIssuedAt(new Date())
 					.setExpiration(new Date(System.currentTimeMillis() + TOKEN_EXPIRATION_TIME))
 					.signWith(SignatureAlgorithm.HS512, SUPER_SECRET_KEY).compact();
 			response.setContentType("application/json");
