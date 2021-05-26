@@ -4,8 +4,10 @@
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
 <mapper namespace="pe.gob.muni.apimercado.mapper.IUsuarioMapper">
-
-	<resultMap id="UsuarioResultMap" type="Usuario" extends="pe.gob.muni.apimercado.mappers.PersonaMapper.PersonaResultMap"/>
+	
+	<resultMap id="PersonaResultMap" type="Persona" />
+	
+	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap"/>
 
 	<select id="findByUsername" resultMap="UsuarioResultMap">
 		select A.id,
