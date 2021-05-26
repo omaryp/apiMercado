@@ -21,7 +21,7 @@ public class Usuario extends Persona{
 	private Date fechaUltAcc;
 	
 	@Min(value=1, message="Atributo código de perfil debe ser != 0")
-	private int codigoPerfil;
+	private int perfiles_codigo;
 	
 	private int persona_id;
 	
@@ -61,7 +61,7 @@ public class Usuario extends Persona{
 	}
 
 	public int getCodigoPerfil() {
-		return codigoPerfil;
+		return perfiles_codigo;
 	}
 
 	public int getPersona_id() {
@@ -73,7 +73,7 @@ public class Usuario extends Persona{
 	}
 
 	public void setCodigoPerfil(int codigoPerfil) {
-		this.codigoPerfil = codigoPerfil;
+		this.perfiles_codigo = codigoPerfil;
 	}
 
 	public boolean isActivo() {

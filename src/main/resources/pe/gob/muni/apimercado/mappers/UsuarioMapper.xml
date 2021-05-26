@@ -15,7 +15,8 @@
 		A.password,
 		A.fechaUltAcc,
 		A.perfiles_codigo,
-		A.persona_id,
+		A.personas_id,
+		A.activo,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -27,8 +28,8 @@
 		B.estado,
 		B.fecha_creacion,
 		B.creado_por,
-		B.fecha_modificacion,
-		B.modificado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
 		B.eliminado_por
 		usuarioMod from usuarios A , personas B where A.personas_id = B.id and A.usuario = #{username}
 	</select>
@@ -39,7 +40,8 @@
 		A.password,
 		A.fechaUltAcc,
 		A.perfiles_codigo,
-		A.persona_id,
+		A.personas_id,
+		A.activo,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -51,18 +53,18 @@
 		B.estado,
 		B.fecha_creacion,
 		B.creado_por,
-		B.fecha_modificacion,
-		B.modificado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
 		B.eliminado_por
 		usuarioMod from usuarios A , personas B where A.personas_id = B.id and A.id = #{id}
 	</select>
 	
 	<insert id="saveEntity" parameterType="Usuario" >
         insert into usuarios(usuario,password,fechaUltAcc,
-		activo,perfiles_codigo,persona_id) 
+		activo,perfiles_codigo,personas_id) 
 		values( 
 		#{usuario},#{password},#{fechaUltAcc},#{activo},
-		#{perfiles_codigo},#{persona_id})
+		#{perfiles_codigo},#{personas_id})
     </insert>
     
     <update id="disabledUserbyUsername">
@@ -83,7 +85,7 @@
       usuario = #{usuario},
       password = #{password}, fechaUltAcc = #{fechaUltAcc},
 	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
-	  persona_id = #{persona_id}
+	  personas_id = #{personas_id}
       where usuario = #{usuario}
     </update>
     
@@ -93,7 +95,7 @@
       usuario = #{usuario},
       password = #{password}, fechaUltAcc = #{fechaUltAcc},
 	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
-	  persona_id = #{persona_id}
+	  personas_id = #{personas_id}
       where id = #{idUsuario}
     </update>
     
@@ -103,7 +105,8 @@
 		A.password,
 		A.fechaUltAcc,
 		A.perfiles_codigo,
-		A.persona_id,
+		A.personas_id,
+		A.activo,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -115,8 +118,8 @@
 		B.estado,
 		B.fecha_creacion,
 		B.creado_por,
-		B.fecha_modificacion,
-		B.modificado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
 		B.eliminado_por
 		from usuarios A , personas B 
 		<where>
@@ -137,7 +140,8 @@
 		A.password,
 		A.fechaUltAcc,
 		A.perfiles_codigo,
-		A.persona_id,
+		A.personas_id,
+		A.activo,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -149,8 +153,8 @@
 		B.estado,
 		B.fecha_creacion,
 		B.creado_por,
-		B.fecha_modificacion,
-		B.modificado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
 		B.eliminado_por
 		usuarioMod from usuarios A , personas B where A.personas_id = B.id 
 	</select>

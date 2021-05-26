@@ -58,7 +58,7 @@
 		C.modulos_codigo,
 		C.estado
 		from usuarios A
-		inner join perfiles_roles B on A.codigoPerfil = B.perfiles_codigo
+		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
 		inner join roles C on C.codigo = B.roles_codigo
 		where A.usuario = #{usuario} and C.estado = 1
 	</select>

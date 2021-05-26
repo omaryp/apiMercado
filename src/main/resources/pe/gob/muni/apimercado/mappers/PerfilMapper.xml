@@ -14,8 +14,7 @@
 		A.descripcion,
 		A.estado
 		from perfiles A
-		where A.codigo =
-		#{codigoPerfil}
+		where A.codigo = #{codigoPerfil}
 	</select>
 
 	<select id="getAllEntitys" resultMap="PerfilResultMap">
