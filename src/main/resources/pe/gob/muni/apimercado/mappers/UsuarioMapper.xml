@@ -5,7 +5,7 @@
 
 <mapper namespace="pe.gob.muni.apimercado.mapper.IUsuarioMapper">
 
-	<resultMap id="UsuarioResultMap" type="Usuario" extends="pe.gob.muni.apimercado.PersonaMapper.getEntity.PersonaResultMap"/>
+	<resultMap id="UsuarioResultMap" type="Usuario" extends="pe.gob.muni.apimercado.PersonaMapper.PersonaResultMap"/>
 
 	<select id="findByUsername" resultMap="UsuarioResultMap">
 		select A.id,
