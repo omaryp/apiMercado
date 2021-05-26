@@ -8,17 +8,18 @@
 	<resultMap id="MercadoResultMap" type="Mercado" />
 
 	<select id="getEntity" resultMap="MercadoResultMap">
-		select id,
+		select 
+		id,
+		descripcion,
+		nombre,
+		direccion,
+		zona,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		nombre,
-		descripcion,
-		direccion,
-		zona
+		eliminado_por
 		from mercados where id = #{id}
 	</select>
 
@@ -51,22 +52,22 @@
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="MercadoResultMap">
-		select id,
+	<select id="pagingEntitys" resultMap="MercadoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		selectid,
+		descripcion,
+		nombre,
+		direccion,
+		zona,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		nombre,
-		descripcion,
-		direccion,
-		zona
+		eliminado_por
 		from mercados
 		<where>
 			<if test="search != null">
-				CONCAT(nombre,' ',descripcion) LIKE CONCAT('%',#{search},'%')
+				CONCAT(nombre) LIKE CONCAT('%',#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null">

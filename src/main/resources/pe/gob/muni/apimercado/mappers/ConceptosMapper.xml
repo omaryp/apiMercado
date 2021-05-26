@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.IConceptoMapper">
+
+	<resultMap id="ConceptoResultMap" type="Concepto" />
+
+	<select id="getEntity" resultMap="ConceptoResultMap">
+		select id,
+		decripcion,
+		partidas_id,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por
+		from conceptos where id = #{id}
+	</select>
+
+	<insert id="saveEntity" parameterType="Concepto">
+		insert into conceptos(
+		descripcion,partidas_id,estado,fecha_creacion, creado_por, fecha_modificacion,
+		modificado_por,eliminado_por)
+		values(
+		#{descripcion},#{partidas_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por})
+	</insert>
+
+	<update id="deleteEntity">
+		Update conceptos
+		set estado = 0
+		where id = #{id}
+	</update>
+
+	<update id="updateEntity" parameterType="Concepto">
+		Update conceptos
+		set
+		descripcion = #{descripcion},partidas_id=#{partidas_id},estado = #{estado},
+		fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		where id = #{id}
+	</update>
+
+	<select id="pagingEntitys" resultMap="ConceptoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select  id,descripcion,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por
+		from conceptos
+		<where>
+			<if test="search != null">
+				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
+		<if test="sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
+	</select>
+
+
+</mapper>

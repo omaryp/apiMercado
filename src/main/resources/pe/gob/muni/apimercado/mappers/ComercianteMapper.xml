@@ -6,69 +6,33 @@
 <mapper
 	namespace="pe.gob.muni.apimercado.mapper.IComercianteMapper">
 
-	<resultMap id="ComercianteResultMap" type="Comerciante" />
+	<resultMap id="ComercianteResultMap" type="Comerciante" >
+		<id property="idComerciante" column="id"/>
+		<result property="ruc" column="ruc"/>
+		<result property="razon_social" column="razon_social"/>
+		<association property="persona" column="persona_id" javaType="Persona" select = "pe.gob.muni.apimercado.PersonaMapper.getEntity"/>
+	</resultMap>
 
 	<select id="getEntity" resultMap="ComercianteResultMap">
-		select id,
-		fecha_creacion,
-		creado_por,
-		fecha_modificacion,
-		modificado_por,
-		eliminado_por,
-		estado,
-		dni,
-		ruc,
-		nombres,
-		apellidos,
-		razon_social,
-		telefono,
-		correo,
-		direccion
+		select A.id,A.ruc,A.razon_social,
 		from
-		comerciantes where id = #{id}
+		comerciantes A where A.id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Comerciante">
 		insert into
 		comerciantes(
-		id,fecha_creacion,creado_por,fecha_modificacion,
-		modificado_por,eliminado_por,estado,dni,
-		ruc,nombres,apellidos,razon_social,
-		telefono,correo,direccion)
-		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},#{dni},
-		#{ruc},#{nombres},#{apellidos},#{razon_social},
-		#{telefono},#{correo},#{direccion})
+		personas_id,ruc,razon_social)
+		values(#{personas_id},#{ruc},#{razon_social})
 	</insert>
 
-	<update id="deleteEntity">
-		Update comerciantes
-		set estado = 0
-		where id =
-		#{id}
-	</update>
-
 	<update id="updateEntity" parameterType="Comerciante">
-		Update
-		comerciantes
+		Update comerciantes
 		set
-		id
-		= #{id},fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por},
-		fecha_modificacion = #{fecha_modificacion},
-		modificado_por =
-		#{modificado_por},eliminado_por = #{eliminado_por},
-		estado =
-		#{estado},dni = #{dni},
-		ruc = #{ruc},nombres = #{nombres},
-		apellidos =
-		#{apellidos},razon_social = #{razon_social},
-		telefono =
-		#{telefono},correo = #{correo},
-		direccion = #{direccion}
-		where id =
-		#{id}
+		personas_id = #{personas_id},
+		ruc = #{ruc},
+		razon_social = #{razon_social}
+		where id = #{id}
 	</update>
 
 	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">

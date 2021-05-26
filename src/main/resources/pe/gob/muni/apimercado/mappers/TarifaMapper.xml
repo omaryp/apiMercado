@@ -8,22 +8,24 @@
 	<resultMap id="TarifaResultMap" type="Tarifa" />
 
 	<select id="getEntity" resultMap="TarifaResultMap">
-		select id,
+		select id,descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,codigo,monto from tarifas where idTarifa = #{idTarifa}
+		eliminado_por
+	    from tarifas where idTarifa = #{idTarifa}
 	</select>
 
 	<insert id="saveEntity" parameterType="Tarifa">
 		insert into tarifas(
-		id,fecha_creacion,creado_por,fecha_modificacion,
-		modificado_por,eliminado_por,estado,codigo,monto)
+		descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
+		fecha_creacion,creado_por,fecha_modificacion,
+		modificado_por,eliminado_por)
 		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},#{codigo},#{monto})
+		#{descripcion},#{monto},#{conceptos_id},#{estado},#{fecha_inicio},#{fecha_fin},
+		#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -35,22 +37,28 @@
 	<update id="updateEntity" parameterType="Tarifa">
 		Update tarifas
 		set
-		id = #{id}, fecha_creacion = #{fecha_creacion},
+		descripcion = #{descripcion},monto=#{monto},conceptos_id=#{conceptos_id},
+		estado = #{estado},fecha_inicio=#{fecha_inicio},fecha_fin=#{fecha_fin}
+		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
-		estado = #{estado}, codigo = #{codigo}, monto = #{monto}
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="TarifaResultMap">
+	<select id="pagingEntitys" resultMap="TarifaResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select id,
+		descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,codigo,monto
+		eliminado_por
 		from tarifas
+		<where>
+			<if test="search != null">
+				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
 		<if test="sort != null">
 			ORDER BY ${sort} ${order}
 		</if>

@@ -10,28 +10,30 @@
 	<select id="getEntity" resultMap="PuestoResultMap">
 		select
 		id,
+		codigo,
+		mercados_id,
+		conceptos_id,
+		cobradores_id,
+		ubicacion_id,
+		giro_id,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		codigo,
-		mercado_id,
-		comerciantes_id,
-		tarifas_id
+		eliminado_por
 		from puestos where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
-		id,	fecha_creacion,	creado_por,	fecha_modificacion,
-		modificado_por,	eliminado_por,	estado,	codigo,
-		mercado_id,	comerciantes_id,tarifas_id)
+		codigo,mercados_id,conceptos_id,cobradores_id,ubicacion_id,
+		giro_id,estado,fecha_creacion,creado_por,fecha_modificacion,
+		modificado_por,	eliminado_por)
 		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},
-		#{codigo},#{mercado_id},#{comerciantes_id},#{tarifas_id})
+		#{codigo},#{mercados_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
+		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -40,33 +42,38 @@
 		where id = #{id}
 	</update>
 
-
 	<update id="updateEntity" parameterType="Puesto">
 		Update puestos
 		set
-		id = #{id},fecha_creacion = #{fecha_creacion},
-		creado_por =
-		#{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
-		estado = #{estado}, codigo = #{codigo},
-		mercado_id = #{mercado_id}, comerciantes_id = #{comerciantes_id},
-		tarifas_id = #{tarifas_id}
+		codigo = #{codigo},
+		mercados_id = #{mercados_id},
+		conceptos_id = #{conceptos_id},
+		cobradores_id = #{cobradores_id},
+		ubicacion_id = #{ubicacion_id},
+		giro_id = #{giro_id},
+		estado = #{estado},
+		fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por}, 
+		fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},
+		eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="PuestoResultMap">
-		select idPuesto,
-		id,
+	<select id="pagingEntitys" resultMap="PuestoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select id,
+		codigo,
+		mercados_id,
+		conceptos_id,
+		cobradores_id,
+		ubicacion_id,
+		giro_id,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		codigo,
-		mercado_id,
-		comerciantes_id,
-		tarifas_id
+		eliminado_por
 		from puestos
 		<if test="sort != null">
 			ORDER BY ${sort} ${order}

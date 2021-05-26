@@ -9,14 +9,14 @@
 
 	<select id="getEntity" resultMap="PartidaResultMap">
 		select id,
+		codigo,
+		descripcion,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		codigo,
-		descripcion
+		eliminado_por		
 		from partidas where id = #{id}
 	</select>
 
@@ -52,16 +52,16 @@
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="PartidaResultMap">
-		select  id,
+	<select id="pagingEntitys" resultMap="PartidaResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select id,
+		codigo,
+		descripcion,
+		estado,
 		fecha_creacion,
 		creado_por,
 		fecha_modificacion,
 		modificado_por,
-		eliminado_por,
-		estado,
-		codigo,
-		descripcion
+		eliminado_por
 		from partidas
 		<where>
 			<if test="search != null">

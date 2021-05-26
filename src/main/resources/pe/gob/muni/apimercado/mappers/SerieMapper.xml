@@ -8,26 +8,22 @@
 	<resultMap id="SerieResultMap" type="Serie" />
 
 	<select id="getEntity" resultMap="SerieResultMap">
-		select id,
-		fecha_creacion,
-		creado_por,
-		fecha_modificacion,
-		modificado_por,
-		eliminado_por,
-		estado,
-		descripcion,
-		mercados_id,
-		partidas_id from series where id = #{id}
+		select 
+		id,codigo,descripcion,conceptos_id,
+		estado,fecha_creacion,creado_por,
+		fecha_modificacion,	modificado_por,
+		eliminado_por
+		from series where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Serie">
 		insert into series(
-		id,	fecha_creacion,	creado_por,
-		fecha_modificacion,	modificado_por,	eliminado_por,
-		estado,	descripcion,mercados_id,partidas_id )
+		codigo,descripcion,conceptos_id,estado,
+		fecha_creacion,	creado_por,
+		fecha_modificacion,	modificado_por,	eliminado_por)
 		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},#{descripcion},#{mercados_id},#{partidas_id})
+		#{codigo},#{descripcion},#{conceptos_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -39,36 +35,27 @@
 	<update id="updateEntity" parameterType="Serie">
 		Update series
 		set
-		id = #{id},fecha_creacion = #{fecha_creacion},
-		creado_por =
-		#{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
-		estado = #{estado}, descripcion = #{descripcion},
-		mercados_id = #{mercados_id}, partidas_id = #{partidas_id}
+		codigo = #{codigo},descripcion=#{descripcion},conceptos_id=#{conceptos_id},
+		estado = #{estado},fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="SerieResultMap">
-		select id,
-		fecha_creacion,
-		creado_por,
-		fecha_modificacion,
-		modificado_por,
-		eliminado_por,
-		estado,
-		descripcion,
-		mercados_id,
-		partidas_id 
+	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select id,codigo,descripcion,conceptos_id,
+		estado,fecha_creacion,creado_por,
+		fecha_modificacion,	modificado_por,
+		eliminado_por
 		from series
+		<where>
+			<if test="search != null">
+				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+			</if>
+		</where>
 		<if test="sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
-	</select>
-
-	<select id="totalRecordEntity" resultType="int">
-		select
-		count(A.id)
-		from series A
 	</select>
 
 </mapper>

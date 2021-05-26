@@ -2,15 +2,20 @@ package pe.gob.muni.apimercado.model;
 
 import java.util.Date;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+
 public class BasicEntity {
 	
-	int id;
-	Date fecha_creacion;
-	int creado_por;
-	Date fecha_modificacion;
-	int modificado_por;
-	int eliminado_por;
-	int estado;
+	private int id;
+	@NotNull(message="Atributo fecha_creacion no debe ser vacío.")
+	private Date fecha_creacion;
+	@Min(value=1, message="Atributo creado_por debe ser != 0")
+	private int creado_por;
+	private Date fecha_modificacion;
+	private int modificado_por;
+	private int eliminado_por;
+	private int estado;
 	
 	public int getId() {
 		return id;

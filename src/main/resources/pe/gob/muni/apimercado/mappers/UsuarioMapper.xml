@@ -5,63 +5,62 @@
 
 <mapper namespace="pe.gob.muni.apimercado.mapper.IUsuarioMapper">
 
-	<resultMap id="UsuarioResultMap" type="Usuario" />
+	<resultMap id="UsuarioResultMap" type="Usuario" extends="pe.gob.muni.apimercado.PersonaMapper.getEntity.PersonaResultMap"/>
 
 	<select id="findByUsername" resultMap="UsuarioResultMap">
-		select idUsuario,
-		usuario,
-		password,
-		nombres,
-		apellidos,
-		tipoDoc,
-		nroDoc,
-		telefono,
-		direccion,
-		correo,
-		fechaNac,
-		fechaUltAcc,
-		codigoPerfil,
-		activo,
-		fechaReg,
-		fechaMod,
-		usuarioReg,
-		usuarioMod from usuarios where usuario = #{username}
+		select A.id,
+		A.usuario,
+		A.password,
+		A.fechaUltAcc,
+		A.codigoPerfil,
+		A.persona_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modificacion,
+		B.modificado_por,
+		B.eliminado_por
+		usuarioMod from usuarios A , personas B where A.personas_id = B.id and A.usuario = #{username}
 	</select>
 	
 	<select id="getEntity" resultMap="UsuarioResultMap">
-		select idUsuario,
-		usuario,
-		password,
-		nombres,
-		apellidos,
-		tipoDoc,
-		nroDoc,
-		telefono,
-		direccion,
-		correo,
-		fechaNac,
-		fechaUltAcc,
-		codigoPerfil,
-		activo,
-		fechaReg,
-		fechaMod,
-		usuarioReg,
-		usuarioMod from usuarios where idUsuario = #{idUsuario}
+		select A.id,
+		A.usuario,
+		A.password,
+		A.fechaUltAcc,
+		A.codigoPerfil,
+		A.persona_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modificacion,
+		B.modificado_por,
+		B.eliminado_por
+		usuarioMod from usuarios A , personas B where A.personas_id = B.id and A.id = #{id}
 	</select>
 	
 	<insert id="saveEntity" parameterType="Usuario" >
-        insert into usuarios(
-        idUsuario,usuario,password,nombres,
-		apellidos,tipoDoc,nroDoc,telefono,
-		direccion,correo,fechaNac,fechaUltAcc,
-		codigoPerfil,activo,
-		fechaReg,fechaMod,usuarioReg,usuarioMod) 
+        insert into usuarios(usuario,password,fechaUltAcc,
+		activo,perfiles_codigo,persona_id) 
 		values( 
-		#{idUsuario},#{usuario},#{password},#{nombres},
-		#{apellidos},#{tipoDoc},#{nroDoc},#{telefono},
-		#{direccion},#{correo},#{fechaNac},#{fechaUltAcc},
-		#{codigoPerfil},#{activo},
-		#{fechaReg},#{fechaMod},#{usuarioReg},#{usuarioMod})
+		#{usuario},#{password},#{fechaUltAcc},#{activo},
+		#{perfiles_codigo},#{persona_id})
     </insert>
     
     <update id="disabledUserbyUsername">
@@ -73,21 +72,16 @@
     <update id="deleteEntity">
      Update usuarios
       set activo = 0
-      where idUsuario = #{idUsuario}
+      where id = #{idUsuario}
     </update>
     
     <update id="actualizarUserByUsername" parameterType="Usuario" >
       Update usuarios
       set 
-      idUsuario = #{idUsuario},
-      password = #{password}, nombres = #{nombres},
-	  apellidos = #{apellidos}, tipoDoc = #{tipoDoc},
-	  nroDoc = #{nroDoc}, telefono = #{telefono},
-	  direccion = #{direccion}, correo = #{correo},
-	  fechaNac = #{fechaNac}, fechaUltAcc = #{fechaUltAcc},
-	  codigoPerfil = #{codigoPerfil}, activo = #{activo},
-	  fechaReg = #{fechaReg}, fechaMod = #{fechaMod},
-	  usuarioReg = #{usuarioReg}, usuarioMod = #{usuarioReg}
+      usuario = #{usuario},
+      password = #{password}, fechaUltAcc = #{fechaUltAcc},
+	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
+	  persona_id = #{persona_id}
       where usuario = #{usuario}
     </update>
     
@@ -95,40 +89,39 @@
       Update usuarios
       set 
       usuario = #{usuario},
-      password = #{password}, nombres = #{nombres},
-	  apellidos = #{apellidos}, tipoDoc = #{tipoDoc},
-	  nroDoc = #{nroDoc}, telefono = #{telefono},
-	  direccion = #{direccion}, correo = #{correo},
-	  fechaNac = #{fechaNac}, fechaUltAcc = #{fechaUltAcc},
-	  codigoPerfil = #{codigoPerfil}, activo = #{activo},
-	  fechaReg = #{fechaReg}, fechaMod = #{fechaMod},
-	  usuarioReg = #{usuarioReg}, usuarioMod = #{usuarioReg}
-      where idUsuario = #{idUsuario}
+      password = #{password}, fechaUltAcc = #{fechaUltAcc},
+	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
+	  persona_id = #{persona_id}
+      where id = #{idUsuario}
     </update>
     
-    <select id="pagingEntitys" resultMap="UsuarioResultMap">
-		select idUsuario,
-		usuario,
-		password,
-		nombres,
-		apellidos,
-		tipoDoc,
-		nroDoc,
-		telefono,
-		direccion,
-		correo,
-		fechaNac,
-		fechaUltAcc,
-		codigoPerfil,
-		activo,
-		fechaReg,
-		fechaMod,
-		usuarioReg,
-		usuarioMod 
-		from usuarios
+    <select id="pagingEntitys" resultMap="UsuarioResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select A.id,
+		A.usuario,
+		A.password,
+		A.fechaUltAcc,
+		A.codigoPerfil,
+		A.persona_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modificacion,
+		B.modificado_por,
+		B.eliminado_por
+		from usuarios A , personas B 
 		<where>
+			A.personas_id = B.id 
 			<if test="search != null">
-				CONCAT(nombres,' ',apellidos) LIKE CONCAT('%',#{search},'%')
+				and 
+				CONCAT(apellidos) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null">
@@ -136,32 +129,28 @@
 		</if>
 	</select>
 	
-	<select id="getAllEntitys" resultMap="UsuarioResultMap">
-		select idUsuario,
-		usuario,
-		password,
-		nombres,
-		apellidos,
-		tipoDoc,
-		nroDoc,
-		telefono,
-		direccion,
-		correo,
-		fechaNac,
-		fechaUltAcc,
-		codigoPerfil,
-		activo,
-		fechaReg,
-		fechaMod,
-		usuarioReg,
-		usuarioMod 
-		from usuarios
-	</select>
-	
-	<select id="totalRecordEntity" resultType="int">
-		select count(A.idUsuario) 
-		from usuarios A
-		where A.apellidos like CONCAT(#{valorBusqueda},'%')  
+	<select id="getAllEntitys" resultMap="UsuarioResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select A.id,
+		A.usuario,
+		A.password,
+		A.fechaUltAcc,
+		A.codigoPerfil,
+		A.persona_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modificacion,
+		B.modificado_por,
+		B.eliminado_por
+		usuarioMod from usuarios A , personas B where A.personas_id = B.id 
 	</select>
     
 </mapper>

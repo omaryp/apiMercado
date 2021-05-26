@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.IPagoMapper">
+
+	<resultMap id="PagoResultMap" type="Pago" />
+
+	<select id="getEntity" resultMap="PagoResultMap">
+		select id,
+		fecha_pago,
+		serie,
+		correlativo,
+		monto_pagado,
+		concepto,
+		observaciones,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modificacion,
+		modificado_por,
+		eliminado_por
+		from pagos where id = #{id}
+	</select>
+
+	<insert id="saveEntity" parameterType="Pago">
+		insert into pagos(
+		fecha_pago,serie,
+		correlativo,monto_pagado,concepto,observaciones,
+		estado,fecha_creacion, creado_por, fecha_modificacion,
+		modificado_por,eliminado_por)
+		values(
+		#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
+		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
+		#{modificado_por},#{eliminado_por})
+	</insert>
+
+	<update id="deleteEntity">
+		Update pagos
+		set estado = 0
+		where id = #{id}
+	</update>
+
+	<update id="updateEntity" parameterType="Pago">
+		Update pagos
+		set
+		fecha_pago = #{fecha_pago},
+		serie = #{serie},
+		correlativo = #{correlativo},
+		monto_pagado = #{monto_pagado},
+		concepto = #{concepto},
+		observaciones = #{observaciones},
+		estado = #{estado},
+		fecha_creacion = #{fecha_creacion},
+		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
+		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		where id = #{id}
+	</update>
+
+</mapper>

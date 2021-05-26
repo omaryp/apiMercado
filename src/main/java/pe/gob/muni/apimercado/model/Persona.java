@@ -1,0 +1,99 @@
+package pe.gob.muni.apimercado.model;
+
+import java.util.Date;
+
+import javax.validation.constraints.Digits;
+import javax.validation.constraints.Email;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Size;
+
+public class Persona extends BasicEntity {
+	
+	@NotBlank(message="Atributo nombres no debe ser vacío.")
+	@NotNull(message="Atributo nombres no debe ser vacío.")
+	private String nombres;
+	
+	@NotBlank(message="Atributo apellidos no debe ser vacío.")
+	@NotNull(message="Atributo apellidos no debe ser nulo.")
+	private String apellidos;
+	
+	@Digits(fraction = 0, integer = 11, message="Atributo teléfono debe contener solo números")
+	@Min(value=1, message="Atributo telefono debe ser != 0")
+	private int telefono;
+	
+	@NotBlank(message="Atributo usuario no debe ser vacío.")
+	@NotNull(message="Atributo usuario no debe ser nulo.")
+	@Email(message="Atributo correo debe ser válido")
+	private String correo;
+	
+	@NotBlank(message="Atributo direccion no debe ser vacío.")
+	@NotNull(message="Atributo direccion no debe ser nulo.")
+	private String direccion;
+	
+	private Date fechaNac;
+	
+	@NotBlank(message="Atributo número de documento no debe ser vacío.")
+	@NotNull(message="Atributo número de documento no debe ser nulo.")
+	@Digits(fraction = 0, integer = 8, message="Atributo número de documento debe contener solo números")
+	@Size(min = 8, max = 8,message="Atributo número de documento no es válido")
+	private String dni;
+
+	public String getNombres() {
+		return nombres;
+	}
+
+	public void setNombres(String nombres) {
+		this.nombres = nombres;
+	}
+
+	public String getApellidos() {
+		return apellidos;
+	}
+
+	public void setApellidos(String apellidos) {
+		this.apellidos = apellidos;
+	}
+
+	public int getTelefono() {
+		return telefono;
+	}
+
+	public void setTelefono(int telefono) {
+		this.telefono = telefono;
+	}
+
+	public String getCorreo() {
+		return correo;
+	}
+
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+
+	public String getDireccion() {
+		return direccion;
+	}
+
+	public void setDireccion(String direccion) {
+		this.direccion = direccion;
+	}
+
+	public Date getFechaNac() {
+		return fechaNac;
+	}
+
+	public void setFechaNac(Date fechaNac) {
+		this.fechaNac = fechaNac;
+	}
+
+	public String getDni() {
+		return dni;
+	}
+
+	public void setDni(String dni) {
+		this.dni = dni;
+	}
+
+}
