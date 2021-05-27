@@ -47,8 +47,10 @@ public class PartidaService implements IPartidaService {
 				
 			return new PageInfo<Partida>(rptaData);
 		} catch (ApiException e) {
+			logger.error("Error api paginando entidades partida {} - {}", e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			logger.error("Error general paginando entidades partida {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -61,10 +63,13 @@ public class PartidaService implements IPartidaService {
 				throw new ValidatorException("Hay Errores de validación", validadorPartida.getErrores());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
+			logger.error("Error validacion api guardando entidades partida {} - {} - {}", e.getMessage(), e.getErrores(),e);
 			throw e;
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api guardando entidades partida {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general guardando entidades partida {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -77,8 +82,10 @@ public class PartidaService implements IPartidaService {
 				throw new ValidatorException("Hay Errores de validación", validadorPartida.getErrores());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
+			logger.error("Error api actualizando entidad partida {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general actualizando entidad partida {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -88,8 +95,10 @@ public class PartidaService implements IPartidaService {
 		try {
 			repository.deleteEntity(id);
 		} catch (ApiException e) {
+			logger.error("Error api eliminando entidad partida {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general eliminando entidad partida {} -  {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -115,8 +124,10 @@ public class PartidaService implements IPartidaService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
+			logger.error("Error api buscando entidad partida {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general buscando entidad partida {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
@@ -126,9 +137,11 @@ public class PartidaService implements IPartidaService {
 	public Partida getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo entidad partida {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general obteniendo entidad partida {} -  {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -138,8 +151,10 @@ public class PartidaService implements IPartidaService {
 		try {
 			return repository.getAllEntitys();
 		} catch (ApiException e) {
+			logger.error("Error api obteniendo all entidades partida {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general obteniendo all entidades partida {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

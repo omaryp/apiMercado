@@ -4,7 +4,6 @@ import java.util.Date;
 
 import javax.validation.constraints.Digits;
 import javax.validation.constraints.Email;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
@@ -19,9 +18,9 @@ public class Persona extends BasicEntity {
 	@NotNull(message="Atributo apellidos no debe ser nulo.")
 	private String apellidos;
 	
-	@Digits(fraction = 0, integer = 11, message="Atributo teléfono debe contener solo números")
-	@Min(value=1, message="Atributo telefono debe ser != 0")
-	private int telefono;
+	@NotBlank(message="Atributo telefono no debe ser vacío.")
+	@NotNull(message="Atributo telefono no debe ser nulo.")
+	private String telefono;
 	
 	@NotBlank(message="Atributo usuario no debe ser vacío.")
 	@NotNull(message="Atributo usuario no debe ser nulo.")
@@ -56,11 +55,11 @@ public class Persona extends BasicEntity {
 		this.apellidos = apellidos;
 	}
 
-	public int getTelefono() {
+	public String getTelefono() {
 		return telefono;
 	}
 
-	public void setTelefono(int telefono) {
+	public void setTelefono(String telefono) {
 		this.telefono = telefono;
 	}
 
@@ -95,5 +94,5 @@ public class Persona extends BasicEntity {
 	public void setDni(String dni) {
 		this.dni = dni;
 	}
-
+	
 }

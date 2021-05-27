@@ -14,8 +14,8 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import pe.gob.muni.apimercado.model.Comerciante;
-import pe.gob.muni.apimercado.repository.ComercianteRepository;
+import pe.gob.muni.apimercado.model.Cobrador;
+import pe.gob.muni.apimercado.repository.CobradorRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
@@ -24,67 +24,67 @@ import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Service
-public class ComercianteService implements IComercianteService {
+public class CobradorService implements ICobradorService {
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private ComercianteRepository repository;
+	private CobradorRepository repository;
 
 	@Autowired
-	private Validador<Comerciante> validadorComerciante;
+	private Validador<Cobrador> validadorCobrador;
 	
 	@Override
-	public PageInfo<Comerciante> pagingEntitys(Map<String, String> params)
+	public PageInfo<Cobrador> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
 		logger.info("obteniendo comerciantes con los filtros {}.",objectToJson(params));
 		try {
-			List<Comerciante> rptaData = null;
+			List<Cobrador> rptaData = null;
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
 				
-			return new PageInfo<Comerciante>(rptaData);
+			return new PageInfo<Cobrador>(rptaData);
 		}catch (ApiException e) {
-			logger.error("Error api paginando entidades comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error api paginando entidades cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general paginando entidades comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error general paginando entidades cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
-	public void saveEntity(Comerciante entity) throws ApiException, Exception, ValidatorException {
+	public void saveEntity(Cobrador entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorComerciante.validarModelo(entity);
-			if (validadorComerciante.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
+			validadorCobrador.validarModelo(entity);
+			if (validadorCobrador.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorCobrador.getErrores());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
 		}catch (ApiException e) {
-			logger.error("Error api guardando entidad comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error api guardando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
-			logger.error("Error general guardando entidad comerciante {} - {}", e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error("Error general guardando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
-	public void updateEntity(Comerciante entity) throws ApiException, Exception, ValidatorException {
+	public void updateEntity(Cobrador entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorComerciante.validarModelo(entity);
-			if (validadorComerciante.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
+			validadorCobrador.validarModelo(entity);
+			if (validadorCobrador.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorCobrador.getErrores());
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
-			logger.error("Error api actualizando entidad comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error api actualizando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
-			logger.error("Error general actualizando entidad comerciante {} - {}", e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error("Error general actualizando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -94,10 +94,10 @@ public class ComercianteService implements IComercianteService {
 		try {
 			repository.deleteEntity(id);
 		}catch (ApiException e) {
-			logger.error("Error api eliminando entidad comerciante {} - {} - {}",id, e.getMessage(), e);
+			logger.error("Error api eliminando entidad cobrador {} - {} - {}",id, e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
-			logger.error("Error general eliminando entidad comerciante {} - {} - {}",id, e.getMessage(), e);
+		} catch (Exception e) {
+			logger.error("Error general eliminando entidad cobrador {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -123,37 +123,37 @@ public class ComercianteService implements IComercianteService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
-			logger.error("Error api buscando entidad comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error api buscando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}catch (Exception e) {
-			logger.error("Error general buscando entidad comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error general buscando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
 	}
 
 	@Override
-	public Comerciante getEntity(int id) throws ApiException, Exception {
+	public Cobrador getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
 		}catch (ApiException e) {
-			logger.error("Error api obteniendo entidad comerciante {} - {} - {}",id, e.getMessage(), e);
+			logger.error("Error api obteniendo entidad cobrador {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}catch (Exception e) {
-			logger.error("Error general obteniendo entidad comerciante {} - {} - {}",id, e.getMessage(), e);
+			logger.error("Error general obteniendo entidad cobrador {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Comerciante> getAllEntitys() throws ApiException, Exception {
+	public List<Cobrador> getAllEntitys() throws ApiException, Exception {
 		try {
 			return repository.getAllEntitys();
 		}catch (ApiException e) {
-			logger.error("Error api obteniendo all entitys comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error api obteniendo all entitys cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}catch (Exception e) {
-			logger.error("Error general obteniendo all entitys comerciante {} - {}", e.getMessage(), e);
+			logger.error("Error general obteniendo all entitys cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

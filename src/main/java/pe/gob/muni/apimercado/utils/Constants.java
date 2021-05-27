@@ -10,7 +10,7 @@ public class Constants {
 
 	// JWT
 
-	public static final String ISSUER_INFO = "Sistema de pagos de impuestos del mercado de Piura.";
+	public static final String ISSUER_INFO = "Api REST para pagos de impuestos de los mercados de la municipalidad de 26 de octubre.";
 	public static final String SUPER_SECRET_KEY = "@ITHg%JaxPw0Z#g&@7#$&KpkIcq48asYu#6XUjy#RH@^nPFyF3f%%0DcY";
 	public static final long TOKEN_EXPIRATION_TIME = 86400000; //24 horas
 	

@@ -6,6 +6,8 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.IPagoMapper">
 
 	<resultMap id="PagoResultMap" type="Pago" />
+	
+	<resultMap id="TicketPagoResultMap" type="TicketPago" />
 
 	<select id="getEntity" resultMap="PagoResultMap">
 		select id,
@@ -18,22 +20,46 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from pagos where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="PagoResultMap">
+		select id,
+		fecha_pago,
+		serie,
+		correlativo,
+		monto_pagado,
+		concepto,
+		observaciones,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from pagos
 	</select>
 
 	<insert id="saveEntity" parameterType="Pago">
 		insert into pagos(
 		fecha_pago,serie,
 		correlativo,monto_pagado,concepto,observaciones,
-		estado,fecha_creacion, creado_por, fecha_modificacion,
-		modificado_por,eliminado_por)
+		estado,fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,eliminado_por)
 		values(
 		#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
-		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
+	</insert>
+	
+	<insert id="asociarTicketPago" parameterType="TicketPago">
+		insert into tickets_pagos(
+		tickets_id,pagos_id)
+		values(
+		#{tickets_id},#{pagos_id})
 	</insert>
 
 	<update id="deleteEntity">
@@ -53,8 +79,8 @@
 		observaciones = #{observaciones},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 

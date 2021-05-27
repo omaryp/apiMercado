@@ -40,10 +40,12 @@ public class PerfilService implements IPerfilService {
 		logger.info("obteniendo perfiles del perfil {}", id);
 		try {
 			return repository.getEntity(id);
-		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+		}  catch (ApiException e) {
+			logger.error("Error api obteniendo entidad perfil {} - {} - {}", id,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general obteniendo entidad perfil {} - {} - {}",id, e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -53,9 +55,11 @@ public class PerfilService implements IPerfilService {
 		try {
 			return repository.getAllEntitys();
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api obteniendo all entitys perfil  {} - {}",e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general obteniendo all entitys perfil  {} - {}", e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -71,9 +75,11 @@ public class PerfilService implements IPerfilService {
 			rptaData = repository.pagingEntitys(pagData);
 				
 			return new PageInfo<Perfil>(rptaData);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api paginado perfiles  {} - {}",e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			logger.error("Error general paginando perfiles  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -87,10 +93,13 @@ public class PerfilService implements IPerfilService {
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
 			repository.updateEntity(entity);
 		} catch (ValidatorException e) {
+			logger.error("Error api validación guardando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);
 			throw e;
 		} catch (ApiException e) {
+			logger.error("Error api guardando perfil  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general guardando perfil    {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -103,11 +112,14 @@ public class PerfilService implements IPerfilService {
 			if (validadorEntity.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
 			repository.updateEntity(entity);
-		} catch (ValidatorException e) {
+		}catch (ValidatorException e) {
+			logger.error("Error api validación actualizando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);
 			throw e;
 		} catch (ApiException e) {
+			logger.error("Error api actualizando perfil  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general actualizando perfil    {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -118,9 +130,11 @@ public class PerfilService implements IPerfilService {
 		try {
 			repository.deleteEntity(id);
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api eliminando entidad perfil {} - {} - {}", id,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general eliminando entidad perfil {} - {} - {}",id, e.getMessage(), e);
+			throw e;
 		}
 
 	}
@@ -132,13 +146,15 @@ public class PerfilService implements IPerfilService {
 			for (Rol rol : roles) {
 				RolPerfil rolPef = new RolPerfil();
 				rolPef.setCodigoPerfil(perfil);
-				rolPef.setCodigoRol(rol.getCodigo());
+				rolPef.setCodigoRol(rol.getId());
 				repository.guardarRolesPerfil(rolPef);
 			}
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api guardando roles en perfil  {} - {}",e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general guardando roles en perfil    {} - {}", e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -161,10 +177,11 @@ public class PerfilService implements IPerfilService {
 			}else
 				rpta = repository.getAllEntitys();
 			
-		}
-		catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api buscando perfiles {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general buscando perfiles {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;

@@ -10,17 +10,19 @@
 	<select id="getAllEntitys" resultMap="ModuloResultMap">
 		select A.codigo,
 		A.nombre,
-		A.descripcion 
+		A.descripcion,
+		A.estado
 		from modulos A
 	</select>
 	
 	<select id="getModulosByUsuario" resultMap="ModuloResultMap">
 		select D.codigo,
 		D.nombre,
-		D.descripcion
+		D.descripcion,
+		D.estado
 		from usuarios A
-		inner join perfiles_Moduloes B on A.codigoPerfil = B.perfiles_codigo
-		inner join roles C on C.codigo = B.roles_codigo
+		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
+		inner join roles C on C.id = B.roles_codigo
 		inner join modulos D on D.codigo = C.modulos_codigo
 		where A.usuario = #{usuario}
 	</select>

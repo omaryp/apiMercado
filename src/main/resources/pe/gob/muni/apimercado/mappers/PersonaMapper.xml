@@ -12,7 +12,7 @@
 		 B.id,B.nombres,B.apellidos,B.telefono,
 		 B.correo,B.direccion,B.fecha_nacimiento,B.dni,
 		 B.estado,B.fecha_creacion,B.creado_por,
-		 B.fecha_modificacion,B.modificado_por,B.eliminado_por
+		 B.fecha_modifcacion,B.modifcado_por,B.eliminado_por
 		from
 		personas B where  B.id = #{id}
 	</select>
@@ -22,12 +22,12 @@
          id,nombres,apellidos,telefono,
 		 correo,direccion,fecha_nacimiento,dni,
 		 estado,fecha_creacion,creado_por,
-		 fecha_modificacion,modificado_por,eliminado_por) 
+		 fecha_modifcacion,modifcado_por,eliminado_por) 
 		values( 
 		#{id},#{nombres},#{apellidos},#{telefono},
 		#{correo},#{direccion},#{fecha_nacimiento},#{dni},
-		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
     </insert>
     
     <update id="deleteEntity">
@@ -42,7 +42,7 @@
       nombres = #{nombres},apellidos = #{apellidos},telefono = #{telefono},
 	  correo = #{correo},direccion = #{direccion},fecha_nacimiento = #{fecha_nacimiento},
 	  dni = #{dni}, estado = #{estado},fecha_creacion = #{fecha_creacion},creado_por = #{creado_por},
-	  fecha_modificacion = #{fecha_modificacion} ,modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+	  fecha_modifcacion = #{fecha_modifcacion} ,modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
       where id = #{id}
     </update>
     

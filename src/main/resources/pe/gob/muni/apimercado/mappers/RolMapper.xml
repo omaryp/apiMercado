@@ -66,6 +66,18 @@
 		where A.usuario = #{usuario} and C.estado = 1
 	</select>
 	
+	<select id="getRolesByUsuarioModulo" resultMap="RolResultMap">
+		select C.id,
+		C.nombre,
+		C.descripcion,
+		C.modulos_codigo,
+		C.estado
+		from usuarios A
+		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
+		inner join roles C on C.id = B.roles_codigo
+		where A.usuario = #{usuario} and C.estado = 1 and C.modulos_codigo = #{modulo}
+	</select>
+	
 	<insert id="saveEntity" parameterType="Rol" >
         insert into roles(nombre,descripcion,modulos_codigo,estado) 
 		values(#{nombre},#{descripcion},#{modulos_codigo},#{estado})

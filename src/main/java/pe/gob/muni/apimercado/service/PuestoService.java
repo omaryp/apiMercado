@@ -16,6 +16,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Puesto;
+import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.repository.PuestoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -46,8 +47,10 @@ public class PuestoService implements IPuestoService {
 				
 			return new PageInfo<Puesto>(rptaData);
 		} catch (ApiException e) {
+			logger.error("Error api paginando entidades puesto {} - {}", e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			logger.error("Error general paginando entidades puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -60,10 +63,13 @@ public class PuestoService implements IPuestoService {
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
+			logger.error("Error api validacion guardando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (ApiException e) {
+			logger.error("Error api guardando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general guardando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -76,8 +82,10 @@ public class PuestoService implements IPuestoService {
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
+			logger.error("Error api actualizando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general actualizando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -86,9 +94,11 @@ public class PuestoService implements IPuestoService {
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
 			repository.deleteEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api eliminando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general eliminando entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -114,8 +124,10 @@ public class PuestoService implements IPuestoService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
+			logger.error("Error api buscando entidades puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general buscando entidades puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
@@ -125,9 +137,11 @@ public class PuestoService implements IPuestoService {
 	public Puesto getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obtiendo entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general obteniendo entidad puesto {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -137,8 +151,23 @@ public class PuestoService implements IPuestoService {
 		try {
 			return repository.getAllEntitys();
 		} catch (ApiException e) {
+			logger.error("Error api obtiendo all entitys puesto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general obteniendo all entitys puesto {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public void asociarPuestoComerciante(PuestoComerciante puesto) throws ApiException {
+		try {
+			repository.asociarPuestoComerciante(puesto);
+		}catch (ApiException e) {
+			logger.error("Error api asociando puesto comerciante {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general asociando puesto comerciante {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

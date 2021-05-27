@@ -5,7 +5,10 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
+import java.io.PrintWriter;
 import java.util.Map;
+
+import javax.servlet.http.HttpServletResponse;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -59,5 +62,19 @@ public class Util {
 		return new ResponseEntity<RespuestaApi<T>>(response,status);
     }
     
+    public static <T> void respuestaApi(T contenido,String mensaje,int codigo,HttpStatus status,HttpServletResponse response) {
+    	try {
+    		PrintWriter writer = response.getWriter();
+    		response.setContentType("application/json");
+            RespuestaApi<T> rpta = new RespuestaApi<T>();
+    		rpta.setCodigo(codigo);
+    		rpta.setMensaje(mensaje);
+    		rpta.setContenido(contenido);
+    		response.setStatus(status.value());
+    		writer.println(objectToJson(rpta));
+		} catch (Exception e) {
+			logger.error("Error al enviar rpta autenticación {} - {}",e.getMessage(),e);
+		}
+    }
     
 }

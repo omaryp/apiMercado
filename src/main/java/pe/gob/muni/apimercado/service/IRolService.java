@@ -11,4 +11,6 @@ public interface IRolService extends IBasicService<Rol>{
 	
 	List<Rol> getRolesByUsuario(String usuario) throws ApiException,Exception;
 	
+	List<Rol> getRolesByUsuarioModulo(String usuario,int modulo) throws ApiException, Exception;
+	
 }

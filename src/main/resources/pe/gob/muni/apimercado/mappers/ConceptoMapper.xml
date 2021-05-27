@@ -9,24 +9,37 @@
 
 	<select id="getEntity" resultMap="ConceptoResultMap">
 		select id,
-		decripcion,
+		descripcion,
 		partidas_id,
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from conceptos where id = #{id}
 	</select>
-
+	
+	<select id="getAllEntitys" resultMap="ConceptoResultMap">
+		select id,
+		descripcion,
+		partidas_id,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from conceptos
+	</select>
+	
 	<insert id="saveEntity" parameterType="Concepto">
 		insert into conceptos(
-		descripcion,partidas_id,estado,fecha_creacion, creado_por, fecha_modificacion,
-		modificado_por,eliminado_por)
+		descripcion,partidas_id,estado,fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,eliminado_por)
 		values(
-		#{descripcion},#{partidas_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{descripcion},#{partidas_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -40,8 +53,8 @@
 		set
 		descripcion = #{descripcion},partidas_id=#{partidas_id},estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
@@ -50,8 +63,8 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from conceptos
 		<where>

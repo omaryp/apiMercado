@@ -6,17 +6,9 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.ITicketMapper">
 
 	<resultMap id="TicketResultMap" type="Ticket" >
-		<id property="id" column="id"/>
 		<result property="comerciantes_id" column="puestos_comerciantes_comerciantes_id"/>
 		<result property="puestos_id" column="puestos_comerciantes_puestos_id"/>
 		<result property="correlativo" column="puestos_comerciantes_correlativo"/>
-		<result property="habido" column="habido"/>
-		<result property="estado" column="estado"/>
-		<result property="fecha_creacion" column="fecha_creacion"/>
-		<result property="creado_por" column="creado_por"/>
-		<result property="fecha_modifcacion" column="fecha_modifcacion"/>
-		<result property="modifcado_por" column="modifcado_por"/>
-		<result property="eliminado_por" column="eliminado_por"/>
 	</resultMap>
 
 	<select id="getEntity" resultMap="TicketResultMap">
@@ -28,10 +20,25 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from tickets where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="TicketResultMap">
+		select id,
+		puestos_comerciantes_comerciantes_id,
+		puestos_comerciantes_puestos_id,
+		puestos_comerciantes_correlativo,
+		habido,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from tickets
 	</select>
 
 	<insert id="saveEntity" parameterType="Ticket">
@@ -39,11 +46,11 @@
 		puestos_comerciantes_comerciantes_id,
 		puestos_comerciantes_puestos_id,
 		puestos_comerciantes_correlativo,
-		habido,estado,fecha_creacion, creado_por, fecha_modificacion,
-		modificado_por,eliminado_por)
+		habido,estado,fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,eliminado_por)
 		values(
-		#{comerciantes_id},#{puestos_id},#{correlativo},#{habido},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{comerciantes_id},#{puestos_id},#{correlativo},#{habido},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -61,8 +68,8 @@
 		habido = #{habido},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 

@@ -5,21 +5,21 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.springframework.stereotype.Repository;
 
-import pe.gob.muni.apimercado.mapper.IPuestoMapper;
-import pe.gob.muni.apimercado.model.Puesto;
-import pe.gob.muni.apimercado.model.PuestoComerciante;
+import pe.gob.muni.apimercado.mapper.IPagoMapper;
+import pe.gob.muni.apimercado.model.Pago;
+import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.utils.ApiException;
 
 @Repository
-public class PuestoRepository extends BasicRepository<Puesto,IPuestoMapper> {
+public class PagoRepository extends BasicRepository<Pago,IPagoMapper> {
 	
-	public void asociarPuestoComerciante(PuestoComerciante puesto)throws ApiException {
+	public void asociarTicketPago(TicketPago ticket) throws ApiException {
 		try {
-			mapper.asociarPuestoComerciante(puesto);
+			mapper.asociarTicketPago(ticket);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {
 			throw new ApiException(e.getMessage(),e);
-		} 
+		}
 	}
 }

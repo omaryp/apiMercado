@@ -11,19 +11,28 @@
 		select 
 		id,codigo,descripcion,conceptos_id,
 		estado,fecha_creacion,creado_por,
-		fecha_modificacion,	modificado_por,
+		fecha_modifcacion,	modifcado_por,
 		eliminado_por
 		from series where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="SerieResultMap">
+		select 
+		id,codigo,descripcion,conceptos_id,
+		estado,fecha_creacion,creado_por,
+		fecha_modifcacion,	modifcado_por,
+		eliminado_por
+		from series
 	</select>
 
 	<insert id="saveEntity" parameterType="Serie">
 		insert into series(
 		codigo,descripcion,conceptos_id,estado,
 		fecha_creacion,	creado_por,
-		fecha_modificacion,	modificado_por,	eliminado_por)
+		fecha_modifcacion,	modifcado_por,	eliminado_por)
 		values(
-		#{codigo},#{descripcion},#{conceptos_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{codigo},#{descripcion},#{conceptos_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -37,15 +46,15 @@
 		set
 		codigo = #{codigo},descripcion=#{descripcion},conceptos_id=#{conceptos_id},
 		estado = #{estado},fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
 	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select id,codigo,descripcion,conceptos_id,
 		estado,fecha_creacion,creado_por,
-		fecha_modificacion,	modificado_por,
+		fecha_modifcacion,	modifcado_por,
 		eliminado_por
 		from series
 		<where>

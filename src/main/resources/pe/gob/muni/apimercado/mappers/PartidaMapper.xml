@@ -14,21 +14,34 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por		
+		from partidas where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="PartidaResultMap">
+		select id,
+		codigo,
+		descripcion,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por		
 		from partidas where id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="Partida">
 		insert into partidas(
-		id, fecha_creacion, creado_por, fecha_modificacion,
-		modificado_por,
+		id, fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,
 		eliminado_por, estado, codigo,
 		descripcion)
 		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},
+		#{id},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por},#{estado},
 		#{codigo},#{descripcion})
 	</insert>
 
@@ -45,8 +58,8 @@
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
 		creado_por =
-		#{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
+		#{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por},
 		estado = #{estado},
 		codigo = #{codigo}, descripcion = #{descripcion}
 		where id = #{id}
@@ -59,8 +72,8 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from partidas
 		<where>

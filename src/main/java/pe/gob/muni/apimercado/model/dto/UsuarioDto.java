@@ -7,9 +7,7 @@ import org.springframework.security.core.userdetails.User;
 
 public class UsuarioDto extends User{
 
-	/**
-	 * 
-	 */
+
 	private static final long serialVersionUID = 1L;
 	private String nombres;
 	private String apellidos;
@@ -21,9 +19,8 @@ public class UsuarioDto extends User{
 			boolean credentialsNonExpired, boolean accountNonLocked,
 			Collection<? extends GrantedAuthority> authorities) {
 		super(username, password, enabled, accountNonExpired, credentialsNonExpired, accountNonLocked, authorities);
-		// TODO Auto-generated constructor stub
 	}
-
+	
 	public String getNombres() {
 		return nombres;
 	}

@@ -12,8 +12,8 @@ public class BasicEntity {
 	private Date fecha_creacion;
 	@Min(value=1, message="Atributo creado_por debe ser != 0")
 	private int creado_por;
-	private Date fecha_modificacion;
-	private int modificado_por;
+	private Date fecha_modifcacion;
+	private int modifcado_por;
 	private int eliminado_por;
 	private int estado;
 	
@@ -35,17 +35,17 @@ public class BasicEntity {
 	public void setCreado_por(int creado_por) {
 		this.creado_por = creado_por;
 	}
-	public Date getFecha_modificacion() {
-		return fecha_modificacion;
+	public Date getFecha_modifcacion() {
+		return fecha_modifcacion;
 	}
-	public void setFecha_modificacion(Date fecha_modificacion) {
-		this.fecha_modificacion = fecha_modificacion;
+	public void setFecha_modificacion(Date fecha_modifcacion) {
+		this.fecha_modifcacion = fecha_modifcacion;
 	}
 	public int getModificado_por() {
-		return modificado_por;
+		return modifcado_por;
 	}
 	public void setModificado_por(int modificado_por) {
-		this.modificado_por = modificado_por;
+		this.modifcado_por = modificado_por;
 	}
 	public int getEliminado_por() {
 		return eliminado_por;

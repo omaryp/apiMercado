@@ -30,14 +30,14 @@ import pe.gob.muni.apimercado.utils.ValidatorException;
 
 public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 	
-	private final Logger logger = LogManager.getLogger(this.getClass());
+	protected final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
 	protected E service;
 	
 	@PostMapping
 	public ResponseEntity<?> saveEntity(@RequestBody T entity) {
-		logger.info("Se recibió perfil - {}",Util.objectToJson(entity));
+		logger.info("Se recibió entidad - {}",Util.objectToJson(entity));
 		try {
 			service.saveEntity(entity);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
@@ -72,7 +72,7 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 	
 	@GetMapping(path = "/pag")
 	public ResponseEntity<?> pagingEntitys(@RequestParam Map<String, String> params) {
-		logger.info("Obteniendo roles por filtro");
+		logger.info("Obteniendo filtro parmas - {}",params);
 		try {
 			PageInfo<T> rpta = service.pagingEntitys(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
@@ -88,7 +88,7 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 	
 	@PutMapping
 	public ResponseEntity<?> updateEntity(@RequestBody T entity) {
-		logger.info("Se recibió perfil - {}",Util.objectToJson(entity));
+		logger.info("Se recibió entidad - {}",Util.objectToJson(entity));
 		try {
 			service.updateEntity(entity);
 			logger.info("Se procesó correctamente solicitud actualizar");

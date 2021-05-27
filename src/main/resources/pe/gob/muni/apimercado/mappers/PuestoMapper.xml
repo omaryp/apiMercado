@@ -6,6 +6,8 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.IPuestoMapper">
 
 	<resultMap id="PuestoResultMap" type="Puesto" />
+	
+	<resultMap id="PuestoComercianteResultMap" type="PuestoComerciante" />
 
 	<select id="getEntity" resultMap="PuestoResultMap">
 		select
@@ -19,21 +21,39 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from puestos where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="PuestoResultMap">
+		select
+		id,
+		codigo,
+		mercados_id,
+		conceptos_id,
+		cobradores_id,
+		ubicacion_id,
+		giro_id,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from puestos 
 	</select>
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
 		codigo,mercados_id,conceptos_id,cobradores_id,ubicacion_id,
-		giro_id,estado,fecha_creacion,creado_por,fecha_modificacion,
-		modificado_por,	eliminado_por)
+		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
+		modifcado_por,	eliminado_por)
 		values(
 		#{codigo},#{mercados_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
-		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -54,8 +74,8 @@
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, 
-		fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},
+		fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},
 		eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
@@ -71,14 +91,22 @@
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from puestos
 		<if test="sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>
-
+	
+	<insert id="asociarPuestoComerciante" parameterType="PuestoComerciante">
+		<selectKey keyProperty="id" resultType="long" order="BEFORE">
+            select max(id) + 1 from puestos_comerciantes 
+            where puestos_id = #{puestos_id} and comerciantes_id = #{comerciantes_id}  
+        </selectKey>
+        insert into puestos_comerciante(puestos_id,comerciantes_id,correlativo,fecha_fin,estado,fecha_modifcacion,modifcado_por,fecha_creacion,creado_por,eliminado_por)
+        values(#{puestos_id},#{comerciantes_id},#{correlativo},#{fecha_fin},#{estado},#{fecha_modifcacion},#{modifcado_por},#{fecha_creacion},#{creado_por},#{eliminado_por})
+	</insert>
 
 </mapper>

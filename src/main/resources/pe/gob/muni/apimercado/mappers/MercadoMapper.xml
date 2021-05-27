@@ -10,28 +10,44 @@
 	<select id="getEntity" resultMap="MercadoResultMap">
 		select 
 		id,
-		descripcion,
+		decripcion,
 		nombre,
 		direccion,
 		zona,
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from mercados where id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="MercadoResultMap">
+		select 
+		id,
+		decripcion,
+		nombre,
+		direccion,
+		zona,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from mercados
 	</select>
 
 	<insert id="saveEntity" parameterType="Mercado">
 		insert into mercados(
 		id,	fecha_creacion,	creado_por,
-		fecha_modificacion,	modificado_por,	eliminado_por,
-		estado,	nombre,	descripcion,direccion,zona)
+		fecha_modifcacion,	modifcado_por,	eliminado_por,
+		estado,	nombre,	decripcion,direccion,zona)
 		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por},#{estado},
-		#{nombre},#{descripcion},#{direccion},#{zona})
+		#{id},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por},#{estado},
+		#{nombre},#{decripcion},#{direccion},#{zona})
 	</insert>
 
 	<update id="deleteEntity">
@@ -44,25 +60,25 @@
 		Update mercados
 		set
 		id = #{id},fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por},
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por},
 		estado = #{estado},
-		nombre = #{nombre}, descripcion = #{descripcion},
+		nombre = #{nombre}, decripcion = #{decripcion},
 		direccion = #{direccion},zona = #{zona}
 		where id = #{id}
 	</update>
 
 	<select id="pagingEntitys" resultMap="MercadoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		selectid,
-		descripcion,
+		decripcion,
 		nombre,
 		direccion,
 		zona,
 		estado,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from mercados
 		<where>

@@ -11,21 +11,31 @@
 		select id,descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 	    from tarifas where idTarifa = #{idTarifa}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="TarifaResultMap">
+		select id,descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+	    from tarifas
 	</select>
 
 	<insert id="saveEntity" parameterType="Tarifa">
 		insert into tarifas(
 		descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
-		fecha_creacion,creado_por,fecha_modificacion,
-		modificado_por,eliminado_por)
+		fecha_creacion,creado_por,fecha_modifcacion,
+		modifcado_por,eliminado_por)
 		values(
 		#{descripcion},#{monto},#{conceptos_id},#{estado},#{fecha_inicio},#{fecha_fin},
-		#{fecha_creacion},#{creado_por},#{fecha_modificacion},
-		#{modificado_por},#{eliminado_por})
+		#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<update id="deleteEntity">
@@ -40,8 +50,8 @@
 		descripcion = #{descripcion},monto=#{monto},conceptos_id=#{conceptos_id},
 		estado = #{estado},fecha_inicio=#{fecha_inicio},fecha_fin=#{fecha_fin}
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modificacion = #{fecha_modificacion},
-		modificado_por = #{modificado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
@@ -50,8 +60,8 @@
 		descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
 		fecha_creacion,
 		creado_por,
-		fecha_modificacion,
-		modificado_por,
+		fecha_modifcacion,
+		modifcado_por,
 		eliminado_por
 		from tarifas
 		<where>

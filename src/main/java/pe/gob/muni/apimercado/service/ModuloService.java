@@ -27,8 +27,16 @@ public class ModuloService implements IModuloService {
 	private ModuloRepository moduloRepository;
 
 	@Override
-	public List<Modulo> getModulosByUsuario(String usuario) throws ApiException,Exception{
-		return null;
+	public List<Modulo> getModulosByUsuario(String username) throws ApiException,Exception{
+		try {
+			return moduloRepository.getModulosByUsuario(username);
+		}catch (ApiException e) {
+			logger.error("Error api get modulos by username {} - {} - {}",username, e.getMessage(), e);
+			throw e;
+		}catch (Exception e) {
+			logger.error("Error general get modulos by username {} - {} - {}",username, e.getMessage(), e);
+			throw e;
+		}
 	}
 
 	@Override

@@ -5,7 +5,8 @@ import static pe.gob.muni.apimercado.utils.Constants.SUPER_SECRET_KEY;
 import static pe.gob.muni.apimercado.utils.Constants.TOKEN_BEARER_PREFIX;
 
 import java.io.IOException;
-import java.util.ArrayList;
+import java.util.List;
+import java.util.stream.Collectors;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -14,9 +15,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.web.authentication.www.BasicAuthenticationFilter;
 
+import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 
 public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
@@ -30,6 +34,7 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 			throws IOException, ServletException {
 		String header = req.getHeader(HEADER_AUTHORIZACION_KEY);
 		if (header == null || !header.startsWith(TOKEN_BEARER_PREFIX)) {
+			SecurityContextHolder.clearContext();
 			chain.doFilter(req, res);
 			return;
 		}
@@ -38,21 +43,36 @@ public class JWTAuthorizationFilter extends BasicAuthenticationFilter {
 		chain.doFilter(req, res);
 	}
 
+	@SuppressWarnings("unchecked")
 	private UsernamePasswordAuthenticationToken getAuthentication(HttpServletRequest request) {
-		String token = request.getHeader(HEADER_AUTHORIZACION_KEY);
-		if (token != null) {
+		
+		List<String> authorities = null;
+		List<GrantedAuthority> auths = null;
+		Claims claims = null;
+		String user = "";
+		String tokenHeader = "";
+		
+		tokenHeader = request.getHeader(HEADER_AUTHORIZACION_KEY);
+		if (null != tokenHeader) {
+			
 			// Se procesa el token y se recupera el usuario.
-			String user = Jwts.parser()
-						.setSigningKey(SUPER_SECRET_KEY)
-						.parseClaimsJws(token.replace(TOKEN_BEARER_PREFIX, ""))
-						.getBody()
-						.getSubject();
-
-			if (user != null) {
-				return new UsernamePasswordAuthenticationToken(user, null, new ArrayList<>());
+			claims = Jwts.parser()
+						.setSigningKey(SUPER_SECRET_KEY.getBytes())
+						.parseClaimsJws(tokenHeader.replace(TOKEN_BEARER_PREFIX, ""))
+						.getBody();
+			
+			user = claims.getSubject();
+			authorities = claims.get("authorities",List.class);
+			
+			if (null != user) {
+				if(null != authorities) {
+					auths = authorities.stream().map(SimpleGrantedAuthority::new).collect(Collectors.toList());
+					return new UsernamePasswordAuthenticationToken(claims.getSubject(), null,auths);
+				}
 			}
 			return null;
 		}
 		return null;
+		
 	}
 }

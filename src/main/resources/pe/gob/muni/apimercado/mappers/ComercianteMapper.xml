@@ -5,18 +5,49 @@
 
 <mapper
 	namespace="pe.gob.muni.apimercado.mapper.IComercianteMapper">
-
-	<resultMap id="ComercianteResultMap" type="Comerciante" >
+	
+	<resultMap id="PersonaResultMap" type="Persona" />
+	
+	<resultMap id="ComercianteResultMap" type="Comerciante" extends="PersonaResultMap">
 		<id property="idComerciante" column="id"/>
-		<result property="ruc" column="ruc"/>
-		<result property="razon_social" column="razon_social"/>
-		<association property="persona" column="persona_id" javaType="Persona" select = "pe.gob.muni.apimercado.PersonaMapper.getEntity"/>
 	</resultMap>
 
 	<select id="getEntity" resultMap="ComercianteResultMap">
-		select A.id,A.ruc,A.razon_social,
-		from
-		comerciantes A where A.id = #{id}
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		 from comerciantes A , personas B where A.personas_id = B.id and A.id = #{id}
+	</select>
+	
+	<select id="getAllEntitys" resultMap="ComercianteResultMap">
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		 from comerciantes A , personas B where A.personas_id = B.id
 	</select>
 
 	<insert id="saveEntity" parameterType="Comerciante">
@@ -36,24 +67,26 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
-		select id,
-		fecha_creacion,
-		creado_por,
-		fecha_modificacion,
-		modificado_por,
-		eliminado_por,
-		estado,
-		dni,
-		ruc,
-		nombres,
-		apellidos,
-		razon_social,
-		telefono,
-		correo,
-		direccion
-		from comerciantes
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		from comerciantes A , personas B 
 		<where>
+			A.personas_id = B.id
 			<if test="search != null">
+				and 
 				CONCAT(nombres,' ',apellidos) LIKE CONCAT('%',#{search},'%')
 			</if>
 		</where>

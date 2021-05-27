@@ -2,7 +2,6 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
-import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
 import java.util.List;
 import java.util.Map;
@@ -15,77 +14,72 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import pe.gob.muni.apimercado.model.Serie;
-import pe.gob.muni.apimercado.repository.SerieRepository;
+import pe.gob.muni.apimercado.model.Pago;
+import pe.gob.muni.apimercado.model.TicketPago;
+import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import static pe.gob.muni.apimercado.utils.Util.mapToObject;
+import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.PageTable;
 
 @Service
-public class SerieService implements ISerieService {
+public class PagoService implements IPagoService {
 
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
-	private SerieRepository repository;
+	private PagoRepository repository;
 
 	@Autowired
-	private Validador<Serie> validadorSerie;
+	private Validador<Pago> validadorPago;
 	
 	@Override
-	public PageInfo<Serie> pagingEntitys(Map<String, String>params)
+	public PageInfo<Pago> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
-		logger.info("obteniendo series para busqueda {}.",params);
+		logger.info("obteniendo comerciantes con los filtros {}.",objectToJson(params));
 		try {
-			List<Serie> rptaData = null;
+			List<Pago> rptaData = null;
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
 				
-			return new PageInfo<Serie>(rptaData);
-		}catch (ApiException e) {
-			logger.error("Error api paginando series  {} - {}",e.getMessage(), e);
+			return new PageInfo<Pago>(rptaData);
+		} catch (ApiException e) {
 			throw e;
-		} catch (Exception e) {
-			logger.error("Error general paginando series  {} - {}",e.getMessage(), e);
+		}catch (Exception e) {
 			throw e;
 		}
 	}
 
 	@Override
-	public void saveEntity(Serie entity) throws ApiException, Exception, ValidatorException {
+	public void saveEntity(Pago entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorSerie.validarModelo(entity);
-			if (validadorSerie.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorSerie.getErrores());
+			validadorPago.validarModelo(entity);
+			if (validadorPago.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorPago.getErrores());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
-		}catch (ApiException e) {
-			logger.error("Error api guardando series  {} - {}",e.getMessage(), e);
+		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general guardando series  {} - {}",e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
-	public void updateEntity(Serie entity) throws ApiException, Exception, ValidatorException {
+	public void updateEntity(Pago entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorSerie.validarModelo(entity);
-			if (validadorSerie.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorSerie.getErrores());
+			validadorPago.validarModelo(entity);
+			if (validadorPago.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorPago.getErrores());
 			repository.updateEntity(entity);
-		}catch (ValidatorException e) {
-			throw e;
-		}catch (ApiException e) {
-			logger.error("Error api guardando series  {} - {}",e.getMessage(), e);
+		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general guardando series  {} - {}",e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -94,11 +88,9 @@ public class SerieService implements ISerieService {
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
 			repository.deleteEntity(id);
-		}catch (ApiException e) {
-			logger.error("Error api eliminando serie {} - {} - {}",id,e.getMessage(), e);
+		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general eliminando serie {} - {} - {}",id,e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -124,39 +116,45 @@ public class SerieService implements ISerieService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
-			logger.error("Error api buscando series  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general buscando series  {} - {}",e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
 	}
 
 	@Override
-	public Serie getEntity(int id) throws ApiException, Exception {
+	public Pago getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		}catch (ApiException e) {
-			logger.error("Error api obteniendo serie {} - {} - {}",id,e.getMessage(), e);
+		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general obteniendo serie {} - {} - {}",id,e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
-	public List<Serie> getAllEntitys() throws ApiException, Exception {
+	public List<Pago> getAllEntitys() throws ApiException, Exception {
 		try {
 			return repository.getAllEntitys();
 		} catch (ApiException e) {
-			logger.error("Error api obteniendo all series  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general obteniendo all series  {} - {}",e.getMessage(), e);
 			throw e;
 		}
+	}
+
+	@Override
+	public void asociarTicketPago(TicketPago ticket) throws ApiException {
+		try {
+			repository.asociarTicketPago(ticket);
+		} catch (ApiException e) {
+			throw e;
+		} catch (Exception e) {
+			throw e;
+		}
+		
 	}
 
 }

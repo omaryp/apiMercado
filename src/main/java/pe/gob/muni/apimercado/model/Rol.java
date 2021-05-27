@@ -13,8 +13,6 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 	 */
 	private static final long serialVersionUID = 1L;
 
-	private int codigo;
-	
 	@NotBlank(message="Atributo nombre Rol no debe ser vacío.")
 	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
 	private String nombre;
@@ -23,14 +21,6 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 	@Min(value=1, message="Atributo módulo debe ser != 0")
 	@Digits(fraction = 0, integer = 11, message="Atributo módulo debe contener solo números")
 	private int modulos_codigo;
-
-	public int getCodigo() {
-		return codigo;
-	}
-
-	public void setCodigo(int codigo) {
-		this.codigo = codigo;
-	}
 
 	public String getNombre() {
 		return nombre;

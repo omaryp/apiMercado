@@ -7,6 +7,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -22,9 +23,11 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import pe.gob.muni.apimercado.model.Modulo;
 import pe.gob.muni.apimercado.model.Perfil;
 import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.ModuloDto;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
 import pe.gob.muni.apimercado.repository.UsuarioRespository;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -40,6 +43,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Autowired
 	private UsuarioRespository repository;
+	
+	@Autowired
+	private IModuloService modService;
 
 	@Autowired
 	private IRolService rolService;
@@ -81,14 +87,16 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		}
 		return userDto;
 	}
-
+	
 	@Override
 	public Usuario findByUsername(String username) throws Exception, ApiException {
 		try {
 			return repository.findByUsername(username);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api get usuario by username {} - {} - {}",username, e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general get usuario by username {} - {} - {}",username, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -97,9 +105,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public void disabledUserbyUsername(String username) throws Exception, ValidatorException, ApiException {
 		try {
 			repository.disabledUserbyUsername(username);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api deshabilitando usuario by username {} - {} - {}",username, e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general deshabilitando usuario by username {} -  {} - {}",username, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -111,9 +121,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			if (validadorUsuario.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
 			repository.actualizarUserByUsername(user);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api actualizando usuario by username {} - {} - {}",user.getUsuario(), e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general actualizando usuario by username {} -  {} - {}",user.getUsuario(), e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -130,9 +142,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			rptaData = repository.pagingEntitys(pagData);
 				
 			return new PageInfo<Usuario>(rptaData);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api paginando usuario  {} - {}", e.getMessage(), e);
 			throw e;
 		}catch (Exception e) {
+			logger.error("Error general paginando usuario   {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -147,9 +161,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api guardando usuario  {} - {}", e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general guardando usuario   {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -161,9 +177,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			if (validadorUsuario.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
 			repository.updateEntity(entity);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api actualizando usuario  {} - {}", e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general actualizando usuario   {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -172,9 +190,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
 			repository.deleteEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api eliminando usuario by username {} - {} - {}",id, e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general eliminando usuario by username {} -  {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -211,8 +231,10 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
+			logger.error("Error api buscando usuario by username {} - {}", e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general buscando usuario by username {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
@@ -222,9 +244,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public Usuario getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo usuario by id {} - {} - {}",id, e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general obteniendo usuario by id {} -  {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -233,9 +257,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public List<Usuario> getAllEntitys() throws ApiException, Exception {
 		try {
 			return repository.getAllEntitys();
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo all entitys usuario {} - {}",e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general obteniendo all entitys usuario  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

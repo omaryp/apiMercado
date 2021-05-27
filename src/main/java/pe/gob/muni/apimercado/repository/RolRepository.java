@@ -27,5 +27,13 @@ public class RolRepository extends BasicRepository<Rol, IRolMapper> {
 			throw new ApiException(e.getMessage(),e);
 		}
 	}
+	
+	public List<Rol> getRolesByUsuarioModulo(String usuario,int modulo) throws ApiException {
+		try {
+			return mapper.getRolesByUsuarioModulo(usuario,modulo);
+		} catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		}
+	}
 
 }

@@ -39,9 +39,11 @@ public class RolService implements IRolService {
 		try {
 			return rolRepository.getRolesByPerfil(perfil);
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api obteniendo roles by perfil {} - {} - {}",perfil,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general obteniendo roles by perfil {} - {} - {}",perfil, e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -51,9 +53,26 @@ public class RolService implements IRolService {
 		try {
 			return rolRepository.getRolesByUsuario(usuario);
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api obteniendo roles by usuario {} - {} - {}",usuario,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general obteniendo roles by usuario {} - {} - {}",usuario, e.getMessage(), e);
+			throw e;
+		}
+
+	}
+	
+	@Override
+	public List<Rol> getRolesByUsuarioModulo(String usuario,int modulo) throws ApiException, Exception {
+		logger.info("obteniendo roles del usuario - modulo {} - {}", usuario, modulo);
+		try {
+			return rolRepository.getRolesByUsuarioModulo(usuario,modulo);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo roles by usuario-modulo {} - {} - {} - {}",usuario,modulo,e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo roles by usuario {} - {} - {} - {}",usuario,modulo, e.getMessage(), e);
+			throw e;
 		}
 
 	}
@@ -63,9 +82,11 @@ public class RolService implements IRolService {
 		logger.info("obteniendo rol {}", id);
 		try {
 			return rolRepository.getEntity(id);
-		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+		}  catch (ApiException e) {
+			logger.error("Error api obteniendo rol {} - {} - {}",id,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
+			logger.error("Error general obteniendo rol {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -76,9 +97,11 @@ public class RolService implements IRolService {
 		try {
 			return rolRepository.getAllEntitys();
 		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+			logger.error("Error api obteniendo all roles {} - {}",e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general obteniendo all roles {} - {}", e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -95,8 +118,10 @@ public class RolService implements IRolService {
 				
 			return new PageInfo<Rol>(rptaData);
 		} catch (ApiException e) {
+			logger.error("Error api paginando roles {} - {}",e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			logger.error("Error general paginando roles {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -110,10 +135,13 @@ public class RolService implements IRolService {
 				throw new ValidatorException("Error de validación", validadorRol.getErrores());
 			rolRepository.saveEntity(entity);
 		}  catch (ValidatorException e) {
+			logger.error("Error api validacion guardando rol {} - {} - {} ",e.getMessage(),e.getErrores(), e);
 			throw e;
 		} catch (ApiException e) {
+			logger.error("Error api guardando rol {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general guardando rol {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -126,11 +154,14 @@ public class RolService implements IRolService {
 			if (validadorRol.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorRol.getErrores());
 			rolRepository.updateEntity(entity);
-		} catch (ValidatorException e) {
+		}catch (ValidatorException e) {
+			logger.error("Error api validacion actualizando rol {} - {} - {} ",e.getMessage(),e.getErrores(), e);
 			throw e;
 		} catch (ApiException e) {
+			logger.error("Error api actualizando rol {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general actualizando rol {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -140,10 +171,12 @@ public class RolService implements IRolService {
 		logger.info("eliminando rol {}", id);
 		try {
 			rolRepository.deleteEntity(id);
-		} catch (ApiException e) {
-			throw new ApiException(e.getMessage(), e);
+		}  catch (ApiException e) {
+			logger.error("Error api eliminando rol {} - {} - {}",id,e.getMessage(), e);
+			throw e;
 		} catch (Exception e) {
-			throw new Exception(e.getMessage(), e);
+			logger.error("Error general eliminando rol {} - {} - {}",id, e.getMessage(), e);
+			throw e;
 		}
 	}
 
@@ -167,8 +200,10 @@ public class RolService implements IRolService {
 				rpta = rolRepository.getAllEntitys();
 			
 		}catch (ApiException e) {
+			logger.error("Error api buscando rol {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general buscando rol {} - {}",e.getMessage(), e);
 			throw e;
 		}
 		return rpta;

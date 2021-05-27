@@ -46,8 +46,10 @@ public class TarifaService implements ITarifaService {
 				
 			return new PageInfo<Tarifa>(rptaData);
 		} catch (ApiException e) {
+			logger.error("Error api paginando tarifas  {} - {}",e.getMessage(), e);
 			throw e;
-		}catch (Exception e) {
+		} catch (Exception e) {
+			logger.error("Error general paginando tarifas  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -61,9 +63,11 @@ public class TarifaService implements ITarifaService {
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api guardando tarifas  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general guardando tarifas  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -75,9 +79,11 @@ public class TarifaService implements ITarifaService {
 			if (validadorTarifa.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTarifa.getErrores());
 			repository.updateEntity(entity);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api actualizando tarifa  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general actualizando tarifa  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -86,9 +92,11 @@ public class TarifaService implements ITarifaService {
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
 			repository.deleteEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api eliminando tarifa {} - {} - {}",id,e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general eliminando tarifa {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -114,8 +122,10 @@ public class TarifaService implements ITarifaService {
 				rpta = repository.getAllEntitys();
 			
 		}catch (ApiException e) {
+			logger.error("Error api buscando tarifa  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error general buscando tarifa  {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
@@ -125,9 +135,11 @@ public class TarifaService implements ITarifaService {
 	public Tarifa getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo tarifa {} - {} - {}",id,e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general obteniendo tarifa {} - {} - {}",id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -136,9 +148,11 @@ public class TarifaService implements ITarifaService {
 	public List<Tarifa> getAllEntitys() throws ApiException, Exception {
 		try {
 			return repository.getAllEntitys();
-		} catch (ApiException e) {
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo all tarifas {} - {}",e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
+			logger.error("Error general obteniendo al tarifas {} - {}",e.getMessage(), e);
 			throw e;
 		}
 	}
