@@ -8,25 +8,28 @@
 	<resultMap id="RolResultMap" type="Rol" />
 
 	<select id="getRolesByPerfil" resultMap="RolResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
-		A.descripcion
+		A.descripcion,
+		A.modulos_codigo,
+		A.estado
 		from roles A
 		inner join perfiles_roles B on A.codigo = B.roles_codigo
 		where B.perfiles_codigo = #{codigoPerfil} and A.estado = 1
 	</select>
 	
 	<select id="getEntity" resultMap="RolResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
-		A.modulos_codigo
+		A.modulos_codigo,
+		A.estado
 		from roles A
 		where A.codigo = #{codigo}
 	</select>
 	
 	<select id="getAllEntitys" resultMap="RolResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
@@ -35,7 +38,7 @@
 	</select>
 	
 	<select id="pagingEntitys" resultMap="RolResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
@@ -43,7 +46,7 @@
 		from roles A
 		<where>
 			<if test="search != null">
-				CONCAT(A.nombre,' ',A.descripcion) LIKE CONCAT('%',#{search},'%')
+				CONCAT(A.nombre) LIKE CONCAT('%',#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null">
@@ -52,7 +55,7 @@
 	</select>
 	
 	<select id="getRolesByUsuario" resultMap="RolResultMap">
-		select C.codigo,
+		select C.id,
 		C.nombre,
 		C.descripcion,
 		C.modulos_codigo,
