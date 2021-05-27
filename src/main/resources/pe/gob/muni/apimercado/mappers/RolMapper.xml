@@ -14,7 +14,7 @@
 		A.modulos_codigo,
 		A.estado
 		from roles A
-		inner join perfiles_roles B on A.codigo = B.roles_codigo
+		inner join perfiles_roles B on A.id = B.roles_codigo
 		where B.perfiles_codigo = #{codigoPerfil} and A.estado = 1
 	</select>
 	
@@ -25,7 +25,7 @@
 		A.modulos_codigo,
 		A.estado
 		from roles A
-		where A.codigo = #{codigo}
+		where A.id = #{codigo}
 	</select>
 	
 	<select id="getAllEntitys" resultMap="RolResultMap">
@@ -62,7 +62,7 @@
 		C.estado
 		from usuarios A
 		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
-		inner join roles C on C.codigo = B.roles_codigo
+		inner join roles C on C.id = B.roles_codigo
 		where A.usuario = #{usuario} and C.estado = 1
 	</select>
 	
@@ -74,7 +74,7 @@
     <delete id="deleteEntity">
      Update roles
       set estado = 0
-      where codigo = #{codigoRol}
+      where id = #{codigoRol}
     </delete>
     
     <update id="updateEntity" parameterType="Rol" >
@@ -83,7 +83,7 @@
           descripcion = #{descripcion},
           modulos_codigo = #{modulos_codigo},
           estado = #{estado}
-      where codigo = #{codigo}
+      where id = #{codigo}
     </update>
 	
 </mapper>
