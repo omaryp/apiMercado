@@ -12,38 +12,63 @@
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
-		A.estado
-		from roles A
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
+		from
+		roles A
 		inner join perfiles_roles B on A.id = B.roles_codigo
-		where B.perfiles_codigo = #{codigoPerfil} and A.estado = 1
+		where
+		B.perfiles_codigo = #{codigoPerfil} and A.estado = 1
 	</select>
-	
+
 	<select id="getEntity" resultMap="RolResultMap">
 		select A.id,
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
-		A.estado
-		from roles A
-		where A.id = #{codigo}
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
+		from
+		roles A
+		where A.id =
+		#{codigo}
 	</select>
-	
+
 	<select id="getAllEntitys" resultMap="RolResultMap">
 		select A.id,
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
-		A.estado
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
 		from roles A
 	</select>
-	
+
 	<select id="pagingEntitys" resultMap="RolResultMap">
 		select A.id,
 		A.nombre,
 		A.descripcion,
 		A.modulos_codigo,
-		A.estado
-		from roles A
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
+		from roles
+		A
 		<where>
 			<if test="search != null">
 				CONCAT(A.nombre) LIKE CONCAT('%',#{search},'%')
@@ -53,49 +78,73 @@
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>
-	
+
 	<select id="getRolesByUsuario" resultMap="RolResultMap">
 		select C.id,
 		C.nombre,
 		C.descripcion,
 		C.modulos_codigo,
-		C.estado
+		C.estado,
+		C.fecha_creacion,
+		C.creado_por,
+		C.fecha_modifcacion,
+		C.modifcado_por,
+		C.eliminado_por
 		from usuarios A
-		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
-		inner join roles C on C.id = B.roles_codigo
-		where A.usuario = #{usuario} and C.estado = 1
+		inner join
+		perfiles_roles B on A.perfiles_codigo =
+		B.perfiles_codigo
+		inner join
+		roles C on C.id = B.roles_codigo
+		where
+		A.usuario = #{usuario} and
+		C.estado = 1
 	</select>
-	
+
 	<select id="getRolesByUsuarioModulo" resultMap="RolResultMap">
-		select C.id,
+		select distinct
+		C.id,
 		C.nombre,
 		C.descripcion,
 		C.modulos_codigo,
-		C.estado
+		C.estado,
+		C.fecha_creacion,
+		C.creado_por,
+		C.fecha_modifcacion,
+		C.modifcado_por,
+		C.eliminado_por
 		from usuarios A
-		inner join perfiles_roles B on A.perfiles_codigo = B.perfiles_codigo
+		inner join perfiles_roles B on A.perfiles_codigo =
+		B.perfiles_codigo
 		inner join roles C on C.id = B.roles_codigo
-		where A.usuario = #{usuario} and C.estado = 1 and C.modulos_codigo = #{modulo}
+		where
+		A.usuario =
+		#{usuario} and C.estado = 1 and C.modulos_codigo =
+		#{modulo}
 	</select>
-	
-	<insert id="saveEntity" parameterType="Rol" >
-        insert into roles(nombre,descripcion,modulos_codigo,estado) 
-		values(#{nombre},#{descripcion},#{modulos_codigo},#{estado})
-    </insert>
-    
-    <delete id="deleteEntity">
-     Update roles
-      set estado = 0
-      where id = #{codigoRol}
-    </delete>
-    
-    <update id="updateEntity" parameterType="Rol" >
-      Update roles
-      set nombre = #{nombre} ,
-          descripcion = #{descripcion},
-          modulos_codigo = #{modulos_codigo},
-          estado = #{estado}
-      where id = #{codigo}
-    </update>
-	
+
+	<insert id="saveEntity" parameterType="Rol">
+		insert into
+		roles(nombre,descripcion,modulos_codigo,estado,fecha_creacion,creado_por,fecha_modifcacion,modifcado_por,eliminado_por)
+		values(#{nombre},#{descripcion},#{modulos_codigo},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
+	</insert>
+
+	<delete id="deleteEntity">
+		Update roles
+		set estado = 0
+		where id = #{codigoRol}
+	</delete>
+
+	<update id="updateEntity" parameterType="Rol">
+		Update roles
+		set
+		nombre = #{nombre} ,
+		descripcion = #{descripcion},
+		modulos_codigo = #{modulos_codigo},
+		estado = #{estado},
+		fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por}
+		where id = #{id}
+	</update>
+
 </mapper>

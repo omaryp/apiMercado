@@ -9,55 +9,75 @@
 	<resultMap id="RolPerfilResultMap" type="RolPerfil" />
 
 	<select id="getEntity" resultMap="PerfilResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
-		A.estado
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
 		from perfiles A
-		where A.codigo = #{codigoPerfil}
+		where A.id = #{codigoPerfil}
 	</select>
 
 	<select id="getAllEntitys" resultMap="PerfilResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
-		A.estado
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
 		from perfiles A
 		where A.estado = 1
 	</select>
 
 	<insert id="saveEntity" parameterType="Perfil">
-		insert into perfiles(nombre,descripcion,estado)
-		values(#{nombre},#{descripcion},#{estado})
+		insert into perfiles(nombre,descripcion,estado,fecha_creacion,creado_por,fecha_modifcacion,modifcado_por,eliminado_por)
+		values(#{nombre},#{descripcion},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
 
 	<insert id="guardarRolesPerfil" parameterType="RolPerfil">
-		insert into perfiles_roles(codigoPerfil,codigoRol)
-		values(#{codigoPerfil},#{codigoRol})
+		insert into perfiles_roles(perfiles_codigo,roles_codigo)
+		values(#{perfiles_codigo},#{roles_codigo})
 	</insert>
 
 	<delete id="deleteEntity">
 		Update perfiles
 		set estado = 0
-		where codigo = #{codigoPerfil}
+		where id = #{codigoPerfil}
 
 	</delete>
 
 	<update id="updateEntity" parameterType="Perfil">
 		Update perfiles
-		set nombre = #{nombre} ,descripcion = #{descripcion},estado = #{estado}
-		where codigo = #{codigo}
+		set 
+		nombre = #{nombre},
+		descripcion = #{descripcion},
+		estado = #{estado},
+		fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por}
+		where id = #{id}
 	</update>
 	
 	<select id="pagingEntitys" resultMap="PerfilResultMap">
-		select A.codigo,
+		select A.id,
 		A.nombre,
 		A.descripcion,
-		A.estado
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
 		from perfiles A
 		<where>
 			<if test="search != null">
-				CONCAT(A.nombre,' ',A.descripcion) LIKE CONCAT('%',#{search},'%')
+				CONCAT(A.nombre) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null">

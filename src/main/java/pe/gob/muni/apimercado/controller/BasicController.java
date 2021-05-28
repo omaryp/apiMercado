@@ -59,6 +59,7 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 		logger.info("Obteniendo entidades por filtro");
 		try {
 			Object rpta = service.searchEntity(params);
+			if (null != null) return respuestaApi(rpta, "Recurso no encontrado", ERROR_AL_PROCESAR_PETICION, HttpStatus.NOT_FOUND);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
 			logger.error("Error al procesar peticion get - {} - {}",e.getMessage(),e);

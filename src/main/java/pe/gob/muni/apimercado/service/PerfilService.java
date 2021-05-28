@@ -145,8 +145,8 @@ public class PerfilService implements IPerfilService {
 		try {
 			for (Rol rol : roles) {
 				RolPerfil rolPef = new RolPerfil();
-				rolPef.setCodigoPerfil(perfil);
-				rolPef.setCodigoRol(rol.getId());
+				rolPef.setPerfiles_codigo(perfil);
+				rolPef.setRoles_codigo(rol.getId());
 				repository.guardarRolesPerfil(rolPef);
 			}
 		} catch (ApiException e) {

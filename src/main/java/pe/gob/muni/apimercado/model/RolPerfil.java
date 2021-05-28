@@ -2,20 +2,20 @@ package pe.gob.muni.apimercado.model;
 
 public class RolPerfil{
 
-	private int codigoPerfil;
-	private int codigoRol;
+	private int perfiles_codigo;
+	private int roles_codigo;
 	
-	public int getCodigoPerfil() {
-		return codigoPerfil;
+	public int getPerfiles_codigo() {
+		return perfiles_codigo;
 	}
-	public void setCodigoPerfil(int codigoPerfil) {
-		this.codigoPerfil = codigoPerfil;
+	public void setPerfiles_codigo(int perfiles_codigo) {
+		this.perfiles_codigo = perfiles_codigo;
 	}
-	public int getCodigoRol() {
-		return codigoRol;
+	public int getRoles_codigo() {
+		return roles_codigo;
 	}
-	public void setCodigoRol(int codigoRol) {
-		this.codigoRol = codigoRol;
+	public void setRoles_codigo(int roles_codigo) {
+		this.roles_codigo = roles_codigo;
 	}
 	
 }
