@@ -31,7 +31,7 @@ public class Persona extends BasicEntity {
 	@NotNull(message="Atributo direccion no debe ser nulo.")
 	private String direccion;
 	
-	private Date fechaNac;
+	private Date fecha_nacimiento;
 	
 	@NotBlank(message="Atributo número de documento no debe ser vacío.")
 	@NotNull(message="Atributo número de documento no debe ser nulo.")
@@ -79,12 +79,12 @@ public class Persona extends BasicEntity {
 		this.direccion = direccion;
 	}
 
-	public Date getFechaNac() {
-		return fechaNac;
+	public Date getFecha_nacimiento() {
+		return fecha_nacimiento;
 	}
 
-	public void setFechaNac(Date fechaNac) {
-		this.fechaNac = fechaNac;
+	public void setFecha_nacimiento(Date fecha_nacimiento) {
+		this.fecha_nacimiento = fecha_nacimiento;
 	}
 
 	public String getDni() {

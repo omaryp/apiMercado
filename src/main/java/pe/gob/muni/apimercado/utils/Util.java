@@ -3,6 +3,7 @@ package pe.gob.muni.apimercado.utils;
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
 import java.io.PrintWriter;
@@ -75,6 +76,24 @@ public class Util {
 		} catch (Exception e) {
 			logger.error("Error al enviar rpta autenticación {} - {}",e.getMessage(),e);
 		}
+    }
+    
+    public static <T extends Persona> Persona getPersona(T entity) {
+    	Persona persona = new Persona();
+		persona.setApellidos(entity.getApellidos());
+		persona.setCorreo(entity.getCorreo());
+		persona.setCreado_por(entity.getCreado_por());
+		persona.setDireccion(entity.getDireccion());
+		persona.setDni(entity.getDni());
+		persona.setEliminado_por(entity.getEliminado_por());
+		persona.setEstado(entity.getEstado());
+		persona.setFecha_creacion(entity.getFecha_creacion());
+		persona.setFecha_modificacion(entity.getFecha_modifcacion());
+		persona.setFecha_nacimiento(entity.getFecha_nacimiento());
+		persona.setModificado_por(entity.getModificado_por());
+		persona.setNombres(entity.getNombres());
+		persona.setTelefono(entity.getTelefono());
+		return persona;
     }
     
 }

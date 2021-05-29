@@ -6,8 +6,8 @@ import static pe.gob.muni.apimercado.utils.Constants.POR_USUARIO;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
+import static pe.gob.muni.apimercado.utils.Util.getPersona;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -23,12 +23,12 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import pe.gob.muni.apimercado.model.Modulo;
 import pe.gob.muni.apimercado.model.Perfil;
+import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
-import pe.gob.muni.apimercado.model.dto.ModuloDto;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.repository.UsuarioRespository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
@@ -45,8 +45,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	private UsuarioRespository repository;
 	
 	@Autowired
-	private IModuloService modService;
-
+	private PersonaRepository perRepository;
+	
 	@Autowired
 	private IRolService rolService;
 
@@ -73,13 +73,13 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			}
 			logger.info("Cargando usuario {}", Util.objectToJson(user));
 			roles = rolService.getRolesByUsuario(username);
-			perfil = perfilService.getEntity(user.getCodigoPerfil());
+			perfil = perfilService.getEntity(user.getPerfiles_codigo());
 
 			userDto = new UsuarioDto(user.getUsuario(), user.getPassword(), user.isActivo(), true, true, true, roles);
 			userDto.setNombres(user.getNombres());
 			userDto.setApellidos(user.getApellidos());
 			userDto.setCorreo(user.getCorreo());
-			userDto.setPerfil(user.getCodigoPerfil());
+			userDto.setPerfil(user.getPerfiles_codigo());
 			userDto.setNombrePerfil(perfil.getNombre());
 		} catch (Exception e) {
 			logger.error("Error al autenticar {}", e);
@@ -153,12 +153,19 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Override
 	public void saveEntity(Usuario entity) throws ApiException, Exception, ValidatorException {
+		Persona padre = null;
 		try {
 			validadorUsuario.validarModelo(entity);
 			if (validadorUsuario.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
+			
+			padre = getPersona(entity);
+			perRepository.saveEntity(padre);
+			
+			entity.setPersonas_id(padre.getId());
 			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
 			repository.saveEntity(entity);
+			
 		}catch (ValidatorException e) {
 			throw e;
 		}catch (ApiException e) {
@@ -215,7 +222,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 					case RESPONSE_OBJECT:
 						switch (busqueda) {
 							case POR_USUARIO:
-								usuario = params.get("user");
+								usuario = params.get("user").toUpperCase();
 								logger.info("Buscando usuario por username - {}", usuario);
 								rpta = repository.findByUsername(usuario);
 								break;

@@ -91,7 +91,7 @@ public class PerfilService implements IPerfilService {
 			validadorEntity.validarModelo(entity);
 			if (validadorEntity.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
-			repository.updateEntity(entity);
+			repository.saveEntity(entity);
 		} catch (ValidatorException e) {
 			logger.error("Error api validación guardando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);
 			throw e;
@@ -164,13 +164,13 @@ public class PerfilService implements IPerfilService {
 		try {
 			if(!params.isEmpty()) {
 				int tipo = Integer.parseInt(params.get("tipo"));
-				int valor = Integer.parseInt(params.get("valor"));
 				switch (tipo) {
 					case RESPONSE_LIST:
 						//colocar funcionalidad  de ser necesario
 						break;
 
 					case RESPONSE_OBJECT:
+						int valor = Integer.parseInt(params.get("valor"));
 						rpta = repository.getEntity(valor);
 						break;
 				}

@@ -7,7 +7,9 @@
 	
 	<resultMap id="PersonaResultMap" type="Persona" />
 	
-	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap"/>
+	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap">
+		<id property="idUsuario" column="id"/>	
+	</resultMap>
 
 	<select id="findByUsername" resultMap="UsuarioResultMap">
 		select A.id,

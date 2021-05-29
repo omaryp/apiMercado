@@ -23,7 +23,7 @@ public class Usuario extends Persona{
 	@Min(value=1, message="Atributo código de perfil debe ser != 0")
 	private int perfiles_codigo;
 	
-	private int persona_id;
+	private int personas_id;
 	
 	private boolean activo;
 	
@@ -60,20 +60,12 @@ public class Usuario extends Persona{
 		this.fechaUltAcc = fechaUltAcc;
 	}
 
-	public int getCodigoPerfil() {
-		return perfiles_codigo;
+	public int getPersonas_id() {
+		return personas_id;
 	}
 
-	public int getPersona_id() {
-		return persona_id;
-	}
-
-	public void setPersona_id(int persona_id) {
-		this.persona_id = persona_id;
-	}
-
-	public void setCodigoPerfil(int codigoPerfil) {
-		this.perfiles_codigo = codigoPerfil;
+	public void setPersonas_id(int personas_id) {
+		this.personas_id = personas_id;
 	}
 
 	public boolean isActivo() {
@@ -83,6 +75,13 @@ public class Usuario extends Persona{
 	public void setActivo(boolean activo) {
 		this.activo = activo;
 	}
-	
+
+	public int getPerfiles_codigo() {
+		return perfiles_codigo;
+	}
+
+	public void setPerfiles_codigo(int perfiles_codigo) {
+		this.perfiles_codigo = perfiles_codigo;
+	}
 	
 }
