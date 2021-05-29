@@ -107,8 +107,8 @@ public class BasicController<T extends BasicEntity,E extends IBasicService<T>>{
 		}
 	}
 	
-	@DeleteMapping
-	public ResponseEntity<?> deleteEntity(@RequestBody int codigo) {
+	@DeleteMapping(path = "/{codigo}")
+	public ResponseEntity<?> deleteEntity(@RequestParam int codigo) {
 		logger.info("Se recibio código  - {}",codigo);
 		try {
 			service.deleteEntity(codigo);

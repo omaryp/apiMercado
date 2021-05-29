@@ -4,7 +4,7 @@ package pe.gob.muni.apimercado.utils.dto;
 public class RespuestaApi<T> {
 	
 	private int codigo;
-	private String mensaje;
+	private String message;
 	private T contenido;
 	
 	public int getCodigo() {
@@ -13,11 +13,11 @@ public class RespuestaApi<T> {
 	public void setCodigo(int codigo) {
 		this.codigo = codigo;
 	}
-	public String getMensaje() {
-		return mensaje;
+	public String getMessage() {
+		return message;
 	}
-	public void setMensaje(String mensaje) {
-		this.mensaje = mensaje;
+	public void setMessage(String message) {
+		this.message = message;
 	}
 	public T getContenido() {
 		return contenido;

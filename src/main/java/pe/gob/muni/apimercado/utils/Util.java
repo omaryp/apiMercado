@@ -58,7 +58,7 @@ public class Util {
     public static <T> ResponseEntity<RespuestaApi<T>> respuestaApi(T contenido,String mensaje,int codigo,HttpStatus status) {
     	RespuestaApi<T> response = new RespuestaApi<T>();
 		response.setCodigo(codigo);
-		response.setMensaje(mensaje);
+		response.setMessage(mensaje);
         response.setContenido(contenido);
 		return new ResponseEntity<RespuestaApi<T>>(response,status);
     }
@@ -69,7 +69,7 @@ public class Util {
     		response.setContentType("application/json");
             RespuestaApi<T> rpta = new RespuestaApi<T>();
     		rpta.setCodigo(codigo);
-    		rpta.setMensaje(mensaje);
+    		rpta.setMessage(mensaje);
     		rpta.setContenido(contenido);
     		response.setStatus(status.value());
     		writer.println(objectToJson(rpta));
