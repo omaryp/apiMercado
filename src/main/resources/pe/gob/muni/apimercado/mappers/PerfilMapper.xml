@@ -80,7 +80,7 @@
 				CONCAT(A.nombre) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != null">
+		<if test="sort != ''">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

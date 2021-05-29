@@ -67,15 +67,14 @@
 		A.fecha_modifcacion,
 		A.modifcado_por,
 		A.eliminado_por
-		from roles
-		A
+		from roles A
 		<where>
 			<if test="search != null">
-				CONCAT(A.nombre) LIKE CONCAT('%',#{search},'%')
+				CONCAT(A.nombre) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != null">
-			ORDER BY ${sort} ${order}
+		<if test="sort != ''">
+			ORDER BY ${sort}  ${order}
 		</if>
 	</select>
 

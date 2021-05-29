@@ -2,14 +2,20 @@ package pe.gob.muni.apimercado.utils.dto;
 
 public class PageTable {
 	
-	public String search;
+	private int page;
+	private String search;
 	private String sort;
 	private String order;
 	private int offset = 0;
 	private int limit = 10;
 	
+	
 	public int getPage() {
-		return (offset + limit) / limit;
+		return page;
+	}
+
+	public void setPage(int page) {
+		this.page = page;
 	}
 
 	public String getSearch() {
