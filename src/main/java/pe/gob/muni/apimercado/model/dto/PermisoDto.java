@@ -5,10 +5,10 @@ import java.util.List;
 import pe.gob.muni.apimercado.model.Modulo;
 import pe.gob.muni.apimercado.model.Rol;
 
-public class ModuloDto {
+public class PermisoDto {
 
 	private Modulo modulo;
-	private List<Rol> authorities;
+	private List<Rol> roles;
 	
 	public Modulo getModulo() {
 		return modulo;
@@ -16,12 +16,11 @@ public class ModuloDto {
 	public void setModulo(Modulo modulo) {
 		this.modulo = modulo;
 	}
-	public List<Rol> getAuthorities() {
-		return authorities;
+	public List<Rol> getRoles() {
+		return roles;
 	}
-	public void setAuthorities(List<Rol> authorities) {
-		this.authorities = authorities;
+	public void setRoles(List<Rol> roles) {
+		this.roles = roles;
 	}
-
 	
 }
