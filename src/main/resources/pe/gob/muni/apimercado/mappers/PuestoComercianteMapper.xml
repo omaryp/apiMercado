@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.IPuestoMapper">
+
+	<resultMap id="PuestoComercianteResultMap"
+		type="PuestoComerciante" />
+
+
+	<select id="getAllEntitys" resultMap="PuestoComercianteResultMap">
+		select
+		puestos_mercados_id,
+		puestos_id,
+		comerciantes_id,
+		correlativo,
+		fecha_fin,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		from puestos_comerciantes
+	</select>
+
+	<select id="getAllPuestosActive" resultMap="PuestoComercianteResultMap">
+		select
+		puestos_mercados_id,
+		puestos_id,
+		comerciantes_id,
+		correlativo,
+		fecha_fin,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		from puestos_comerciantes
+		where estado = 1
+	</select>
+
+	<select id="getAllPuestosMercado" resultMap="PuestoResultMap" parameterType="int">
+		select
+		puestos_mercados_id,
+		puestos_id,
+		comerciantes_id,
+		correlativo,
+		fecha_fin,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		from puestos_comerciantes
+		where estado = 1 and puestos_mercados_id = #{id}
+	</select>
+
+	<insert id="saveEntity" parameterType="PuestoComerciante">
+		<selectKey keyProperty="correlativo" resultType="long" order="BEFORE">
+			select max(id) + 1 from puestos_comerciantes
+			where puestos_id = #{puestos_id} and comerciantes_id = #{comerciantes_id}
+		</selectKey>
+		insert into
+		puestos_comerciante(puestos_id,comerciantes_id,correlativo,fecha_fin,estado,fecha_modifcacion,modifcado_por,fecha_creacion,creado_por,eliminado_por)
+		values(#{puestos_id},#{comerciantes_id},#{correlativo},#{fecha_fin},#{estado},#{fecha_modifcacion},#{modifcado_por},#{fecha_creacion},#{creado_por},#{eliminado_por})
+	</insert>
+
+</mapper>

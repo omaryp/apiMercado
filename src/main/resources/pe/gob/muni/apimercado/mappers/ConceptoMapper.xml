@@ -69,10 +69,10 @@
 		from conceptos
 		<where>
 			<if test="search != null">
-				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+				descripcion LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != null">
+		<if test="sort != '' or sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

@@ -8,8 +8,10 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.getPersona;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -23,11 +25,14 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import pe.gob.muni.apimercado.model.Modulo;
 import pe.gob.muni.apimercado.model.Perfil;
 import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.PermisoDto;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.repository.ModuloRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.repository.UsuarioRespository;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -43,6 +48,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 
 	@Autowired
 	private UsuarioRespository repository;
+	
+	@Autowired
+	private ModuloRepository modRepository;
 	
 	@Autowired
 	private PersonaRepository perRepository;
@@ -81,11 +89,38 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			userDto.setCorreo(user.getCorreo());
 			userDto.setPerfil(user.getPerfiles_codigo());
 			userDto.setNombrePerfil(perfil.getNombre());
+			userDto.setModulos(getAuthorities(username, roles));
+			
 		} catch (Exception e) {
 			logger.error("Error al autenticar {}", e);
 			throw new UsernameNotFoundException("Error interno al iniciar session. "+e.getMessage(),e);
 		}
 		return userDto;
+	}
+	
+	private List<PermisoDto> getAuthorities(String usuario ,List<Rol> roles) throws ApiException, Exception{
+		final List<PermisoDto> permisos = new ArrayList<PermisoDto>();
+		List<Modulo> modUser = null;
+		Map<Integer, Modulo> modulos = null;
+		
+		try {
+			
+			modUser = modRepository.getModulosByUsuario(usuario);
+			modulos = modUser.stream().collect(Collectors.toMap(Modulo::getId, mod -> mod));
+			final Map<Integer, List<Rol>> rolModulo = roles.stream().collect(Collectors.groupingBy(Rol::getModulos_codigo));
+			modulos.forEach((key,modulo) -> {
+				PermisoDto permiso = new PermisoDto();
+				permiso.setModulo(modulo);
+				permiso.setRoles(rolModulo.get(key));
+				permisos.add(permiso);
+			});
+			
+		}catch (ApiException e) {
+			throw e;
+		}catch (Exception e) {
+			throw e;
+		}
+		return permisos;
 	}
 	
 	@Override

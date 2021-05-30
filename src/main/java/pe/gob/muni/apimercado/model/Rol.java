@@ -21,6 +21,12 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 	@Min(value=1, message="Atributo módulo debe ser != 0")
 	@Digits(fraction = 0, integer = 11, message="Atributo módulo debe contener solo números")
 	private int modulos_codigo;
+	
+	@NotBlank(message="Atributo nombre Rol no debe ser vacío.")
+	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
+	private String icono;
+	
+	private boolean menu;
 
 	public String getNombre() {
 		return nombre;
@@ -50,6 +56,22 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 
 	public void setModulos_codigo(int modulos_codigo) {
 		this.modulos_codigo = modulos_codigo;
+	}
+
+	public String getIcono() {
+		return icono;
+	}
+
+	public void setIcono(String icono) {
+		this.icono = icono;
+	}
+
+	public boolean isMenu() {
+		return menu;
+	}
+
+	public void setMenu(boolean menu) {
+		this.menu = menu;
 	}
 
 	

@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -16,12 +17,15 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import pe.gob.muni.apimercado.model.Mercado;
+import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.ProcesoTicket;
 
 @Service
 public class TicketService implements ITicketService {
@@ -32,20 +36,29 @@ public class TicketService implements ITicketService {
 	private TicketRepository repository;
 
 	@Autowired
-	private Validador<Ticket> validadorTicket;
+	private IMercadoService merService;
 	
+	@Autowired
+	private IPuestoComercianteService pueService;
+
+	@Autowired
+	private Validador<Ticket> validadorTicket;
+
+	@Autowired
+	private Validador<ProcesoTicket> validadorProceso;
+
 	@Override
-	public PageInfo<Ticket> pagingEntitys(Map<String,String> params)throws ApiException, Exception {
-		logger.info("obteniendo tickets con los filtros {}.",objectToJson(params));
+	public PageInfo<Ticket> pagingEntitys(Map<String, String> params) throws ApiException, Exception {
+		logger.info("obteniendo tickets con los filtros {}.", objectToJson(params));
 		try {
 			List<Ticket> rptaData = null;
 			PageTable pagData = mapToObject(params, PageTable.class);
-			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
-			
+			PageHelper.startPage(pagData.getPage(), pagData.getLimit());
+
 			rptaData = repository.pagingEntitys(pagData);
-				
+
 			return new PageInfo<Ticket>(rptaData);
-		}catch (ApiException e) {
+		} catch (ApiException e) {
 			logger.error("Error api paginando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
@@ -61,10 +74,10 @@ public class TicketService implements ITicketService {
 			if (validadorTicket.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
 			repository.saveEntity(entity);
-		}catch (ValidatorException e) {
+		} catch (ValidatorException e) {
 			logger.error("Error api validando entidad ticket {} - {}", e.getMessage(), e.getErrores());
 			throw e;
-		}catch (ApiException e) {
+		} catch (ApiException e) {
 			logger.error("Error api guardando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
@@ -80,7 +93,7 @@ public class TicketService implements ITicketService {
 			if (validadorTicket.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
 			repository.updateEntity(entity);
-		}catch (ApiException e) {
+		} catch (ApiException e) {
 			logger.error("Error api actualizando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
@@ -93,11 +106,11 @@ public class TicketService implements ITicketService {
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
 			repository.deleteEntity(id);
-		}catch (ApiException e) {
-			logger.error("Error api eliminando entidades ticket {} - {} - {}",id, e.getMessage(), e);
+		} catch (ApiException e) {
+			logger.error("Error api eliminando entidades ticket {} - {} - {}", id, e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general eliminando entidades ticket {} - {} - {}",id, e.getMessage(), e);
+			logger.error("Error general eliminando entidades ticket {} - {} - {}", id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -107,21 +120,21 @@ public class TicketService implements ITicketService {
 		Object rpta = null;
 		int codigo = 0;
 		try {
-			if(!params.isEmpty()) {
+			if (!params.isEmpty()) {
 				int tipo = Integer.parseInt(params.get("tipo"));
 				switch (tipo) {
-					case RESPONSE_LIST:
-						//colocar aqui funcionalidad, si es necesaria
-						break;
-					case RESPONSE_OBJECT:
-						codigo = Integer.parseInt(params.get("codigo"));
-						rpta = repository.getEntity(codigo);
-						break;
+				case RESPONSE_LIST:
+					// colocar aqui funcionalidad, si es necesaria
+					break;
+				case RESPONSE_OBJECT:
+					codigo = Integer.parseInt(params.get("codigo"));
+					rpta = repository.getEntity(codigo);
+					break;
 				}
-			}else
+			} else
 				rpta = repository.getAllEntitys();
-			
-		}catch (ApiException e) {
+
+		} catch (ApiException e) {
 			logger.error("Error api buscando entidad ticket - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
@@ -135,11 +148,11 @@ public class TicketService implements ITicketService {
 	public Ticket getEntity(int id) throws ApiException, Exception {
 		try {
 			return repository.getEntity(id);
-		}catch (ApiException e) {
-			logger.error("Error api obteniendo entidad ticket {} - {} - {}",id, e.getMessage(), e);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo entidad ticket {} - {} - {}", id, e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general obteniendo entidad ticket {} - {} - {}",id, e.getMessage(), e);
+			logger.error("Error general obteniendo entidad ticket {} - {} - {}", id, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -148,11 +161,65 @@ public class TicketService implements ITicketService {
 	public List<Ticket> getAllEntitys() throws ApiException, Exception {
 		try {
 			return repository.getAllEntitys();
-		}catch (ApiException e) {
+		} catch (ApiException e) {
 			logger.error("Error api obteniendo entidades ticket - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general obteniendo entidades ticket - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public void generarTickets(ProcesoTicket params) throws ApiException, Exception {
+		List<Mercado> mercados;
+		try {
+			validadorProceso.validarModelo(params);
+			if (validadorProceso.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorProceso.getErrores());
+			if (params.getMercados_id() == 0) {
+				mercados = merService.getAllEntitys();
+				mercados.forEach((mercado) -> {
+					try {
+						procesarTickets(params);
+					} catch (Exception e) {
+						logger.error("Error al generar tickets");
+					}
+				});
+			} else
+				procesarTickets(params);
+		} catch (ApiException e) {
+			throw e;
+		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	public void procesarTickets(ProcesoTicket params) throws ApiException, Exception {
+		List<PuestoComerciante> puestos;
+		final List<Ticket> tickets = new ArrayList<Ticket>();	
+		try {
+			puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
+			puestos.forEach((puesto) -> {
+				Ticket nvoTicket = new Ticket();
+				nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
+				nvoTicket.setCorrelativo(puesto.getCorrelativo());
+				nvoTicket.setCreado_por(params.getCreado_por());
+				nvoTicket.setEliminado_por(0);
+				nvoTicket.setEstado(1);
+				nvoTicket.setFecha_creacion(params.getFechaProceso());
+				nvoTicket.setFecha_modificacion(null);
+				nvoTicket.setMercados_id(puesto.getMercados_id());
+				nvoTicket.setModificado_por(0);
+				nvoTicket.setNo_habido(false);
+				nvoTicket.setObservaciones("");
+				nvoTicket.setPuestos_id(puesto.getPuestos_id());
+				tickets.add(nvoTicket);
+			});
+			repository.saveAllTickets(tickets);
+		} catch (ApiException e) {
+			throw e;
+		} catch (Exception e) {
 			throw e;
 		}
 	}

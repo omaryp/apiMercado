@@ -1,6 +1,6 @@
 package pe.gob.muni.apimercado.model;
 
-public class RolPerfil{
+public class RolPerfil extends BasicEntity{
 
 	private int perfiles_codigo;
 	private int roles_codigo;

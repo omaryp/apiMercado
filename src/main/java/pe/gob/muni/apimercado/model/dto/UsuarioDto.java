@@ -1,12 +1,12 @@
 package pe.gob.muni.apimercado.model.dto;
 
 import java.util.Collection;
+import java.util.List;
 
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 
 public class UsuarioDto extends User{
-
 
 	private static final long serialVersionUID = 1L;
 	private String nombres;
@@ -14,6 +14,7 @@ public class UsuarioDto extends User{
 	private String correo;
 	private int perfil;
 	private String nombrePerfil;
+	private List<PermisoDto> modulos;
 	
 	public UsuarioDto(String username, String password, boolean enabled, boolean accountNonExpired,
 			boolean credentialsNonExpired, boolean accountNonLocked,
@@ -60,5 +61,13 @@ public class UsuarioDto extends User{
 	public void setNombrePerfil(String nombrePerfil) {
 		this.nombrePerfil = nombrePerfil;
 	}
-	
+
+	public List<PermisoDto> getModulos() {
+		return modulos;
+	}
+
+	public void setModulos(List<PermisoDto> modulos) {
+		this.modulos = modulos;
+	}
+
 }

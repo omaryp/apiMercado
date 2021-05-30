@@ -5,18 +5,25 @@
 
 <mapper namespace="pe.gob.muni.apimercado.mapper.ITicketMapper">
 
-	<resultMap id="TicketResultMap" type="Ticket" >
-		<result property="comerciantes_id" column="puestos_comerciantes_comerciantes_id"/>
-		<result property="puestos_id" column="puestos_comerciantes_puestos_id"/>
-		<result property="correlativo" column="puestos_comerciantes_correlativo"/>
+	<resultMap id="TicketResultMap" type="Ticket">
+		<result property="mercados_id"
+			column="puestos_comerciantes_puestos_mercados_id" />
+		<result property="comerciantes_id"
+			column="puestos_comerciantes_comerciantes_id" />
+		<result property="puestos_id"
+			column="puestos_comerciantes_puestos_id" />
+		<result property="correlativo"
+			column="puestos_comerciantes_correlativo" />
 	</resultMap>
 
 	<select id="getEntity" resultMap="TicketResultMap">
 		select id,
+		puestos_comerciantes_puestos_mercados_id,
 		puestos_comerciantes_comerciantes_id,
 		puestos_comerciantes_puestos_id,
 		puestos_comerciantes_correlativo,
-		habido,
+		no_habido,
+		observacion,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -25,13 +32,32 @@
 		eliminado_por
 		from tickets where id = #{id}
 	</select>
-	
+
 	<select id="getAllEntitys" resultMap="TicketResultMap">
 		select id,
+		puestos_comerciantes_puestos_mercados_id,
 		puestos_comerciantes_comerciantes_id,
 		puestos_comerciantes_puestos_id,
 		puestos_comerciantes_correlativo,
-		habido,
+		no_habido,
+		observacion,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from tickets
+	</select>
+	
+	<select id="getAllTicketMercado" resultMap="TicketResultMap">
+		select id,
+		puestos_comerciantes_puestos_mercados_id,
+		puestos_comerciantes_comerciantes_id,
+		puestos_comerciantes_puestos_id,
+		puestos_comerciantes_correlativo,
+		no_habido,
+		observacion,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -43,14 +69,35 @@
 
 	<insert id="saveEntity" parameterType="Ticket">
 		insert into tickets(
+		puestos_comerciantes_puestos_mercados_id,
 		puestos_comerciantes_comerciantes_id,
 		puestos_comerciantes_puestos_id,
 		puestos_comerciantes_correlativo,
-		habido,estado,fecha_creacion, creado_por, fecha_modifcacion,
+		no_habido,observaciones,estado,fecha_creacion, creado_por,
+		fecha_modifcacion,
 		modifcado_por,eliminado_por)
-		values(
-		#{comerciantes_id},#{puestos_id},#{correlativo},#{habido},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
-		#{modifcado_por},#{eliminado_por})
+		values(#{mercados_id},
+		#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
+		#{observaciones},#{estado},#{fecha_creacion},#{creado_por},
+		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
+	</insert>
+
+	<insert id="saveAllTickets" useGeneratedKeys="true"
+		keyProperty="id">
+		insert into tickets(
+		puestos_comerciantes_puestos_mercados_id,
+		puestos_comerciantes_comerciantes_id,
+		puestos_comerciantes_puestos_id,
+		puestos_comerciantes_correlativo,
+		no_habido,observaciones,estado,fecha_creacion, creado_por,
+		fecha_modifcacion,
+		modifcado_por,eliminado_por) values
+			<foreach item="item" collection="list" separator=",">
+				(#{mercados_id},
+				#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
+				#{observaciones},#{estado},#{fecha_creacion},#{creado_por},
+				#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
+			</foreach>
 	</insert>
 
 	<update id="deleteEntity">
@@ -62,14 +109,20 @@
 	<update id="updateEntity" parameterType="Ticket">
 		Update tickets
 		set
+		puestos_comerciantes_puestos_mercados_id =
+		#{puestos_comerciantes_puestos_mercados_id},
 		puestos_comerciantes_comerciantes_id = #{comerciantes_id},
 		puestos_comerciantes_puestos_id = #{partidas_id},
 		puestos_comerciantes_correlativo = #{correlativo},
-		habido = #{habido},
+		no_habido =
+		#{no_habido},
+		observaciones = #{observaciones},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
-		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
+		creado_por = #{creado_por},
+		fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por =
+		#{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 

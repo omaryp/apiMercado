@@ -88,7 +88,7 @@
 			 and  apellidos LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != ''">
+		<if test="sort != '' or sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

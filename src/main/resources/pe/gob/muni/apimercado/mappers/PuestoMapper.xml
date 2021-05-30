@@ -44,6 +44,25 @@
 		eliminado_por
 		from puestos 
 	</select>
+	
+	<select id="getAllPuestosMercado" resultMap="PuestoResultMap" parameterType="int">
+		select
+		id,
+		codigo,
+		mercados_id,
+		conceptos_id,
+		cobradores_id,
+		ubicacion_id,
+		giro_id,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		eliminado_por
+		from puestos 
+		where mercados_id = #{id}
+	</select>
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
@@ -95,18 +114,9 @@
 		modifcado_por,
 		eliminado_por
 		from puestos
-		<if test="sort != null">
+		<if test="sort != '' or sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>
-	
-	<insert id="asociarPuestoComerciante" parameterType="PuestoComerciante">
-		<selectKey keyProperty="id" resultType="long" order="BEFORE">
-            select max(id) + 1 from puestos_comerciantes 
-            where puestos_id = #{puestos_id} and comerciantes_id = #{comerciantes_id}  
-        </selectKey>
-        insert into puestos_comerciante(puestos_id,comerciantes_id,correlativo,fecha_fin,estado,fecha_modifcacion,modifcado_por,fecha_creacion,creado_por,eliminado_por)
-        values(#{puestos_id},#{comerciantes_id},#{correlativo},#{fecha_fin},#{estado},#{fecha_modifcacion},#{modifcado_por},#{fecha_creacion},#{creado_por},#{eliminado_por})
-	</insert>
 
 </mapper>

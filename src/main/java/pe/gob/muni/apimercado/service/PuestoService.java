@@ -29,10 +29,14 @@ public class PuestoService implements IPuestoService {
 	private final Logger logger = LogManager.getLogger(this.getClass());
 
 	@Autowired
+	private IPuestoComercianteService pcService;	
+	@Autowired
 	private PuestoRepository repository;
 
 	@Autowired
 	private Validador<Puesto> validadorPuesto;
+	@Autowired
+	private Validador<PuestoComerciante> validadorPuestoC;
 	
 	@Override
 	public PageInfo<Puesto> pagingEntitys(Map<String, String> params)
@@ -132,6 +136,8 @@ public class PuestoService implements IPuestoService {
 		}
 		return rpta;
 	}
+	
+
 
 	@Override
 	public Puesto getEntity(int id) throws ApiException, Exception {
@@ -160,14 +166,33 @@ public class PuestoService implements IPuestoService {
 	}
 
 	@Override
-	public void asociarPuestoComerciante(PuestoComerciante puesto) throws ApiException {
+	public void asociarPuestoComerciante(PuestoComerciante puestoC) throws ValidatorException,ApiException,Exception {
 		try {
-			repository.asociarPuestoComerciante(puesto);
+			validadorPuestoC.validarModelo(puestoC);
+			if (validadorPuestoC.isHayErrores())
+				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
+			pcService.saveEntity(puestoC);
+		}catch (ValidatorException e) {
+			logger.error("Error api validando puesto comerciante {} - {}", e.getMessage(), e);
+			throw e;
 		}catch (ApiException e) {
 			logger.error("Error api asociando puesto comerciante {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general asociando puesto comerciante {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public List<Puesto> getAllPuestosMercado(int idMercado) throws ApiException {
+		try {
+			return repository.getAllPuestosMercado(idMercado);
+		}catch (ApiException e) {
+			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obetener puestos por mercado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
