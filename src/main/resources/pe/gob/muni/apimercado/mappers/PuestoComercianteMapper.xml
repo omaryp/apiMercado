@@ -40,7 +40,7 @@
 		where estado = 1
 	</select>
 
-	<select id="getAllPuestosMercado" resultMap="PuestoResultMap" parameterType="int">
+	<select id="getAllPuestosMercado" resultMap="PuestoComercianteResultMap" parameterType="int">
 		select
 		puestos_mercados_id,
 		puestos_id,
