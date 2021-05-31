@@ -3,7 +3,6 @@ package pe.gob.muni.apimercado.model;
 import java.util.Date;
 
 import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 
 public class BasicEntity {
 	

@@ -45,7 +45,7 @@
 		insert into perfiles_roles(perfiles_codigo,roles_codigo)
 		values
 		<foreach item="item" collection="list" separator=",">
-			values(#{perfiles_codigo},#{roles_codigo})
+			(#{item.perfiles_codigo},#{item.roles_codigo})
 		</foreach>
 	</insert>
 
