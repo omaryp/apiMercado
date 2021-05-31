@@ -56,7 +56,7 @@
 	</update>
 	
 	<delete id="deleteRolPerfil">
-		delete perfiles_roles
+		delete from perfiles_roles
 		where roles_codigo = #{roles_codigo} and perfiles_codigo = #{perfiles_codigo}
 	</delete>
 
