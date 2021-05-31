@@ -131,7 +131,7 @@
 				CONCAT(apellidos) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != '' or sort != null">
+		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

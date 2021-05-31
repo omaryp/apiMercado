@@ -112,7 +112,7 @@
 		modifcado_por,
 		eliminado_por
 		from puestos
-		<if test="sort != '' or sort != null">
+		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

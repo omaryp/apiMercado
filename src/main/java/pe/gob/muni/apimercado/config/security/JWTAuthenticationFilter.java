@@ -93,8 +93,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 				jwt.setUser(cargaNuevoUsuario(user));
 				jwt.setToken(token);
+				respuestaApi(jwt, "Transacción OK", TRANSACCION_OK, HttpStatus.OK, response);
 			}
-			respuestaApi(jwt, "Transacción OK", TRANSACCION_OK, HttpStatus.OK, response);
+			
 		} catch (Exception e) {
 			respuestaApi(null, "Ocurrió un error interno en la aplicación", ERROR_INTERNO,
 					HttpStatus.INTERNAL_SERVER_ERROR, response);

@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ public class MercadoService implements IMercadoService {
 			validadorMercado.validarModelo(entity);
 			if (validadorMercado.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorMercado.getErrores());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validando entidad mercado {} - {}", e.getMessage(), e.getErrores());

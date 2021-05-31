@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -91,6 +92,7 @@ public class PerfilService implements IPerfilService {
 			validadorEntity.validarModelo(entity);
 			if (validadorEntity.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		} catch (ValidatorException e) {
 			logger.error("Error api validación guardando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);

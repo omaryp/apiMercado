@@ -73,7 +73,7 @@
 				CONCAT(A.nombre) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
-		<if test="sort != '' or sort != 'null'">
+		<if test="sort != '' and sort != null">
 			ORDER BY ${sort}  ${order}
 		</if>
 	</select>
@@ -117,6 +117,7 @@
 		B.perfiles_codigo
 		inner join roles C on C.id = B.roles_codigo
 		where
+		C.estado = 1 and
 		A.usuario =
 		#{usuario} and C.estado = 1 and C.modulos_codigo =
 		#{modulo}

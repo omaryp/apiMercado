@@ -22,8 +22,8 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 	@Digits(fraction = 0, integer = 11, message="Atributo módulo debe contener solo números")
 	private int modulos_codigo;
 	
-	@NotBlank(message="Atributo nombre Rol no debe ser vacío.")
-	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
+	@NotBlank(message="Atributo icono no debe ser vacío.")
+	@NotNull(message="Atributo icono no debe ser vacío.")
 	private String icono;
 	
 	private boolean menu;

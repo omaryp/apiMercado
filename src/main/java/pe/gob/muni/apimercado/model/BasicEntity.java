@@ -8,7 +8,6 @@ import javax.validation.constraints.NotNull;
 public class BasicEntity {
 	
 	private int id;
-	@NotNull(message="Atributo fecha_creacion no debe ser vacío.")
 	private Date fecha_creacion;
 	@Min(value=1, message="Atributo creado_por debe ser != 0")
 	private int creado_por;

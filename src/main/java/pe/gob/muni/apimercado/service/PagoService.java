@@ -3,6 +3,7 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -60,6 +61,7 @@ public class PagoService implements IPagoService {
 			validadorPago.validarModelo(entity);
 			if (validadorPago.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPago.getErrores());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;

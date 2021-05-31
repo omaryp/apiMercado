@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -61,6 +62,7 @@ public class PartidaService implements IPartidaService {
 			validadorPartida.validarModelo(entity);
 			if (validadorPartida.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPartida.getErrores());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error validacion api guardando entidades partida {} - {} - {}", e.getMessage(), e.getErrores(),e);

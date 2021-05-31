@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -171,6 +172,7 @@ public class PuestoService implements IPuestoService {
 			validadorPuestoC.validarModelo(puestoC);
 			if (validadorPuestoC.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
+			puestoC.setFecha_creacion(new Date());
 			pcService.saveEntity(puestoC);
 		}catch (ValidatorException e) {
 			logger.error("Error api validando puesto comerciante {} - {}", e.getMessage(), e);

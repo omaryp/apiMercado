@@ -69,7 +69,7 @@
 				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
 			</if>
 		</where>
-		<if test="sort != null">
+		<if test="sort != null and sort != ''">
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>

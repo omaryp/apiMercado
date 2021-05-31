@@ -1,5 +1,6 @@
 package pe.gob.muni.apimercado.service;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -133,6 +134,7 @@ public class RolService implements IRolService {
 			validadorRol.validarModelo(entity);
 			if (validadorRol.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorRol.getErrores());
+			entity.setFecha_creacion(new Date());
 			rolRepository.saveEntity(entity);
 		}  catch (ValidatorException e) {
 			logger.error("Error api validacion guardando rol {} - {} - {} ",e.getMessage(),e.getErrores(), e);
