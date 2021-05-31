@@ -54,6 +54,7 @@
 		A.modifcado_por,
 		A.eliminado_por
 		from roles A
+		where A.estado = 1
 	</select>
 
 	<select id="pagingEntitys" resultMap="RolResultMap">
