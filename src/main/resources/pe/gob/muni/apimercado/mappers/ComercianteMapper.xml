@@ -65,7 +65,7 @@
 		razon_social = #{razon_social}
 		where id = #{id}
 	</update>
-
+	
 	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select A.id,A.ruc,A.razon_social,A.personas_id,
 		B.id,

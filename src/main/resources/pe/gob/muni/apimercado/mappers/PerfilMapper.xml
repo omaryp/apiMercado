@@ -43,14 +43,21 @@
 
 	<insert id="guardarRolesPerfil" parameterType="RolPerfil">
 		insert into perfiles_roles(perfiles_codigo,roles_codigo)
-		values(#{perfiles_codigo},#{roles_codigo})
+		values
+		<foreach item="item" collection="list" separator=",">
+			values(#{perfiles_codigo},#{roles_codigo})
+		</foreach>
 	</insert>
 
-	<delete id="deleteEntity">
+	<update id="deleteRolPerfil">
 		Update perfiles
 		set estado = 0
 		where id = #{codigoPerfil}
-
+	</update>
+	
+	<delete id="deleteEntity">
+		Delete perfiles_roles
+		where roles_codigo = #{roles_codigo} and perfiles_codigo = #{perfiles_codigo}
 	</delete>
 
 	<update id="updateEntity" parameterType="Perfil">

@@ -22,8 +22,8 @@ public class Persona extends BasicEntity {
 	@NotNull(message="Atributo telefono no debe ser nulo.")
 	private String telefono;
 	
-	@NotBlank(message="Atributo usuario no debe ser vacío.")
-	@NotNull(message="Atributo usuario no debe ser nulo.")
+	@NotBlank(message="Atributo correo no debe ser vacío.")
+	@NotNull(message="Atributo correo no debe ser nulo.")
 	@Email(message="Atributo correo debe ser válido")
 	private String correo;
 	

@@ -17,7 +17,6 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Perfil;
-import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.RolPerfil;
 import pe.gob.muni.apimercado.repository.PerfilRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -142,20 +141,31 @@ public class PerfilService implements IPerfilService {
 	}
 	
 	@Override
-	public void guardarRolesPerfil(int perfil, List<Rol> roles) throws ApiException, Exception {
-		logger.info("guardando roles del perfil {}", perfil);
+	public void guardarRolesPerfil(List<RolPerfil> entitys) throws ApiException, Exception {
+		logger.info("guardando roles del perfil {}", entitys);
 		try {
-			for (Rol rol : roles) {
-				RolPerfil rolPef = new RolPerfil();
-				rolPef.setPerfiles_codigo(perfil);
-				rolPef.setRoles_codigo(rol.getId());
-				repository.guardarRolesPerfil(rolPef);
-			}
+			repository.guardarRolesPerfil(entitys);
 		} catch (ApiException e) {
 			logger.error("Error api guardando roles en perfil  {} - {}",e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general guardando roles en perfil    {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public void eliminarRolesPerfil(List<RolPerfil> entitys) throws ApiException, Exception {
+		logger.info("guardando roles del perfil {}", entitys);
+		try {
+			for (RolPerfil rolPerfil : entitys) {
+				repository.deleteRolPerfil(rolPerfil);
+			}
+		} catch (ApiException e) {
+			logger.error("Error api eliminando roles en perfil {} - {}",e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general eliminando roles en perfil {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
