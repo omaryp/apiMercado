@@ -11,6 +11,7 @@
 		select A.id,
 		A.nombre,
 		A.nombre_menu,
+		A.icono,
 		A.descripcion,
 		A.estado
 		from modulos A
@@ -20,6 +21,7 @@
 		select distinct D.id,
 		D.nombre,
 		D.nombre_menu,
+		A.icono,
 		D.descripcion,
 		D.estado
 		from usuarios A
