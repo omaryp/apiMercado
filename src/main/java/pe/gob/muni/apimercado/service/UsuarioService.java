@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.POR_CODIGO;
 import static pe.gob.muni.apimercado.utils.Constants.POR_USUARIO;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Constants.PERFIL_COBRADOR;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.getPersona;
 
@@ -25,6 +26,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import pe.gob.muni.apimercado.model.Cobrador;
 import pe.gob.muni.apimercado.model.Modulo;
 import pe.gob.muni.apimercado.model.Perfil;
 import pe.gob.muni.apimercado.model.Persona;
@@ -32,6 +34,7 @@ import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
 import pe.gob.muni.apimercado.model.dto.PermisoDto;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.repository.CobradorRepository;
 import pe.gob.muni.apimercado.repository.ModuloRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.repository.UsuarioRespository;
@@ -54,6 +57,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	
 	@Autowired
 	private PersonaRepository perRepository;
+	
+	@Autowired
+	private CobradorRepository cobRepository;
 	
 	@Autowired
 	private IRolService rolService;
@@ -201,6 +207,12 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
 			repository.saveEntity(entity);
 			
+			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
+				Cobrador cob = new Cobrador();
+				cob.setPersona_id(padre.getId());
+				cobRepository.saveEntity(cob);
+			}
+				
 		}catch (ValidatorException e) {
 			throw e;
 		}catch (ApiException e) {

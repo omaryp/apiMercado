@@ -1,15 +1,15 @@
 package pe.gob.muni.apimercado.model;
 
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
 
 public class Modulo extends BasicEntity {
 	
-
-	@NotBlank(message="Atributo nombre Rol no debe ser vacío.")
-	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
+	@NotBlank(message="Atributo nombre del modulo no debe ser vacío.")
 	private String nombre;
 	private String descripcion;
+	
+	@NotBlank(message="Atributo nombre menu del módulo no debe ser vacío.")
+	private String nombre_menu;
 
 	public String getNombre() {
 		return nombre;
@@ -27,5 +27,12 @@ public class Modulo extends BasicEntity {
 		this.descripcion = descripcion;
 	}
 
+	public String getNombre_menu() {
+		return nombre_menu;
+	}
+
+	public void setNombre_menu(String nombre_menu) {
+		this.nombre_menu = nombre_menu;
+	}
 
 }

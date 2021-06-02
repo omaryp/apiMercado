@@ -8,13 +8,9 @@ import org.springframework.security.core.GrantedAuthority;
 
 public class Rol extends BasicEntity implements GrantedAuthority{
 	
-	/**
-	 * 
-	 */
 	private static final long serialVersionUID = 1L;
 
 	@NotBlank(message="Atributo nombre Rol no debe ser vacío.")
-	@NotNull(message="Atributo nombre Rol no debe ser vacío.")
 	private String nombre;
 	private String descripcion;
 	
@@ -27,6 +23,12 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 	private String icono;
 	
 	private boolean menu;
+	
+	@NotBlank(message="Atributo url menu no debe ser vacío.")
+	private String url;
+	
+	@NotBlank(message="Atributo nombre menu no debe ser vacío.")
+	private String nombre_menu;
 
 	public String getNombre() {
 		return nombre;
@@ -46,7 +48,6 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 
 	@Override
 	public String getAuthority() {
-		// TODO Auto-generated method stub
 		return nombre;
 	}
 
@@ -74,5 +75,20 @@ public class Rol extends BasicEntity implements GrantedAuthority{
 		this.menu = menu;
 	}
 
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
+	public String getNombre_menu() {
+		return nombre_menu;
+	}
+
+	public void setNombre_menu(String nombre_menu) {
+		this.nombre_menu = nombre_menu;
+	}
 	
 }

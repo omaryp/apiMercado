@@ -10,6 +10,7 @@
 	<select id="getAllEntitys" resultMap="ModuloResultMap">
 		select A.id,
 		A.nombre,
+		A.nombre_menu,
 		A.descripcion,
 		A.estado
 		from modulos A
@@ -18,6 +19,7 @@
 	<select id="getModulosByUsuario" resultMap="ModuloResultMap">
 		select distinct D.id,
 		D.nombre,
+		D.nombre_menu,
 		D.descripcion,
 		D.estado
 		from usuarios A

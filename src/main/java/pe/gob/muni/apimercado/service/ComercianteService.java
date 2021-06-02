@@ -15,8 +15,12 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Comerciante;
+import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.repository.ComercianteRepository;
+import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+
+import static pe.gob.muni.apimercado.utils.Util.getPersona;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -30,6 +34,9 @@ public class ComercianteService implements IComercianteService {
 
 	@Autowired
 	private ComercianteRepository repository;
+	
+	@Autowired
+	private PersonaRepository perRepository;
 
 	@Autowired
 	private Validador<Comerciante> validadorComerciante;
@@ -57,11 +64,18 @@ public class ComercianteService implements IComercianteService {
 
 	@Override
 	public void saveEntity(Comerciante entity) throws ApiException, Exception, ValidatorException {
+		Persona padre = null;
 		try {
 			validadorComerciante.validarModelo(entity);
 			if (validadorComerciante.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
+			
+			padre = getPersona(entity);
+			perRepository.saveEntity(padre);
+			
+			entity.setPersonas_id(padre.getId());
 			repository.saveEntity(entity);
+			
 		}catch (ValidatorException e) {
 			throw e;
 		}catch (ApiException e) {
@@ -75,11 +89,18 @@ public class ComercianteService implements IComercianteService {
 
 	@Override
 	public void updateEntity(Comerciante entity) throws ApiException, Exception, ValidatorException {
+		Persona padre = null;
 		try {
 			validadorComerciante.validarModelo(entity);
 			if (validadorComerciante.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
+			
+			padre = getPersona(entity);
+			perRepository.updateEntity(padre);
+			
+			entity.setPersonas_id(padre.getId());
 			repository.updateEntity(entity);
+			
 		}catch (ApiException e) {
 			logger.error("Error api actualizando entidad comerciante {} - {}", e.getMessage(), e);
 			throw e;

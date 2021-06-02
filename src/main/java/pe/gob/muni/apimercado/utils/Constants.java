@@ -32,5 +32,7 @@ public class Constants {
 	public final static int PUESTO_CERRADO = 3;  
 	
 	public final static int ACTIVO = 1; 
-	public final static int DESACTIVADO = 0; 
+	public final static int DESACTIVADO = 0;
+	
+	public final static int PERFIL_COBRADOR = 2;
 }
