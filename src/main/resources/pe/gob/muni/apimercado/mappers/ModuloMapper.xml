@@ -21,7 +21,7 @@
 		select distinct D.id,
 		D.nombre,
 		D.nombre_menu,
-		A.icono,
+		D.icono,
 		D.descripcion,
 		D.estado
 		from usuarios A
