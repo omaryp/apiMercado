@@ -23,6 +23,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.AuthenticationServiceException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.AuthenticationException;
@@ -59,7 +60,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 					credenciales.getPassword(), new ArrayList<>()));
 			return auth;
 		} catch (Exception e) {
-			throw new RuntimeException("Error general al autenticar usuario : " + e.getMessage(), e);
+			throw new AuthenticationServiceException("Credenciales inválidas");
 		}
 	}
 
@@ -119,7 +120,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 	protected void unsuccessfulAuthentication(HttpServletRequest request, HttpServletResponse response,
 			AuthenticationException failed) throws IOException, ServletException {
 		// TODO Auto-generated method stub
-		respuestaApi(null, "Usuario no autorizado, " + failed.getMessage(), ERROR_AL_PROCESAR_PETICION,
+		respuestaApi(null, "Usuario no autorizado : " + failed.getMessage(), ERROR_AL_PROCESAR_PETICION,
 				HttpStatus.UNAUTHORIZED, response);
 
 	}

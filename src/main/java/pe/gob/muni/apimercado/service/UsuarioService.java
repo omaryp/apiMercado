@@ -85,6 +85,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			if (user == null) {
 				throw new UsernameNotFoundException(username + "no existe.");
 			}
+
 			logger.info("Cargando usuario {}", Util.objectToJson(user));
 			roles = rolService.getRolesByUsuario(username);
 			perfil = perfilService.getEntity(user.getPerfiles_codigo());
