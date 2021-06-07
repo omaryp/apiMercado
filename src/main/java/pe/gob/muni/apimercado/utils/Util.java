@@ -88,9 +88,9 @@ public class Util {
 		persona.setEliminado_por(entity.getEliminado_por());
 		persona.setEstado(entity.getEstado());
 		persona.setFecha_creacion(entity.getFecha_creacion());
-		persona.setFecha_modificacion(entity.getFecha_modifcacion());
+		persona.setFecha_modifcacion(entity.getFecha_modifcacion());
 		persona.setFecha_nacimiento(entity.getFecha_nacimiento());
-		persona.setModificado_por(entity.getModificado_por());
+		persona.setModifcado_por(entity.getModifcado_por());
 		persona.setNombres(entity.getNombres());
 		persona.setTelefono(entity.getTelefono());
 		return persona;

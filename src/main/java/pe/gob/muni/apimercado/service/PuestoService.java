@@ -32,8 +32,9 @@ public class PuestoService implements IPuestoService {
 	@Autowired
 	private IPuestoComercianteService pcService;	
 	@Autowired
+	private IUsuarioService auth;
+	@Autowired
 	private PuestoRepository repository;
-
 	@Autowired
 	private Validador<Puesto> validadorPuesto;
 	@Autowired
@@ -66,6 +67,7 @@ public class PuestoService implements IPuestoService {
 			validadorPuesto.validarModelo(entity);
 			if (validadorPuesto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validacion guardando entidad puesto {} - {}", e.getMessage(), e);
@@ -85,6 +87,8 @@ public class PuestoService implements IPuestoService {
 			validadorPuesto.validarModelo(entity);
 			if (validadorPuesto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
 			logger.error("Error api actualizando entidad puesto {} - {}", e.getMessage(), e);
@@ -173,6 +177,7 @@ public class PuestoService implements IPuestoService {
 			if (validadorPuestoC.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
 			puestoC.setFecha_creacion(new Date());
+			puestoC.setCreado_por(auth.getUserToken());
 			pcService.saveEntity(puestoC);
 		}catch (ValidatorException e) {
 			logger.error("Error api validando puesto comerciante {} - {}", e.getMessage(), e);

@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +34,9 @@ public class TarifaService implements ITarifaService {
 	@Autowired
 	private Validador<Tarifa> validadorTarifa;
 	
+	@Autowired
+	private IUsuarioService auth;
+	
 	@Override
 	public PageInfo<Tarifa> pagingEntitys(Map<String, String> params)
 			throws ApiException, Exception {
@@ -60,6 +64,8 @@ public class TarifaService implements ITarifaService {
 			validadorTarifa.validarModelo(entity);
 			if (validadorTarifa.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTarifa.getErrores());
+			entity.setCreado_por(auth.getUserToken());
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
@@ -78,6 +84,8 @@ public class TarifaService implements ITarifaService {
 			validadorTarifa.validarModelo(entity);
 			if (validadorTarifa.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTarifa.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api actualizando tarifa  {} - {}",e.getMessage(), e);

@@ -31,7 +31,8 @@ public class MercadoService implements IMercadoService {
 
 	@Autowired
 	private MercadoRepository repository;
-
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	private Validador<Mercado> validadorMercado;
 	
@@ -62,6 +63,7 @@ public class MercadoService implements IMercadoService {
 			if (validadorMercado.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorMercado.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validando entidad mercado {} - {}", e.getMessage(), e.getErrores());
@@ -81,6 +83,8 @@ public class MercadoService implements IMercadoService {
 			validadorMercado.validarModelo(entity);
 			if (validadorMercado.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorMercado.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api actualizando entidades mercado {} - {}", e.getMessage(), e);

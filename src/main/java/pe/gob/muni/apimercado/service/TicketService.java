@@ -6,6 +6,7 @@ import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -40,6 +41,9 @@ public class TicketService implements ITicketService {
 	
 	@Autowired
 	private IPuestoComercianteService pueService;
+	
+	@Autowired
+	private IUsuarioService auth;
 
 	@Autowired
 	private Validador<Ticket> validadorTicket;
@@ -73,6 +77,8 @@ public class TicketService implements ITicketService {
 			validadorTicket.validarModelo(entity);
 			if (validadorTicket.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
+			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		} catch (ValidatorException e) {
 			logger.error("Error api validando entidad ticket {} - {}", e.getMessage(), e.getErrores());
@@ -92,6 +98,8 @@ public class TicketService implements ITicketService {
 			validadorTicket.validarModelo(entity);
 			if (validadorTicket.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
 			logger.error("Error api actualizando entidades ticket {} - {}", e.getMessage(), e);
@@ -208,9 +216,9 @@ public class TicketService implements ITicketService {
 				nvoTicket.setEliminado_por(0);
 				nvoTicket.setEstado(1);
 				nvoTicket.setFecha_creacion(params.getFechaProceso());
-				nvoTicket.setFecha_modificacion(null);
+				nvoTicket.setFecha_modifcacion(null);
 				nvoTicket.setMercados_id(puesto.getMercados_id());
-				nvoTicket.setModificado_por(0);
+				nvoTicket.setModifcado_por(0);
 				nvoTicket.setNo_habido(false);
 				nvoTicket.setObservaciones("");
 				nvoTicket.setPuestos_id(puesto.getPuestos_id());

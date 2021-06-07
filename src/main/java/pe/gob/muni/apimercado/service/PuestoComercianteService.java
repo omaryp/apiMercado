@@ -1,6 +1,7 @@
 package pe.gob.muni.apimercado.service;
 
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -58,6 +59,7 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 	@Override
 	public void saveEntity(PuestoComerciante entity) throws ApiException, Exception, ValidatorException {
 		try {
+			entity.setFecha_creacion(new Date());
 			repository.saveEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api guardando entidad puestocomerciante {} - {}", e.getMessage(), e);

@@ -79,9 +79,9 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				user = (UsuarioDto) auth.getPrincipal();
 
 				grantedAuthorities = new ArrayList<GrantedAuthority>(auth.getAuthorities());
-
+				user = cargaNuevoUsuario(user);
 				token = Jwts.builder().setHeaderParam("typ", "JWT").setIssuer(ISSUER_INFO)
-						.setSubject(user.getUsername())
+						.setSubject(user.getId()+"-"+user.getUsername())
 						.claim("authorities",
 								grantedAuthorities.stream().map(GrantedAuthority::getAuthority)
 										.collect(Collectors.toList()))
@@ -92,7 +92,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 				response.setContentType("application/json");
 				response.addHeader(HEADER_AUTHORIZACION_KEY, TOKEN_BEARER_PREFIX + " " + token);
 
-				jwt.setUser(cargaNuevoUsuario(user));
+				jwt.setUser(user);
 				jwt.setToken(token);
 				respuestaApi(jwt, "Transacción OK", TRANSACCION_OK, HttpStatus.OK, response);
 			}
@@ -107,6 +107,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 		UsuarioDto nvoDto = null;
 		nvoDto = new UsuarioDto(oldDto.getUsername(), "[SECRET]", oldDto.isEnabled(),
 					true, true, true,new ArrayList<Rol>());
+		nvoDto.setId(oldDto.getId());
 		nvoDto.setNombres(oldDto.getNombres());
 		nvoDto.setApellidos(oldDto.getApellidos());
 		nvoDto.setCorreo(oldDto.getCorreo());

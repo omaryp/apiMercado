@@ -32,6 +32,8 @@ public class RolService implements IRolService {
 	@Autowired
 	private RolRepository rolRepository;
 	@Autowired
+	private IUsuarioService auth;
+	@Autowired
 	private Validador<Rol> validadorRol;
 
 	@Override
@@ -135,6 +137,7 @@ public class RolService implements IRolService {
 			if (validadorRol.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorRol.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			rolRepository.saveEntity(entity);
 		}  catch (ValidatorException e) {
 			logger.error("Error api validacion guardando rol {} - {} - {} ",e.getMessage(),e.getErrores(), e);
@@ -155,6 +158,8 @@ public class RolService implements IRolService {
 			validadorRol.validarModelo(entity);
 			if (validadorRol.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorRol.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			rolRepository.updateEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validacion actualizando rol {} - {} - {} ",e.getMessage(),e.getErrores(), e);

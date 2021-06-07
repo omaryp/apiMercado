@@ -17,7 +17,7 @@ public class Tarifa extends BasicEntity {
 	@Min(value=1, message="Atributo conceptos_id debe ser != 0")
 	private int conceptos_id;
 	@NotNull(message="Atributo fecha_incio no debe ser vacío.")
-	private Date fecha_incio;
+	private Date fecha_inicio;
 	@NotNull(message="Atributo fecha_fin no debe ser vacío.")
 	private Date fecha_fin;
 	
@@ -39,11 +39,12 @@ public class Tarifa extends BasicEntity {
 	public void setConceptos_id(int conceptos_id) {
 		this.conceptos_id = conceptos_id;
 	}
-	public Date getFecha_incio() {
-		return fecha_incio;
+	
+	public Date getFecha_inicio() {
+		return fecha_inicio;
 	}
-	public void setFecha_incio(Date fecha_incio) {
-		this.fecha_incio = fecha_incio;
+	public void setFecha_inicio(Date fecha_inicio) {
+		this.fecha_inicio = fecha_inicio;
 	}
 	public Date getFecha_fin() {
 		return fecha_fin;

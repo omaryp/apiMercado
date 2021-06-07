@@ -31,7 +31,8 @@ public class PartidaService implements IPartidaService {
 
 	@Autowired
 	private PartidaRepository repository;
-
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	private Validador<Partida> validadorPartida;
 	
@@ -63,6 +64,7 @@ public class PartidaService implements IPartidaService {
 			if (validadorPartida.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPartida.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error validacion api guardando entidades partida {} - {} - {}", e.getMessage(), e.getErrores(),e);
@@ -82,6 +84,8 @@ public class PartidaService implements IPartidaService {
 			validadorPartida.validarModelo(entity);
 			if (validadorPartida.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPartida.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
 			logger.error("Error api actualizando entidad partida {} - {}", e.getMessage(), e);
@@ -119,11 +123,11 @@ public class PartidaService implements IPartidaService {
 					case RESPONSE_OBJECT:
 						codigo = Integer.parseInt(params.get("codigo"));
 						logger.info("Buscando usuario por codigo - {}", codigo);
-						rpta = repository.getEntity(codigo);
+						rpta = getEntity(codigo);
 						break;
 				}
 			}else
-				rpta = repository.getAllEntitys();
+				rpta = getAllEntitys();
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando entidad partida {} - {}", e.getMessage(), e);

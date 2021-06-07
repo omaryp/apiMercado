@@ -31,7 +31,8 @@ public class PerfilService implements IPerfilService {
 	
 	@Autowired
 	PerfilRepository repository;
-	
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	Validador<Perfil> validadorEntity;
 
@@ -92,6 +93,7 @@ public class PerfilService implements IPerfilService {
 			if (validadorEntity.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		} catch (ValidatorException e) {
 			logger.error("Error api validación guardando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);
@@ -112,6 +114,8 @@ public class PerfilService implements IPerfilService {
 			validadorEntity.validarModelo(entity);
 			if (validadorEntity.isHayErrores())
 				throw new ValidatorException("Error de validación", validadorEntity.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validación actualizando perfil {} - {} - {}",e.getMessage(), e.getErrores(),e);

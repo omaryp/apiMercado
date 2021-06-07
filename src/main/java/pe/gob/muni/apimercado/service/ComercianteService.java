@@ -3,6 +3,8 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -37,6 +39,9 @@ public class ComercianteService implements IComercianteService {
 	
 	@Autowired
 	private PersonaRepository perRepository;
+	
+	@Autowired
+	private IUsuarioService auth;
 
 	@Autowired
 	private Validador<Comerciante> validadorComerciante;
@@ -50,7 +55,7 @@ public class ComercianteService implements IComercianteService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = repository.pagingEntitys(pagData);
+			rptaData = procesarLista(repository.pagingEntitys(pagData));
 				
 			return new PageInfo<Comerciante>(rptaData);
 		}catch (ApiException e) {
@@ -60,6 +65,15 @@ public class ComercianteService implements IComercianteService {
 			logger.error("Error general paginando entidades comerciante {} - {}", e.getMessage(), e);
 			throw e;
 		}
+	}
+	
+	private List<Comerciante> procesarLista(List<Comerciante> datos){
+		List<Comerciante> rpta = new ArrayList<Comerciante>();
+		datos.forEach((entity) -> {
+			entity.setId(entity.getPersonas_id());
+			rpta.add(entity);
+		});
+		return rpta;
 	}
 
 	@Override
@@ -71,6 +85,8 @@ public class ComercianteService implements IComercianteService {
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
 			
 			padre = getPersona(entity);
+			entity.setCreado_por(auth.getUserToken());
+			entity.setFecha_creacion(new Date());
 			perRepository.saveEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
@@ -96,6 +112,8 @@ public class ComercianteService implements IComercianteService {
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
 			
 			padre = getPersona(entity);
+			entity.setModifcado_por(auth.getUserToken());
+			entity.setFecha_modifcacion(new Date());
 			perRepository.updateEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
@@ -137,11 +155,11 @@ public class ComercianteService implements IComercianteService {
 					case RESPONSE_OBJECT:
 						codigo = Integer.parseInt(params.get("codigo"));
 						logger.info("Buscando usuario por codigo - {}", codigo);
-						rpta = repository.getEntity(codigo);
+						rpta = getEntity(codigo);
 						break;
 				}
 			}else
-				rpta = repository.getAllEntitys();
+				rpta = procesarLista(getAllEntitys());
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando entidad comerciante {} - {}", e.getMessage(), e);
@@ -156,7 +174,9 @@ public class ComercianteService implements IComercianteService {
 	@Override
 	public Comerciante getEntity(int id) throws ApiException, Exception {
 		try {
-			return repository.getEntity(id);
+			Comerciante entity = repository.getEntity(id);
+			entity.setId(entity.getPersonas_id());
+			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api obteniendo entidad comerciante {} - {} - {}",id, e.getMessage(), e);
 			throw e;

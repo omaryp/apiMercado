@@ -13,7 +13,6 @@ public class Comerciante extends Persona {
 	public void setIdComerciante(int idComerciante) {
 		this.idComerciante = idComerciante;
 	}
-	
 	public int getPersonas_id() {
 		return personas_id;
 	}
@@ -33,5 +32,4 @@ public class Comerciante extends Persona {
 		this.razon_social = razon_social;
 	}
 	
-			
 }

@@ -9,6 +9,7 @@ import org.springframework.security.core.userdetails.User;
 public class UsuarioDto extends User{
 
 	private static final long serialVersionUID = 1L;
+	private int id;
 	private String nombres;
 	private String apellidos;
 	private String correo;
@@ -68,6 +69,14 @@ public class UsuarioDto extends User{
 
 	public void setModulos(List<PermisoDto> modulos) {
 		this.modulos = modulos;
+	}
+
+	public int getId() {
+		return id;
+	}
+
+	public void setId(int id) {
+		this.id = id;
 	}
 
 }

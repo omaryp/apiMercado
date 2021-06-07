@@ -3,6 +3,7 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -43,7 +44,7 @@ public class CobradorService implements ICobradorService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = repository.pagingEntitys(pagData);
+			rptaData = procesarLista(repository.pagingEntitys(pagData));
 				
 			return new PageInfo<Cobrador>(rptaData);
 		}catch (ApiException e) {
@@ -53,6 +54,15 @@ public class CobradorService implements ICobradorService {
 			logger.error("Error general paginando entidades cobrador {} - {}", e.getMessage(), e);
 			throw e;
 		}
+	}
+	
+	private List<Cobrador> procesarLista(List<Cobrador> datos){
+		List<Cobrador> rpta = new ArrayList<Cobrador>();
+		datos.forEach((entity) -> {
+			entity.setId(entity.getPersonas_id());
+			rpta.add(entity);
+		});
+		return rpta;
 	}
 
 	@Override
@@ -116,11 +126,11 @@ public class CobradorService implements ICobradorService {
 					case RESPONSE_OBJECT:
 						codigo = Integer.parseInt(params.get("codigo"));
 						logger.info("Buscando usuario por codigo - {}", codigo);
-						rpta = repository.getEntity(codigo);
+						rpta = getEntity(codigo);
 						break;
 				}
 			}else
-				rpta = repository.getAllEntitys();
+				rpta = procesarLista(getAllEntitys());
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando entidad cobrador {} - {}", e.getMessage(), e);
@@ -135,7 +145,9 @@ public class CobradorService implements ICobradorService {
 	@Override
 	public Cobrador getEntity(int id) throws ApiException, Exception {
 		try {
-			return repository.getEntity(id);
+			Cobrador entity = repository.getEntity(id);
+			entity.setId(entity.getPersonas_id());
+			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api obteniendo entidad cobrador {} - {} - {}",id, e.getMessage(), e);
 			throw e;

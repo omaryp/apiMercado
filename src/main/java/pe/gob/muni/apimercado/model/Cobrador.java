@@ -3,7 +3,7 @@ package pe.gob.muni.apimercado.model;
 public class Cobrador extends Persona {
 	
 	private int idCobrador;
-	private int persona_id;
+	private int personas_id;
 	
 	public int getIdCobrador() {
 		return idCobrador;
@@ -11,12 +11,13 @@ public class Cobrador extends Persona {
 	public void setIdCobrador(int idCobrador) {
 		this.idCobrador = idCobrador;
 	}
-	public int getPersona_id() {
-		return persona_id;
+	public int getPersonas_id() {
+		return personas_id;
 	}
-	public void setPersona_id(int persona_id) {
-		this.persona_id = persona_id;
+	public void setPersonas_id(int personas_id) {
+		this.personas_id = personas_id;
 	}
+	
 	
 
 }

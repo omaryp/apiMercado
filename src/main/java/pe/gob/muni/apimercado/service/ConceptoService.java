@@ -3,6 +3,7 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -30,7 +31,8 @@ public class ConceptoService implements IConceptoService {
 
 	@Autowired
 	private ConceptoRepository repository;
-
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	private Validador<Concepto> validadorConcepto;
 	
@@ -61,6 +63,8 @@ public class ConceptoService implements IConceptoService {
 			validadorConcepto.validarModelo(entity);
 			if (validadorConcepto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorConcepto.getErrores());
+			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
@@ -79,6 +83,8 @@ public class ConceptoService implements IConceptoService {
 			validadorConcepto.validarModelo(entity);
 			if (validadorConcepto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorConcepto.getErrores());
+			entity.setModifcado_por(auth.getUserToken());
+			entity.setFecha_modifcacion(new Date());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
 			logger.error("Error api actualizando entidad concepto {} - {}", e.getMessage(), e);

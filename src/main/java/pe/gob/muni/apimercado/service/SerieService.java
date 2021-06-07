@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -29,7 +30,8 @@ public class SerieService implements ISerieService {
 
 	@Autowired
 	private SerieRepository repository;
-
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	private Validador<Serie> validadorSerie;
 	
@@ -60,6 +62,8 @@ public class SerieService implements ISerieService {
 			validadorSerie.validarModelo(entity);
 			if (validadorSerie.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorSerie.getErrores());
+			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
@@ -78,6 +82,8 @@ public class SerieService implements ISerieService {
 			validadorSerie.validarModelo(entity);
 			if (validadorSerie.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorSerie.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;

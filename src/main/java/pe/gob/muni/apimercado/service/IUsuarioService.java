@@ -12,4 +12,6 @@ public interface IUsuarioService extends IBasicService<Usuario>{
 
 	void actualizarUserByUsername(Usuario user) throws Exception, ValidatorException, ApiException;
 
+	int getUserToken();
+
 }

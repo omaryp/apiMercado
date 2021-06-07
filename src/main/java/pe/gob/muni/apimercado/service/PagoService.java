@@ -32,7 +32,8 @@ public class PagoService implements IPagoService {
 
 	@Autowired
 	private PagoRepository repository;
-
+	@Autowired
+	private IUsuarioService auth;
 	@Autowired
 	private Validador<Pago> validadorPago;
 	
@@ -62,6 +63,7 @@ public class PagoService implements IPagoService {
 			if (validadorPago.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPago.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			throw e;
@@ -78,6 +80,8 @@ public class PagoService implements IPagoService {
 			validadorPago.validarModelo(entity);
 			if (validadorPago.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPago.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
 		} catch (ApiException e) {
 			throw e;

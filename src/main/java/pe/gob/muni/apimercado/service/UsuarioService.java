@@ -10,6 +10,7 @@ import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.getPersona;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
@@ -17,6 +18,8 @@ import java.util.stream.Collectors;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -72,7 +75,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	
 	@Autowired
 	private BCryptPasswordEncoder bCryptPasswordEncoder;
-
+	
 	@Override
 	public UserDetails loadUserByUsername(String username) throws UsernameNotFoundException {
 		Usuario user = null;
@@ -81,7 +84,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		Perfil perfil = null;
 
 		try {
-			user = repository.findByUsername(username);
+			user = findByUsername(username);
 			if (user == null) {
 				throw new UsernameNotFoundException(username + "no existe.");
 			}
@@ -91,6 +94,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			perfil = perfilService.getEntity(user.getPerfiles_codigo());
 
 			userDto = new UsuarioDto(user.getUsuario(), user.getPassword(), user.isActivo(), true, true, true, roles);
+			userDto.setId(user.getId());
 			userDto.setNombres(user.getNombres());
 			userDto.setApellidos(user.getApellidos());
 			userDto.setCorreo(user.getCorreo());
@@ -133,7 +137,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	@Override
 	public Usuario findByUsername(String username) throws Exception, ApiException {
 		try {
-			return repository.findByUsername(username);
+			Usuario entity = repository.findByUsername(username);
+			entity.setId(entity.getPersonas_id());
+			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api get usuario by username {} - {} - {}",username, e.getMessage(), e);
 			throw e;
@@ -181,7 +187,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = repository.pagingEntitys(pagData);
+			rptaData = procesarLista(repository.pagingEntitys(pagData));
 				
 			return new PageInfo<Usuario>(rptaData);
 		}catch (ApiException e) {
@@ -193,6 +199,15 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		}
 	}
 
+	private List<Usuario> procesarLista(List<Usuario> datos){
+		List<Usuario> rpta = new ArrayList<Usuario>();
+		datos.forEach((entity) -> {
+			entity.setId(entity.getPersonas_id());
+			rpta.add(entity);
+		});
+		return rpta;
+	}
+
 	@Override
 	public void saveEntity(Usuario entity) throws ApiException, Exception, ValidatorException {
 		Persona padre = null;
@@ -202,6 +217,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
 			
 			padre = getPersona(entity);
+			padre.setFecha_creacion(new Date());
+			entity.setCreado_por(getUserToken());
 			perRepository.saveEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
@@ -210,7 +227,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			
 			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
 				Cobrador cob = new Cobrador();
-				cob.setPersona_id(padre.getId());
+				cob.setPersonas_id(padre.getId());
 				cobRepository.saveEntity(cob);
 			}
 				
@@ -224,6 +241,13 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			throw e;
 		}
 	}
+	
+	@Override
+	public int getUserToken() {
+		Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+		String user = authentication.getName();
+		return Integer.parseInt(user.split("-")[0]);
+	}
 
 	@Override
 	public void updateEntity(Usuario entity) throws ApiException, Exception, ValidatorException {
@@ -231,6 +255,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			validadorUsuario.validarModelo(entity);
 			if (validadorUsuario.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
+			entity.setFecha_modifcacion(new Date());
+			entity.setModifcado_por(getUserToken());
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api actualizando usuario  {} - {}", e.getMessage(), e);
@@ -272,18 +298,18 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 							case POR_USUARIO:
 								usuario = params.get("user").toUpperCase();
 								logger.info("Buscando usuario por username - {}", usuario);
-								rpta = repository.findByUsername(usuario);
+								rpta = findByUsername(usuario);
 								break;
 							case POR_CODIGO:
 								codigo = Integer.parseInt(params.get("codigo"));
 								logger.info("Buscando usuario por codigo - {}", codigo);
-								rpta = repository.getEntity(codigo);
+								rpta = getEntity(codigo);
 								break;
 							}
 						break;
 				}
 			}else
-				rpta = repository.getAllEntitys();
+				rpta = procesarLista(getAllEntitys());
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando usuario by username {} - {}", e.getMessage(), e);
@@ -298,7 +324,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	@Override
 	public Usuario getEntity(int id) throws ApiException, Exception {
 		try {
-			return repository.getEntity(id);
+			Usuario entity = repository.getEntity(id);
+			entity.setId(entity.getPersonas_id());
+			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api obteniendo usuario by id {} - {} - {}",id, e.getMessage(), e);
 			throw e;

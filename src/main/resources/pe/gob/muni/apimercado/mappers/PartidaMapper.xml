@@ -30,7 +30,7 @@
 		fecha_modifcacion,
 		modifcado_por,
 		eliminado_por		
-		from partidas where id = #{id}
+		from partidas
 	</select>
 
 	<insert id="saveEntity" parameterType="Partida">
