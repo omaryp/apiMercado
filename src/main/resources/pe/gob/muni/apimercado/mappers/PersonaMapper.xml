@@ -18,13 +18,11 @@
 	</select>
 	
 	<insert id="saveEntity" useGeneratedKeys="true" keyProperty="id" parameterType="Persona" >
-        insert into personas(
-         id,nombres,apellidos,telefono,
+        insert into personas(nombres,apellidos,telefono,
 		 correo,direccion,fecha_nacimiento,dni,
 		 estado,fecha_creacion,creado_por,
 		 fecha_modifcacion,modifcado_por,eliminado_por) 
-		values( 
-		#{id},#{nombres},#{apellidos},#{telefono},
+		values(#{nombres},#{apellidos},#{telefono},
 		#{correo},#{direccion},#{fecha_nacimiento},#{dni},
 		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})

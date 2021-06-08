@@ -34,13 +34,11 @@
 	</select>
 
 	<insert id="saveEntity" parameterType="Partida">
-		insert into partidas(
-		id, fecha_creacion, creado_por, fecha_modifcacion,
+		insert into partidas( fecha_creacion, creado_por, fecha_modifcacion,
 		modifcado_por,
 		eliminado_por, estado, codigo,
 		descripcion)
-		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		values(#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por},#{estado},
 		#{codigo},#{descripcion})
 	</insert>

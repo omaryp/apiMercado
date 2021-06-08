@@ -40,12 +40,10 @@
 	</select>
 
 	<insert id="saveEntity" parameterType="Mercado">
-		insert into mercados(
-		id,	fecha_creacion,	creado_por,
+		insert into mercados(fecha_creacion,	creado_por,
 		fecha_modifcacion,	modifcado_por,	eliminado_por,
 		estado,	nombre,	decripcion,direccion,zona)
-		values(
-		#{id},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		values(#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por},#{estado},
 		#{nombre},#{decripcion},#{direccion},#{zona})
 	</insert>
