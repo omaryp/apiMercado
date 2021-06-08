@@ -64,10 +64,10 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="CobradorResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select * from(
 		select 
 		A.id,
 		A.personas_id,
-		B.id,
 		B.nombres,
 		B.apellidos,
 		B.dni,
@@ -81,11 +81,10 @@
 		B.fecha_modifcacion,
 		B.modifcado_por,
 		B.eliminado_por
-		from cobradores A , personas B
+		from cobradores A , personas B where A.personas_id = B.id) T
 		<where>
-			A.personas_id = B.id
 			<if test="search != null">
-			 and  apellidos LIKE CONCAT(#{search},'%')
+			 and T.apellidos LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
 		<if test="sort != '' and sort != null">

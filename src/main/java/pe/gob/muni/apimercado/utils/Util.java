@@ -80,6 +80,7 @@ public class Util {
     
     public static <T extends Persona> Persona getPersona(T entity) {
     	Persona persona = new Persona();
+    	persona.setId(entity.getId());
 		persona.setApellidos(entity.getApellidos());
 		persona.setCorreo(entity.getCorreo());
 		persona.setCreado_por(entity.getCreado_por());
