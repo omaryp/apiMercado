@@ -59,7 +59,7 @@
 	<update id="updateEntity" parameterType="Cobrador">
 		Update cobradores
 		set
-		personas_id = #{personas_id},
+		personas_id = #{personas_id}
 		where id = #{id}
 	</update>
 

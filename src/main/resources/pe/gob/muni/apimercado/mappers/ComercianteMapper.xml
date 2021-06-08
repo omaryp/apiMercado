@@ -60,7 +60,6 @@
 	<update id="updateEntity" parameterType="Comerciante">
 		Update comerciantes
 		set
-		personas_id = #{personas_id},
 		ruc = #{ruc},
 		razon_social = #{razon_social}
 		where id = #{id}

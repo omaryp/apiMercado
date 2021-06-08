@@ -86,8 +86,7 @@
       set 
       usuario = #{usuario},
       password = #{password}, fechaUltAcc = #{fechaUltAcc},
-	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
-	  personas_id = #{personas_id}
+	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo}
       where usuario = #{usuario}
     </update>
     
@@ -96,8 +95,7 @@
       set 
       usuario = #{usuario},
       password = #{password}, fechaUltAcc = #{fechaUltAcc},
-	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo},
-	  personas_id = #{personas_id}
+	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo}
       where id = #{idUsuario}
     </update>
     

@@ -216,9 +216,10 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			if (validadorUsuario.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
 			
-			padre = getPersona(entity);
-			padre.setFecha_creacion(new Date());
+			
+			entity.setFecha_creacion(new Date());
 			entity.setCreado_por(getUserToken());
+			padre = getPersona(entity);
 			perRepository.saveEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
@@ -257,6 +258,10 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 				throw new ValidatorException("Hay Errores de validación", validadorUsuario.getErrores());
 			entity.setFecha_modifcacion(new Date());
 			entity.setModifcado_por(getUserToken());
+			
+			Persona padre = getPersona(entity);
+			perRepository.updateEntity(padre);
+			
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api actualizando usuario  {} - {}", e.getMessage(), e);

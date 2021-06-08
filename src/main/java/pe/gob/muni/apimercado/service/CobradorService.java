@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import java.util.Map;
 
@@ -14,10 +15,13 @@ import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
-
 import pe.gob.muni.apimercado.model.Cobrador;
+import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.repository.CobradorRepository;
+import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import static pe.gob.muni.apimercado.utils.Util.getPersona;
+
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -31,6 +35,10 @@ public class CobradorService implements ICobradorService {
 
 	@Autowired
 	private CobradorRepository repository;
+	@Autowired
+	private PersonaRepository perRepository;
+	@Autowired
+	private IUsuarioService auth;
 
 	@Autowired
 	private Validador<Cobrador> validadorCobrador;
@@ -89,7 +97,13 @@ public class CobradorService implements ICobradorService {
 			validadorCobrador.validarModelo(entity);
 			if (validadorCobrador.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorCobrador.getErrores());
-			repository.updateEntity(entity);
+			
+			entity.setModifcado_por(auth.getUserToken());
+			entity.setFecha_modifcacion(new Date());
+			
+			Persona padre = getPersona(entity);
+			perRepository.updateEntity(padre);
+			
 		}catch (ApiException e) {
 			logger.error("Error api actualizando entidad cobrador {} - {}", e.getMessage(), e);
 			throw e;

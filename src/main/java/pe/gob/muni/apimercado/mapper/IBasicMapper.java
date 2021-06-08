@@ -17,9 +17,7 @@ public interface IBasicMapper<T extends BasicEntity> {
 	List<T> getAllEntitys() throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	List<T> pagingEntitys(PageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
-	
-	int totalRecordEntity(String valorBusqueda) throws SQLException,SQLIntegrityConstraintViolationException;
-	
+		
 	void saveEntity(T entity) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	void updateEntity(T entity) throws SQLException,SQLIntegrityConstraintViolationException;

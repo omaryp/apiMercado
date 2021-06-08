@@ -55,17 +55,7 @@ public class BasicRepository<T extends BasicEntity,M extends IBasicMapper<T>> {
 			throw new ApiException(e.getMessage(),e);
 		}
 	}
-	
-	public int totalRecordsEntity(String valorBusqueda) throws ApiException{
-		try {
-			return mapper.totalRecordEntity(valorBusqueda);
-		}catch (SQLIntegrityConstraintViolationException e) {
-			throw new ApiException(e.getMessage(),e);
-		}catch (SQLException e) {
-			throw new ApiException(e.getMessage(),e);
-		}
-	}
-	
+		
 	public List<T> pagingEntitys(PageTable parms) throws ApiException{
 		try {
 			return mapper.pagingEntitys(parms);

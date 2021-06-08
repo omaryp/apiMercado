@@ -83,10 +83,10 @@ public class ComercianteService implements IComercianteService {
 			validadorComerciante.validarModelo(entity);
 			if (validadorComerciante.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
-			
-			padre = getPersona(entity);
+		
 			entity.setCreado_por(auth.getUserToken());
 			entity.setFecha_creacion(new Date());
+			padre = getPersona(entity);
 			perRepository.saveEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
@@ -111,9 +111,9 @@ public class ComercianteService implements IComercianteService {
 			if (validadorComerciante.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorComerciante.getErrores());
 			
-			padre = getPersona(entity);
 			entity.setModifcado_por(auth.getUserToken());
 			entity.setFecha_modifcacion(new Date());
+			padre = getPersona(entity);
 			perRepository.updateEntity(padre);
 			
 			entity.setPersonas_id(padre.getId());
