@@ -10,7 +10,7 @@
 	<select id="getEntity" resultMap="MercadoResultMap">
 		select 
 		id,
-		decripcion,
+		descripcion,
 		nombre,
 		direccion,
 		zona,
@@ -26,7 +26,7 @@
 	<select id="getAllEntitys" resultMap="MercadoResultMap">
 		select 
 		id,
-		decripcion,
+		descripcion,
 		nombre,
 		direccion,
 		zona,
@@ -42,10 +42,10 @@
 	<insert id="saveEntity" parameterType="Mercado">
 		insert into mercados(fecha_creacion,	creado_por,
 		fecha_modifcacion,	modifcado_por,	eliminado_por,
-		estado,	nombre,	decripcion,direccion,zona)
+		estado,	nombre,	descripcion,direccion,zona)
 		values(#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por},#{estado},
-		#{nombre},#{decripcion},#{direccion},#{zona})
+		#{nombre},#{descripcion},#{direccion},#{zona})
 	</insert>
 
 	<update id="deleteEntity">
@@ -61,14 +61,14 @@
 		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
 		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por},
 		estado = #{estado},
-		nombre = #{nombre}, decripcion = #{decripcion},
+		nombre = #{nombre}, descripcion = #{descripcion},
 		direccion = #{direccion},zona = #{zona}
 		where id = #{id}
 	</update>
 
 	<select id="pagingEntitys" resultMap="MercadoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select id,
-		decripcion,
+		descripcion,
 		nombre,
 		direccion,
 		zona,

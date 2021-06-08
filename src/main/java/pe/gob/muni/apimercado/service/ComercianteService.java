@@ -114,6 +114,7 @@ public class ComercianteService implements IComercianteService {
 			
 			entity.setModifcado_por(auth.getUserToken());
 			entity.setFecha_modifcacion(new Date());
+			entity.setEstado(1);
 			padre = getPersona(entity);
 			perRepository.updateEntity(padre);
 			
