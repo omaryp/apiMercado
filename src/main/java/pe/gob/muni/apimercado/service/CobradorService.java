@@ -52,9 +52,10 @@ public class CobradorService implements ICobradorService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = procesarLista(repository.pagingEntitys(pagData));
-				
-			return new PageInfo<Cobrador>(rptaData);
+			rptaData = repository.pagingEntitys(pagData);
+			PageInfo<Cobrador> rpta  = new PageInfo<Cobrador>(rptaData);
+			rpta.setList(procesarLista(rpta.getList()));
+			return rpta;
 		}catch (ApiException e) {
 			logger.error("Error api paginando entidades cobrador {} - {}", e.getMessage(), e);
 			throw e;

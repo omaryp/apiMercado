@@ -55,9 +55,10 @@ public class ComercianteService implements IComercianteService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = procesarLista(repository.pagingEntitys(pagData));
-				
-			return new PageInfo<Comerciante>(rptaData);
+			rptaData =repository.pagingEntitys(pagData);
+			PageInfo<Comerciante> rpta  = new PageInfo<Comerciante>(rptaData);
+			rpta.setList(procesarLista(rpta.getList()));
+			return rpta;
 		}catch (ApiException e) {
 			logger.error("Error api paginando entidades comerciante {} - {}", e.getMessage(), e);
 			throw e;

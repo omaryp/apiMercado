@@ -187,9 +187,11 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			PageTable pagData = mapToObject(params, PageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
-			rptaData = procesarLista(repository.pagingEntitys(pagData));
+			rptaData = repository.pagingEntitys(pagData);
+			PageInfo<Usuario> rpta  = new PageInfo<Usuario>(rptaData);
+			rpta.setList(procesarLista(rpta.getList()));
 				
-			return new PageInfo<Usuario>(rptaData);
+			return rpta;
 		}catch (ApiException e) {
 			logger.error("Error api paginando usuario  {} - {}", e.getMessage(), e);
 			throw e;
