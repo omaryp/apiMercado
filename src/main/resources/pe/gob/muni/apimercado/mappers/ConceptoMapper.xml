@@ -59,7 +59,7 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="ConceptoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
-		select  id,descripcion,
+		select  id,descripcion,partidas_id,
 		estado,
 		fecha_creacion,
 		creado_por,

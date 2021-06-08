@@ -9,7 +9,7 @@ public class Concepto extends BasicEntity {
 	@NotBlank(message="Atributo descripcion no debe ser vacío.")
 	@NotNull(message="Atributo descripcion no debe ser vacío.")
 	private String descripcion;
-	@Min(value=1, message="Atributo partida_id debe ser != 0")
+	@Min(value=1, message="Atributo partidas_id debe ser != 0")
 	private int partidas_id;
 	
 	public String getDescripcion() {
@@ -24,5 +24,7 @@ public class Concepto extends BasicEntity {
 	public void setPartidas_id(int partidas_id) {
 		this.partidas_id = partidas_id;
 	}
+	
+	
 	
 }
