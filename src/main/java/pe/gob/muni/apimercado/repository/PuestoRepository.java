@@ -15,9 +15,9 @@ import pe.gob.muni.apimercado.utils.dto.PageTable;
 @Repository
 public class PuestoRepository extends BasicRepository<Puesto,IPuestoMapper> {
 	
-	public List<PuestoDto> getAllPuestosMercado(int idMercado)throws ApiException {
+	public List<PuestoDto> getAllPuestosDtoMercado(int idMercado)throws ApiException {
 		try {
-			return mapper.getAllPuestosMercado(idMercado);
+			return mapper.getAllPuestosDtoMercado(idMercado);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

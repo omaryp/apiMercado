@@ -1,6 +1,5 @@
 package pe.gob.muni.apimercado.service;
 
-
 import java.util.Date;
 import java.util.List;
 import java.util.Map;
@@ -24,6 +23,9 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 
 	@Autowired
 	private PuestoComercianteRepository repository;
+	
+	@Autowired
+	private IUsuarioService auth;
 
 	@Override
 	public Object searchEntity(Map<String, String> params) throws ApiException, Exception {
@@ -33,8 +35,7 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 
 	@Override
 	public PuestoComerciante getEntity(int id) throws ApiException, Exception {
-		// TODO Auto-generated method stub
-		return null;
+		return repository.getEntity(id);
 	}
 
 	@Override
@@ -59,7 +60,16 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 	@Override
 	public void saveEntity(PuestoComerciante entity) throws ApiException, Exception, ValidatorException {
 		try {
+			PuestoComerciante actual = getEntity(entity.getComerciantes_id());
+			actual.setFecha_fin(new Date());
+			actual.setFecha_modifcacion(new Date());
+			actual.setEstado(0);
+			actual.setModifcado_por(auth.getUserToken());
+			repository.updateEntity(actual);
+			
+			entity.setCreado_por(auth.getUserToken());
 			entity.setFecha_creacion(new Date());
+			entity.setEstado(1);
 			repository.saveEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api guardando entidad puestocomerciante {} - {}", e.getMessage(), e);
@@ -68,7 +78,6 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 			logger.error("Error general guardando entidad puestocomerciante {} - {}", e.getMessage(), e);
 			throw e;
 		}
-		
 	}
 
 	@Override

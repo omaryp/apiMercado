@@ -23,6 +23,22 @@
 		modifcado_por,
 		from puestos_comerciantes
 	</select>
+	
+	<select id="getEntity" resultMap="PuestoComercianteResultMap">
+		select
+		puestos_mercados_id,
+		puestos_id,
+		comerciantes_id,
+		correlativo,
+		fecha_fin,
+		estado,
+		fecha_creacion,
+		creado_por,
+		fecha_modifcacion,
+		modifcado_por,
+		from puestos_comerciantes
+		where comerciantes_id = #{id} and A.estado = 1
+	</select>
 
 	<select id="getAllPuestosActive" resultMap="PuestoComercianteResultMap">
 		select
@@ -39,6 +55,20 @@
 		from puestos_comerciantes
 		where estado = 1
 	</select>
+	
+	<update id="updateEntity" parameterType="PuestoComerciante">
+		update puestos_comerciantes
+		set 
+		puestos_mercados_id = #{puestos_mercados_id},
+		puestos_id = #{puestos_id},
+		comerciantes_id = #{comerciantes_id},
+		correlativo = #{correlativo},
+		fecha_fin = #{fecha_fin},
+		estado = #{estado},
+		fecha_modifcacion = #{fecha_modifcacion},
+		modifcado_por = #{modifcado_por}
+		where puestos_id = #{puestos_id} and comerciantes_id #{comerciantes_id} 
+	</update>
 
 	<select id="getAllPuestosMercado" resultMap="PuestoComercianteResultMap" parameterType="int">
 		select

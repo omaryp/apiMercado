@@ -13,7 +13,7 @@ import pe.gob.muni.apimercado.utils.dto.PageTable;
 @Mapper
 public interface IPuestoMapper extends IBasicMapper<Puesto> {
 	
-	List<PuestoDto> getAllPuestosMercado(int id) throws SQLException,SQLIntegrityConstraintViolationException; 
+	List<PuestoDto> getAllPuestosDtoMercado(int id) throws SQLException,SQLIntegrityConstraintViolationException; 
 	
 	List<PuestoDto> pagingDtoEntitys(PageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
 	

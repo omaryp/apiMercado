@@ -18,7 +18,6 @@ public class Tarifa extends BasicEntity {
 	private int conceptos_id;
 	@NotNull(message="Atributo fecha_incio no debe ser vacío.")
 	private Date fecha_inicio;
-	@NotNull(message="Atributo fecha_fin no debe ser vacío.")
 	private Date fecha_fin;
 	
 	public String getDescripcion() {

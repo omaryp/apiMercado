@@ -32,7 +32,7 @@
 	</select>
 	
 	<update id="deleteEntity">
-		Update roles
+		Update comerciantes
 		set estado = 0
 		where id = #{id}
 	</update>

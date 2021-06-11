@@ -10,7 +10,7 @@ public class BasicEntity {
 	private Date fecha_modifcacion;
 	private int modifcado_por;
 	private int eliminado_por;
-	private int estado;
+	private int estado = 1;
 	
 	public int getId() {
 		return id;

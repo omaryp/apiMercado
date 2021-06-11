@@ -214,7 +214,7 @@ public class PuestoService implements IPuestoService {
 	@Override
 	public List<PuestoDto> getAllPuestosDtoMercado(int idMercado) throws ApiException {
 		try {
-			return repository.getAllPuestosMercado(idMercado);
+			return repository.getAllPuestosDtoMercado(idMercado);
 		}catch (ApiException e) {
 			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);
 			throw e;

@@ -6,6 +6,7 @@ import static pe.gob.muni.apimercado.utils.Constants.POR_USUARIO;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Constants.PERFIL_COBRADOR;
+import static pe.gob.muni.apimercado.utils.Constants.SECRET_PASSWORD;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.getPersona;
 
@@ -264,6 +265,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			Persona padre = getPersona(entity);
 			perRepository.updateEntity(padre);
 			
+			if(!entity.getPassword().equals(SECRET_PASSWORD))
+				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
 			repository.updateEntity(entity);
 		}catch (ApiException e) {
 			logger.error("Error api actualizando usuario  {} - {}", e.getMessage(), e);
@@ -333,6 +336,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		try {
 			Usuario entity = repository.getEntity(id);
 			entity.setId(entity.getPersonas_id());
+			entity.setPassword(SECRET_PASSWORD);
 			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api obteniendo usuario by id {} - {} - {}",id, e.getMessage(), e);

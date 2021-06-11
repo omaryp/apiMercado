@@ -9,6 +9,7 @@ import static pe.gob.muni.apimercado.utils.Constants.TOKEN_EXPIRATION_TIME;
 import static pe.gob.muni.apimercado.utils.Constants.TRANSACCION_OK;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
+import static pe.gob.muni.apimercado.utils.Constants.SECRET_PASSWORD;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -34,6 +35,7 @@ import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
 import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
+
 import pe.gob.muni.apimercado.utils.dto.Jwt;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
@@ -105,7 +107,7 @@ public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
 	private UsuarioDto cargaNuevoUsuario(UsuarioDto oldDto) {
 		UsuarioDto nvoDto = null;
-		nvoDto = new UsuarioDto(oldDto.getUsername(), "[SECRET]", oldDto.isEnabled(),
+		nvoDto = new UsuarioDto(oldDto.getUsername(), SECRET_PASSWORD, oldDto.isEnabled(),
 					true, true, true,new ArrayList<Rol>());
 		nvoDto.setId(oldDto.getId());
 		nvoDto.setNombres(oldDto.getNombres());

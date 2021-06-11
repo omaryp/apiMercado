@@ -48,7 +48,7 @@
 		Update tarifas
 		set
 		descripcion = #{descripcion},monto=#{monto},conceptos_id=#{conceptos_id},
-		estado = #{estado},fecha_inicio=#{fecha_inicio},fecha_fin=#{fecha_fin}
+		estado = #{estado},fecha_inicio=#{fecha_inicio},fecha_fin=#{fecha_fin},
 		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
 		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
@@ -66,7 +66,7 @@
 		from tarifas
 		<where>
 			<if test="search != null">
-				CONCAT(descripcion) LIKE CONCAT('%',#{search},'%')
+				CONCAT(descripcion) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null and sort != ''">
