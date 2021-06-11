@@ -48,6 +48,7 @@
 	<select id="getAllPuestosDtoMercado" resultMap="PuestoDtoResultMap" parameterType="int">
 		select
 		A.id,
+		A.codigo,
 		A.mercados_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,
@@ -161,6 +162,7 @@
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select
 		A.id,
+		A.codigo,
 		A.mercados_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,

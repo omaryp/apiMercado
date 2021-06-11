@@ -4,6 +4,7 @@ public class PuestoDto {
 
 	private int id;
 	private int mercados_id;
+	private String codigo;
 	private String descripcion_mercado;
 	private int conceptos_id;
 	private String descripcion_concepto;
@@ -100,6 +101,12 @@ public class PuestoDto {
 	}
 	public void setComerciantes_id(int comerciantes_id) {
 		this.comerciantes_id = comerciantes_id;
+	}
+	public String getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 }

@@ -18,6 +18,8 @@ public class Usuario extends Persona{
 	@NotNull(message="Atributo password no debe ser nulo.")
 	private String password;
 	
+	private String password2;
+	
 	private Date fechaUltAcc;
 	
 	@Min(value=1, message="Atributo código de perfil debe ser != 0")
@@ -83,5 +85,15 @@ public class Usuario extends Persona{
 	public void setPerfiles_codigo(int perfiles_codigo) {
 		this.perfiles_codigo = perfiles_codigo;
 	}
+
+	public String getPassword2() {
+		return password2;
+	}
+
+	public void setPassword2(String password2) {
+		this.password2 = password2;
+	}
+	
+	
 	
 }
