@@ -133,7 +133,8 @@ public class ComercianteService implements IComercianteService {
 	@Override
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
-			repository.deleteEntity(id);
+			Comerciante tmp = getEntity(id);
+			perRepository.deleteEntity(tmp.getPersonas_id());
 		}catch (ApiException e) {
 			logger.error("Error api eliminando entidad comerciante {} - {} - {}",id, e.getMessage(), e);
 			throw e;

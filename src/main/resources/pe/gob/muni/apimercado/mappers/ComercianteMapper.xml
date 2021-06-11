@@ -30,13 +30,7 @@
 		B.eliminado_por
 		 from comerciantes A , personas B where A.personas_id = B.id and A.id = #{id}
 	</select>
-	
-	<update id="deleteEntity">
-		Update comerciantes
-		set estado = 0
-		where id = #{id}
-	</update>
-	
+		
 	<select id="getAllEntitys" resultMap="ComercianteResultMap">
 		select A.id,A.ruc,A.razon_social,A.personas_id,
 		B.id,

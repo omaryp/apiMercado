@@ -206,6 +206,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		List<Usuario> rpta = new ArrayList<Usuario>();
 		datos.forEach((entity) -> {
 			entity.setId(entity.getPersonas_id());
+			entity.setPassword(SECRET_PASSWORD);
 			rpta.add(entity);
 		});
 		return rpta;
