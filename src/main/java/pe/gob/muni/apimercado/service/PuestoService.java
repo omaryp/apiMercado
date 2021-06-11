@@ -18,6 +18,7 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Puesto;
 import pe.gob.muni.apimercado.model.PuestoComerciante;
+import pe.gob.muni.apimercado.model.dto.PuestoDto;
 import pe.gob.muni.apimercado.repository.PuestoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -192,7 +193,26 @@ public class PuestoService implements IPuestoService {
 	}
 
 	@Override
-	public List<Puesto> getAllPuestosMercado(int idMercado) throws ApiException {
+	public PageInfo<PuestoDto> pagingDtoEntitys(Map<String, String> params) throws ApiException,Exception {
+		try {
+			List<PuestoDto> rptaData = null;
+			PageTable pagData = mapToObject(params, PageTable.class);
+			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
+			
+			rptaData = repository.pagingDtoEntitys(pagData);
+				
+			return new PageInfo<PuestoDto>(rptaData);
+		}catch (ApiException e) {
+			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public List<PuestoDto> getAllPuestosDtoMercado(int idMercado) throws ApiException {
 		try {
 			return repository.getAllPuestosMercado(idMercado);
 		}catch (ApiException e) {

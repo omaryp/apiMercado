@@ -6,6 +6,7 @@ public class PageTable {
 	private String search;
 	private String sort;
 	private String order;
+	private int filter;
 	private int offset = 0;
 	private int limit = 10;
 	
@@ -58,4 +59,12 @@ public class PageTable {
 		this.limit = limit;
 	}
 
+	public int getFilter() {
+		return filter;
+	}
+
+	public void setFilter(int filter) {
+		this.filter = filter;
+	}
+	
 }

@@ -7,6 +7,8 @@
 
 	<resultMap id="PuestoResultMap" type="Puesto" />
 	
+	<resultMap id="PuestoDtoResultMap" type="PuestoDto" />
+
 	<select id="getEntity" resultMap="PuestoResultMap">
 		select
 		id,
@@ -24,7 +26,7 @@
 		eliminado_por
 		from puestos where id = #{id}
 	</select>
-	
+
 	<select id="getAllEntitys" resultMap="PuestoResultMap">
 		select
 		id,
@@ -40,10 +42,38 @@
 		fecha_modifcacion,
 		modifcado_por,
 		eliminado_por
-		from puestos 
+		from puestos
 	</select>
 	
-	<select id="getAllPuestosMercado" resultMap="PuestoResultMap" parameterType="int">
+	<select id="getAllPuestosDtoMercado" resultMap="PuestoDtoResultMap" parameterType="int">
+		select
+		A.id,
+		A.mercados_id,
+		E.descripcion descripcion_mercado,
+		A.conceptos_id,
+		F.descripcion descripcion_concepto,
+		A.ubicacion_id,
+		G.valor_cadena1 descripcion_ubicacion, 
+		A.giro_id,
+		H.valor_cadena1 descripcion_giro,
+		B.comerciantes_id,
+		D.dni,
+		D.nombres,
+		D.apellidos,
+		A.estado
+		from puestos A
+		inner join puestos_comerciantes B on A.id = B.puestos_id
+		left join comerciantes C on C.id = B.comerciantes_id 
+		inner join personas D on D.id = C.personas_id
+		inner join mercados E on E.id = A.mercados_id
+		inner join conceptos F on F.id = A.conceptos_id
+		inner join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
+		inner join parametros H on H.codigo=2 and H.subcodigo = A.giro_id
+		where A.mercados_id = #{id}
+	</select>
+
+	<select id="getAllPuestosMercado" resultMap="PuestoResultMap"
+		parameterType="int">
 		select
 		id,
 		codigo,
@@ -58,7 +88,7 @@
 		fecha_modifcacion,
 		modifcado_por,
 		eliminado_por
-		from puestos 
+		from puestos
 		where mercados_id = #{id}
 	</select>
 
@@ -66,7 +96,7 @@
 		insert into puestos(
 		codigo,mercados_id,conceptos_id,cobradores_id,ubicacion_id,
 		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
-		modifcado_por,	eliminado_por)
+		modifcado_por, eliminado_por)
 		values(
 		#{codigo},#{mercados_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
 		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
@@ -82,22 +112,27 @@
 	<update id="updateEntity" parameterType="Puesto">
 		Update puestos
 		set
-		codigo = #{codigo},
+		codigo
+		= #{codigo},
 		mercados_id = #{mercados_id},
-		conceptos_id = #{conceptos_id},
+		conceptos_id =
+		#{conceptos_id},
 		cobradores_id = #{cobradores_id},
-		ubicacion_id = #{ubicacion_id},
+		ubicacion_id =
+		#{ubicacion_id},
 		giro_id = #{giro_id},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, 
+		creado_por = #{creado_por},
 		fecha_modifcacion = #{fecha_modifcacion},
-		modifcado_por = #{modifcado_por},
+		modifcado_por =
+		#{modifcado_por},
 		eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="PuestoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+	<select id="pagingEntitys" resultMap="PuestoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
 		select id,
 		codigo,
 		mercados_id,
@@ -112,8 +147,59 @@
 		modifcado_por,
 		eliminado_por
 		from puestos
+		<where>
+			<if test="filter != '' and filter != null">
+				mercados_id = #{filter}
+			</if>
+		</where>
 		<if test="sort != '' and sort != null">
-			ORDER BY ${sort} ${order}
+			ORDER BY #{sort} #{order}
+		</if>
+	</select>
+	
+	<select id="pagingDtoEntitys" resultMap="PuestoDtoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select
+		A.id,
+		A.mercados_id,
+		E.descripcion descripcion_mercado,
+		A.conceptos_id,
+		F.descripcion descripcion_concepto,
+		A.ubicacion_id,
+		G.valor_cadena1 descripcion_ubicacion,
+		A.giro_id,
+		H.valor_cadena1 descripcion_giro,
+		B.comerciantes_id,
+		D.dni,
+		D.nombres,
+		D.apellidos,
+		A.estado
+		from puestos A
+		inner join puestos_comerciantes B on
+		A.id = B.puestos_id
+		left join comerciantes C on C.id =
+		B.comerciantes_id
+		inner join personas D on D.id = C.personas_id
+		inner join mercados E on E.id
+		= A.mercados_id
+		inner join conceptos F on F.id = A.conceptos_id
+		inner
+		join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
+		inner
+		join parametros H on H.codigo=2 and H.subcodigo = A.giro_id
+		<where>
+			<if test="search != '' and search != null">
+				apellidos LIKE CONCAT(#{search},'%')
+			</if>
+			<if test="filter != '' and filter != null">
+				<if test="search != '' and search != null">
+					and
+				</if>
+				mercados_id = #{filter}
+			</if>
+		</where>
+		<if test="sort != '' and sort != null">
+			ORDER BY #{sort} #{order}
 		</if>
 	</select>
 
