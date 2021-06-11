@@ -1,9 +1,15 @@
 package pe.gob.muni.apimercado.model;
 
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+
 public class Parametro extends BasicEntity {
 	
+	@Min(value=1, message="Atributo codigo debe ser != 0")
 	private int codigo;
+	@Min(value=1, message="Atributo subcodigo debe ser != 0")
 	private int subcodigo;
+	@NotBlank(message="Atributo tabla no debe ser vacío.")
 	private String tabla;
 	private int valor_entero;
 	private double valor_decimal;

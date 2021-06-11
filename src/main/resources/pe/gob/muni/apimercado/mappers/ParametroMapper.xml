@@ -10,7 +10,7 @@
 	<select id="getEntity" resultMap="ParametroResultMap">
 		select
 		codigo,subcodigo,tabla,valor_entero,
-		valor_decimal,valor_cadena1,valor_cadena2,B.dni,
+		valor_decimal,valor_cadena1,valor_cadena2,
 		fecha_creacion,fecha_modifcacion,creado_por,
 		modifcado_por,eliminado_por,estado
 		from
@@ -18,7 +18,7 @@
 		#{codigo} and subcodigo=#{subcodigo}
 	</select>
 
-	<select id="getAllEntity" resultMap="ParametroResultMap">
+	<select id="getAllEntitys" resultMap="ParametroResultMap">
 		select
 		codigo,subcodigo,tabla,valor_entero,
 		valor_decimal,valor_cadena1,valor_cadena2,
