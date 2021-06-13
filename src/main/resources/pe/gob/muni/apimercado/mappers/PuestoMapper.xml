@@ -160,6 +160,7 @@
 	
 	<select id="pagingDtoEntitys" resultMap="PuestoDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		select * from (
 		select
 		A.id,
 		A.codigo,
@@ -182,13 +183,11 @@
 		left join comerciantes C on C.id =
 		B.comerciantes_id
 		inner join personas D on D.id = C.personas_id
-		inner join mercados E on E.id
-		= A.mercados_id
+		inner join mercados E on E.id = A.mercados_id
 		inner join conceptos F on F.id = A.conceptos_id
-		inner
-		join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
-		inner
-		join parametros H on H.codigo=2 and H.subcodigo = A.giro_id
+		inner join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
+		inner join parametros H on H.codigo=2 and H.subcodigo = A.giro_id 
+		Order by A.codigo ASC) T
 		<where>
 			<if test="search != '' and search != null">
 				apellidos LIKE CONCAT(#{search},'%')
