@@ -185,7 +185,7 @@
 				A.mercados_id = #{filter}
 			</if>
 		</where>
-		Order by LPAD(A.codigo,20,'0') ASC
+		Order by LPAD(A.codigo,20,'0') ASC,ubicaciones_id
 	</select>
 
 </mapper>
