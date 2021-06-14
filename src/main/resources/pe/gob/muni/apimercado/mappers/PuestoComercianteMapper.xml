@@ -11,7 +11,8 @@
 
 	<select id="getAllEntitys" resultMap="PuestoComercianteResultMap">
 		select
-		puestos_mercados_id,
+		mercados_id,
+		ubicaciones_id,
 		puestos_id,
 		comerciantes_id,
 		correlativo,
@@ -26,7 +27,8 @@
 	
 	<select id="getEntity" resultMap="PuestoComercianteResultMap">
 		select
-		puestos_mercados_id,
+		mercados_id,
+		ubicaciones_id,
 		puestos_id,
 		comerciantes_id,
 		correlativo,
@@ -42,7 +44,8 @@
 
 	<select id="getAllPuestosActive" resultMap="PuestoComercianteResultMap">
 		select
-		puestos_mercados_id,
+		mercados_id,
+		ubicaciones_id,
 		puestos_id,
 		comerciantes_id,
 		correlativo,
@@ -59,7 +62,8 @@
 	<update id="updateEntity" parameterType="PuestoComerciante">
 		update puestos_comerciantes
 		set 
-		puestos_mercados_id = #{puestos_mercados_id},
+		mercados_id = #{mercados_id},
+		ubicaciones_id = #{ubicaciones_id},
 		puestos_id = #{puestos_id},
 		comerciantes_id = #{comerciantes_id},
 		correlativo = #{correlativo},
@@ -72,7 +76,8 @@
 
 	<select id="getAllPuestosMercado" resultMap="PuestoComercianteResultMap" parameterType="int">
 		select
-		puestos_mercados_id,
+		mercados_id,
+		ubicaciones_id,
 		puestos_id,
 		comerciantes_id,
 		correlativo,
@@ -92,8 +97,8 @@
 			where puestos_id = #{puestos_id} and comerciantes_id = #{comerciantes_id}
 		</selectKey>
 		insert into
-		puestos_comerciante(puestos_id,comerciantes_id,correlativo,fecha_fin,estado,fecha_modifcacion,modifcado_por,fecha_creacion,creado_por,eliminado_por)
-		values(#{puestos_id},#{comerciantes_id},#{correlativo},#{fecha_fin},#{estado},#{fecha_modifcacion},#{modifcado_por},#{fecha_creacion},#{creado_por},#{eliminado_por})
+		puestos_comerciante(puestos_id,ubicaciones_id,mercados_id,comerciantes_id,correlativo,fecha_fin,estado,fecha_modifcacion,modifcado_por,fecha_creacion,creado_por,eliminado_por)
+		values(#{puestos_id},#{ubicaciones_id},#{mercados_id},#{comerciantes_id},#{correlativo},#{fecha_fin},#{estado},#{fecha_modifcacion},#{modifcado_por},#{fecha_creacion},#{creado_por},#{eliminado_por})
 	</insert>
 
 </mapper>

@@ -8,6 +8,8 @@ public class Ticket extends BasicEntity {
 	private int mercados_id;
 	@Min(value=1, message="Atributo comerciante_id debe ser != 0")
 	private int comerciantes_id;
+	@Min(value=1, message="Atributo ubicaciones_id debe ser != 0")
+	private int ubicaciones_id;
 	@Min(value=1, message="Atributo puesto_id debe ser != 0")
 	private int puestos_id;
 	@Min(value=1, message="Atributo correlativo debe ser != 0")
@@ -62,6 +64,14 @@ public class Ticket extends BasicEntity {
 
 	public void setObservaciones(String observaciones) {
 		this.observaciones = observaciones;
+	}
+
+	public int getUbicaciones_id() {
+		return ubicaciones_id;
+	}
+
+	public void setUbicaciones_id(int ubicaciones_id) {
+		this.ubicaciones_id = ubicaciones_id;
 	}
 
 		

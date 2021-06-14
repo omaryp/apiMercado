@@ -8,7 +8,7 @@ public class PuestoDto {
 	private String descripcion_mercado;
 	private int conceptos_id;
 	private String descripcion_concepto;
-	private int ubicacion_id;
+	private int ubicaciones_id;
 	private String descripcion_ubicacion;
 	private int giro_id;
 	private String descripcion_giro;
@@ -48,11 +48,11 @@ public class PuestoDto {
 	public void setDescripcion_concepto(String descripcion_concepto) {
 		this.descripcion_concepto = descripcion_concepto;
 	}
-	public int getUbicacion_id() {
-		return ubicacion_id;
+	public int getUbicaciones_id() {
+		return ubicaciones_id;
 	}
-	public void setUbicacion_id(int ubicacion_id) {
-		this.ubicacion_id = ubicacion_id;
+	public void setUbicaciones_id(int ubicaciones_id) {
+		this.ubicaciones_id = ubicaciones_id;
 	}
 	public String getDescripcion_ubicacion() {
 		return descripcion_ubicacion;

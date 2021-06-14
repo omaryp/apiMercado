@@ -16,7 +16,7 @@ public class Puesto extends BasicEntity {
 	@Min(value=1, message="Atributo cobrador debe ser != 0")
 	private int cobradores_id;
 	@Min(value=1, message="Atributo ubicación debe ser != 0")
-	private int ubicacion_id;
+	private int ubicaciones_id;
 	@Min(value=1, message="Atributo giro debe ser != 0")
 	private int giro_id;
 	
@@ -44,11 +44,11 @@ public class Puesto extends BasicEntity {
 	public void setCobradores_id(int cobradores_id) {
 		this.cobradores_id = cobradores_id;
 	}
-	public int getUbicacion_id() {
-		return ubicacion_id;
+	public int getUbicaciones_id() {
+		return ubicaciones_id;
 	}
-	public void setUbicacion_id(int ubicacion_id) {
-		this.ubicacion_id = ubicacion_id;
+	public void setUbicaciones_id(int ubicaciones_id) {
+		this.ubicaciones_id = ubicaciones_id;
 	}
 	public int getGiro_id() {
 		return giro_id;

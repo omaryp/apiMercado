@@ -6,6 +6,7 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.IMercadoMapper">
 
 	<resultMap id="MercadoResultMap" type="Mercado" />
+	<resultMap id="UbicacionMercadoResultMap" type="UbicacionMercado" />
 
 	<select id="getEntity" resultMap="MercadoResultMap">
 		select 
@@ -88,5 +89,18 @@
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>
+	
+	<insert id="guardarUbicacionMercado" parameterType="UbicacionMercado">
+		insert into ubicaciones_mercados(ubicaciones_id,mercados_id)
+		values
+		<foreach item="item" collection="list" separator=",">
+			(#{item.ubicaciones_id},#{item.mercados_id})
+		</foreach>
+	</insert>
+	
+	<delete id="deleteUbicacionMercado">
+		delete from ubicaciones_mercados
+		where ubicaciones_id = #{ubicaciones_id} and mercados_id = #{mercados_id}
+	</delete>
 
 </mapper>

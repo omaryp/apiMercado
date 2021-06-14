@@ -14,6 +14,7 @@
 
 	<select id="getEntity" resultMap="CobradorResultMap">
 		select A.id,A.personas_id,
+		A.mercados_id,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -33,6 +34,7 @@
 
 	<select id="getAllEntitys" resultMap="CobradorResultMap">
 		select A.id,A.personas_id,
+		A.mercados_id,
 		B.id,
 		B.nombres,
 		B.apellidos,
@@ -53,7 +55,7 @@
 	<insert id="saveEntity" parameterType="Cobrador">
 		insert into
 		cobradores(
-		personas_id)
+		personas_id,mercados_id)
 		values(#{personas_id})
 	</insert>
 
@@ -61,6 +63,7 @@
 		Update cobradores
 		set
 		personas_id = #{personas_id}
+		mercados_id = #{mercados_id}
 		where id = #{id}
 	</update>
 
@@ -70,6 +73,7 @@
 		select
 		A.id,
 		A.personas_id,
+		A.mercados_id,
 		B.nombres,
 		B.apellidos,
 		B.dni,

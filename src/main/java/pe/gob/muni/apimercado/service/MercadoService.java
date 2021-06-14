@@ -18,6 +18,7 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Mercado;
+import pe.gob.muni.apimercado.model.UbicacionMercado;
 import pe.gob.muni.apimercado.repository.MercadoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -162,6 +163,37 @@ public class MercadoService implements IMercadoService {
 			logger.error("Error general obteniendo entidades mercado  {} - {}", e.getMessage(), e);
 			throw e;
 		}
+	}
+
+	@Override
+	public void guardarUbicacionMercado(List<UbicacionMercado> entitys) throws ApiException,Exception {
+		logger.info("guardando roles del perfil {}", entitys);
+		try {
+			repository.guardarUbicacionMercado(entitys);
+		} catch (ApiException e) {
+			logger.error("Error api guardar ubicaciones en mercado {} - {}",e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general guardar ubicaciones en mercado {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public void deleteUbicacionMercado(List<UbicacionMercado> entitys) throws ApiException,Exception {
+		logger.info("guardando roles del perfil {}", entitys);
+		try {
+			for (UbicacionMercado ubica : entitys) {
+				repository.deleteUbicacionMercado(ubica);
+			}
+		} catch (ApiException e) {
+			logger.error("Error api eliminando ubicaciones en mercado {} - {}",e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general eliminando ubicaciones en mercado {} - {}", e.getMessage(), e);
+			throw e;
+		}
+		
 	}
 
 }

@@ -14,6 +14,7 @@
 		id,
 		codigo,
 		mercados_id,
+		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
 		ubicacion_id,
@@ -32,6 +33,7 @@
 		id,
 		codigo,
 		mercados_id,
+		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
 		ubicacion_id,
@@ -50,6 +52,7 @@
 		A.id,
 		A.codigo,
 		A.mercados_id,
+		A.ubicaciones_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,
 		F.descripcion descripcion_concepto,
@@ -68,7 +71,7 @@
 		inner join personas D on D.id = C.personas_id
 		inner join mercados E on E.id = A.mercados_id
 		inner join conceptos F on F.id = A.conceptos_id
-		inner join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
+		inner join ubicaciones G on G.id = A.ubicaciones_id
 		inner join parametros H on H.codigo=2 and H.subcodigo = A.giro_id
 		where A.mercados_id = #{id}
 	</select>
@@ -79,6 +82,7 @@
 		id,
 		codigo,
 		mercados_id,
+		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
 		ubicacion_id,
@@ -95,11 +99,11 @@
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
-		codigo,mercados_id,conceptos_id,cobradores_id,ubicacion_id,
+		codigo,mercados_id,ubicaciones_id,conceptos_id,cobradores_id,ubicacion_id,
 		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
 		modifcado_por, eliminado_por)
 		values(
-		#{codigo},#{mercados_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
+		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
 		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -116,6 +120,7 @@
 		codigo
 		= #{codigo},
 		mercados_id = #{mercados_id},
+		ubicaciones_id = #{ubicaciones_id}, 
 		conceptos_id =
 		#{conceptos_id},
 		cobradores_id = #{cobradores_id},
@@ -137,6 +142,7 @@
 		select id,
 		codigo,
 		mercados_id,
+		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
 		ubicacion_id,
@@ -165,6 +171,7 @@
 		A.id,
 		A.codigo,
 		A.mercados_id,
+		A.ubicaciones_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,
 		F.descripcion descripcion_concepto,
@@ -185,7 +192,7 @@
 		inner join personas D on D.id = C.personas_id
 		inner join mercados E on E.id = A.mercados_id
 		inner join conceptos F on F.id = A.conceptos_id
-		inner join parametros G on G.codigo=1 and G.subcodigo = A.ubicacion_id
+		inner join ubicaciones G on G.id = A.ubicaciones_id
 		inner join parametros H on H.codigo=2 and H.subcodigo = A.giro_id 
 		Order by A.codigo ASC) T
 		<where>

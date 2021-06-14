@@ -12,6 +12,8 @@ public class PuestoComerciante extends BasicEntity {
 	private int puestos_id;
 	@Min(value=1, message="Atributo comerciante_id debe ser != 0")
 	private int comerciantes_id;
+	@Min(value=1, message="Atributo ubicacion_id debe ser != 0")
+	private int ubicaciones_id;
 	private int correlativo;
 	private Date fecha_fin;
 	
