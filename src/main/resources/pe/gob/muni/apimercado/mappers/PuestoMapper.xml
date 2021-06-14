@@ -17,7 +17,6 @@
 		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
-		ubicacion_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -36,7 +35,6 @@
 		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
-		ubicacion_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -52,12 +50,11 @@
 		A.id,
 		A.codigo,
 		A.mercados_id,
-		A.ubicaciones_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,
 		F.descripcion descripcion_concepto,
-		A.ubicacion_id,
-		G.valor_cadena1 descripcion_ubicacion, 
+		A.ubicaciones_id,
+		G.descripcion descripcion_ubicacion, 
 		A.giro_id,
 		H.valor_cadena1 descripcion_giro,
 		B.comerciantes_id,
@@ -85,7 +82,6 @@
 		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
-		ubicacion_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -99,11 +95,11 @@
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
-		codigo,mercados_id,ubicaciones_id,conceptos_id,cobradores_id,ubicacion_id,
+		codigo,mercados_id,ubicaciones_id,conceptos_id,cobradores_id,
 		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
 		modifcado_por, eliminado_por)
 		values(
-		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},#{cobradores_id},#{ubicacion_id},
+		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},#{cobradores_id},
 		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -124,8 +120,6 @@
 		conceptos_id =
 		#{conceptos_id},
 		cobradores_id = #{cobradores_id},
-		ubicacion_id =
-		#{ubicacion_id},
 		giro_id = #{giro_id},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
@@ -145,7 +139,6 @@
 		ubicaciones_id,
 		conceptos_id,
 		cobradores_id,
-		ubicacion_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -171,12 +164,11 @@
 		A.id,
 		A.codigo,
 		A.mercados_id,
-		A.ubicaciones_id,
 		E.descripcion descripcion_mercado,
 		A.conceptos_id,
 		F.descripcion descripcion_concepto,
-		A.ubicacion_id,
-		G.valor_cadena1 descripcion_ubicacion,
+		A.ubicaciones_id,
+		G.descripcion descripcion_ubicacion,
 		A.giro_id,
 		H.valor_cadena1 descripcion_giro,
 		B.comerciantes_id,
