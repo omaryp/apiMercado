@@ -116,11 +116,8 @@
 		conceptos_id = #{conceptos_id},
 		giro_id = #{giro_id},
 		estado = #{estado},
-		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por},
 		fecha_modifcacion = #{fecha_modifcacion},
-		modifcado_por =
-		#{modifcado_por},
+		modifcado_por = #{modifcado_por},
 		eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>

@@ -69,6 +69,7 @@ public class PuestoService implements IPuestoService {
 			if (validadorPuesto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
 			entity.setFecha_creacion(new Date());
+			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
 		}catch (ValidatorException e) {
 			logger.error("Error api validacion guardando entidad puesto {} - {}", e.getMessage(), e);
