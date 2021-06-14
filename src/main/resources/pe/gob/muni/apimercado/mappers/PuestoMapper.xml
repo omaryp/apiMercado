@@ -179,8 +179,7 @@
 		from puestos A
 		inner join puestos_comerciantes B on
 		A.id = B.puestos_id
-		left join comerciantes C on C.id =
-		B.comerciantes_id
+		left join comerciantes C on C.id = B.comerciantes_id
 		inner join personas D on D.id = C.personas_id
 		inner join mercados E on E.id = A.mercados_id
 		inner join conceptos F on F.id = A.conceptos_id
