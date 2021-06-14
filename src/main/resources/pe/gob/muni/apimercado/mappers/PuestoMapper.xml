@@ -149,7 +149,6 @@
 	
 	<select id="pagingDtoEntitys" resultMap="PuestoDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
-		select * from (
 		select
 		A.id,
 		A.codigo,
@@ -175,18 +174,18 @@
 		inner join conceptos F on F.id = A.conceptos_id
 		inner join ubicaciones G on G.id = A.ubicaciones_id
 		inner join parametros H on H.codigo=2 and H.subcodigo = A.giro_id 
-		Order by A.codigo ASC) T
 		<where>
 			<if test="search != '' and search != null">
-				apellidos LIKE CONCAT(#{search},'%')
+				D.apellidos LIKE CONCAT(#{search},'%')
 			</if>
 			<if test="filter != '' and filter != null">
 				<if test="search != '' and search != null">
 					and
 				</if>
-				mercados_id = #{filter}
+				A.mercados_id = #{filter}
 			</if>
 		</where>
+		Order by A.codigo ASC
 	</select>
 
 </mapper>
