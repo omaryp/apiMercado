@@ -187,9 +187,6 @@
 				mercados_id = #{filter}
 			</if>
 		</where>
-		<if test="sort != '' and sort != null">
-			ORDER BY #{sort} #{order}
-		</if>
 	</select>
 
 </mapper>
