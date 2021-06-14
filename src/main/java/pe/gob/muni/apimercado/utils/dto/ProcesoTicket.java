@@ -2,7 +2,6 @@ package pe.gob.muni.apimercado.utils.dto;
 
 import java.util.Date;
 
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 public class ProcesoTicket {
@@ -10,9 +9,7 @@ public class ProcesoTicket {
 	@NotNull(message="Atributo fecha proceso no debe ser vacío.")
 	private Date fechaProceso;
 	private int mercados_id;
-	@Min(value=1, message="Atributo creado por debe ser != 0")
 	private int creado_por;
-	@NotNull(message="Atributo fecha creacion no debe ser vacío.")
 	private Date fechaCreacion;
 
 	public Date getFechaProceso() {
