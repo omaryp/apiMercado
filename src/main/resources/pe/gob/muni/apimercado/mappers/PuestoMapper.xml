@@ -16,7 +16,6 @@
 		mercados_id,
 		ubicaciones_id,
 		conceptos_id,
-		cobradores_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -34,7 +33,6 @@
 		mercados_id,
 		ubicaciones_id,
 		conceptos_id,
-		cobradores_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -81,7 +79,6 @@
 		mercados_id,
 		ubicaciones_id,
 		conceptos_id,
-		cobradores_id,
 		giro_id,
 		estado,
 		fecha_creacion,
@@ -95,11 +92,11 @@
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
-		codigo,mercados_id,ubicaciones_id,conceptos_id,cobradores_id,
+		codigo,mercados_id,ubicaciones_id,conceptos_id,
 		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
 		modifcado_por, eliminado_por)
 		values(
-		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},#{cobradores_id},
+		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},
 		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -113,13 +110,10 @@
 	<update id="updateEntity" parameterType="Puesto">
 		Update puestos
 		set
-		codigo
-		= #{codigo},
+		codigo = #{codigo},
 		mercados_id = #{mercados_id},
 		ubicaciones_id = #{ubicaciones_id}, 
-		conceptos_id =
-		#{conceptos_id},
-		cobradores_id = #{cobradores_id},
+		conceptos_id = #{conceptos_id},
 		giro_id = #{giro_id},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
@@ -138,7 +132,6 @@
 		mercados_id,
 		ubicaciones_id,
 		conceptos_id,
-		cobradores_id,
 		giro_id,
 		estado,
 		fecha_creacion,
