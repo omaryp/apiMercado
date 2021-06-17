@@ -146,7 +146,7 @@
         	<if test="estado == 1 or estado = 0"  >
 				A.estado = #{estado} 
 			</if>
-			<if test="fecha_incio != '' and fecha_incio != null and fecha_fin != '' and fecha_fin != null "  >
+			<if test="fecha_incio != null and fecha_fin != null "  >
 				AND A.fecha_creacion between #{fecha_incio) and #{fecha_fin} 
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
