@@ -9,8 +9,6 @@ public class ProcesoTicket {
 	@NotNull(message="Atributo fecha proceso no debe ser vacío.")
 	private Date fechaProceso;
 	private int mercados_id;
-	private int creado_por;
-	private Date fechaCreacion;
 
 	public Date getFechaProceso() {
 		return fechaProceso;
@@ -28,21 +26,5 @@ public class ProcesoTicket {
 		this.mercados_id = mercados_id;
 	}
 
-	public int getCreado_por() {
-		return creado_por;
-	}
-
-	public void setCreado_por(int creado_por) {
-		this.creado_por = creado_por;
-	}
-
-	public Date getFechaCreacion() {
-		return fechaCreacion;
-	}
-
-	public void setFechaCreacion(Date fechaCreacion) {
-		this.fechaCreacion = fechaCreacion;
-	}
-	
 	
 }

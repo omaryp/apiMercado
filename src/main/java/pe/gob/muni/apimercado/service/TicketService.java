@@ -20,11 +20,13 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
+import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 import pe.gob.muni.apimercado.utils.dto.ProcesoTicket;
 
 @Service
@@ -58,6 +60,27 @@ public class TicketService implements ITicketService {
 			rptaData = repository.pagingEntitys(pagData);
 
 			return new PageInfo<Ticket>(rptaData);
+		} catch (ApiException e) {
+			logger.error("Error api paginando entidades ticket {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general paginando entidades ticket {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public PageInfo<TicketDto> pagingTickets(Map<String, String> params) throws ApiException, Exception {
+		logger.info("obteniendo tickets con los filtros {}.", objectToJson(params));
+		try {
+			List<TicketDto> rptaData = null;
+			PageTableTicket pagData = mapToObject(params, PageTableTicket.class);
+			
+			PageHelper.startPage(pagData.getPage(), pagData.getLimit());
+
+			rptaData = repository.pagingTickets(pagData);
+
+			return new PageInfo<TicketDto>(rptaData);
 		} catch (ApiException e) {
 			logger.error("Error api paginando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
@@ -181,6 +204,9 @@ public class TicketService implements ITicketService {
 			if (validadorProceso.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorProceso.getErrores());
 			procesarTickets(params);
+		} catch (ValidatorException e) {
+			logger.error("Hay Errores de validación - {} - {}", e.getMessage(), e);
+			throw e;
 		} catch (ApiException e) {
 			logger.error("Error api generando ticket - {} - {}", e.getMessage(), e);
 			throw e;
@@ -201,7 +227,7 @@ public class TicketService implements ITicketService {
 				nvoTicket.setCorrelativo(puesto.getCorrelativo());
 				nvoTicket.setCreado_por(auth.getUserToken());
 				nvoTicket.setEliminado_por(0);
-				nvoTicket.setEstado(1);
+				nvoTicket.setEstado(0);
 				nvoTicket.setFecha_creacion(params.getFechaProceso());
 				nvoTicket.setFecha_modifcacion(null);
 				nvoTicket.setMercados_id(puesto.getMercados_id());
