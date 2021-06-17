@@ -47,6 +47,12 @@ public class PuestoComerciante extends BasicEntity {
 	public void setFecha_fin(Date fecha_fin) {
 		this.fecha_fin = fecha_fin;
 	}
+	public int getUbicaciones_id() {
+		return ubicaciones_id;
+	}
+	public void setUbicaciones_id(int ubicaciones_id) {
+		this.ubicaciones_id = ubicaciones_id;
+	}
 	
 		
 }

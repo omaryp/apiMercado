@@ -208,6 +208,7 @@ public class TicketService implements ITicketService {
 				nvoTicket.setModifcado_por(0);
 				nvoTicket.setNo_habido(false);
 				nvoTicket.setObservaciones("");
+				nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
 				nvoTicket.setPuestos_id(puesto.getPuestos_id());
 				tickets.add(nvoTicket);
 			});
