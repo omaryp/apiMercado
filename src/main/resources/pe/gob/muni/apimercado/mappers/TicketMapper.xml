@@ -71,29 +71,21 @@
 		no_habido,observaciones,estado,fecha_creacion, creado_por,
 		fecha_modifcacion,
 		modifcado_por,eliminado_por)
-		values(#{mercados_id},#{ubicaciones_id}
+		values(#{mercados_id},#{ubicaciones_id},
 		#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
 		#{observaciones},#{estado},#{fecha_creacion},#{creado_por},
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
 
-	<insert id="saveAllTickets" useGeneratedKeys="true"
-		keyProperty="id">
+	<insert id="saveAllTickets" parameterType="java.util.List">
 		insert into tickets(
-		mercados_id,
-		ubicaciones_id,
-		comerciantes_id,
-		puestos_id,
-		correlativo,
-		no_habido,observaciones,estado,fecha_creacion, creado_por,
-		fecha_modifcacion,
-		modifcado_por,eliminado_por) values
-			<foreach item="item" collection="list" separator=",">
-				(#{item.mercados_id},#{item.ubicaciones_id}
-				#{item.comerciantes_id},#{item.puestos_id},#{item.correlativo},#{item.no_habido},
-				#{item.observaciones},#{item.estado},#{item.fecha_creacion},#{item.creado_por},
-				#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
-			</foreach>
+		mercados_id,ubicaciones_id,
+		comerciantes_id,puestos_id,correlativo,no_habido,
+		observaciones,estado,fecha_creacion, creado_por,
+		fecha_modifcacion,modifcado_por,eliminado_por) values
+		<foreach item="item" collection="list" separator=",">
+			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.estado},#{item.fecha_creacion},#{item.creado_por},#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
+		</foreach>
 	</insert>
 
 	<update id="deleteEntity">
@@ -110,15 +102,14 @@
 		comerciantes_id = #{comerciantes_id},
 		puestos_id = #{partidas_id},
 		correlativo = #{correlativo},
-		no_habido =
-		#{no_habido},
+		no_habido = #{no_habido},
 		observaciones = #{observaciones},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por},
 		fecha_modifcacion = #{fecha_modifcacion},
-		modifcado_por =
-		#{modifcado_por},eliminado_por = #{eliminado_por}
+		modifcado_por = #{modifcado_por},
+		eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
 

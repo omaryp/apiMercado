@@ -18,7 +18,6 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
-import pe.gob.muni.apimercado.model.Mercado;
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.repository.TicketRepository;
@@ -36,9 +35,6 @@ public class TicketService implements ITicketService {
 	@Autowired
 	private TicketRepository repository;
 
-	@Autowired
-	private IMercadoService merService;
-	
 	@Autowired
 	private IPuestoComercianteService pueService;
 	
@@ -143,10 +139,10 @@ public class TicketService implements ITicketService {
 				rpta = repository.getAllEntitys();
 
 		} catch (ApiException e) {
-			logger.error("Error api buscando entidad ticket - {}", e.getMessage(), e);
+			logger.error("Error api buscando entidad ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general buscando entidad ticket - {}", e.getMessage(), e);
+			logger.error("Error general buscando entidad ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
 		return rpta;
@@ -170,35 +166,26 @@ public class TicketService implements ITicketService {
 		try {
 			return repository.getAllEntitys();
 		} catch (ApiException e) {
-			logger.error("Error api obteniendo entidades ticket - {}", e.getMessage(), e);
+			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general obteniendo entidades ticket - {}", e.getMessage(), e);
+			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
 
 	@Override
 	public void generarTickets(ProcesoTicket params) throws ApiException, Exception {
-		List<Mercado> mercados;
 		try {
 			validadorProceso.validarModelo(params);
 			if (validadorProceso.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorProceso.getErrores());
-			if (params.getMercados_id() == 0) {
-				mercados = merService.getAllEntitys();
-				mercados.forEach((mercado) -> {
-					try {
-						procesarTickets(params);
-					} catch (Exception e) {
-						logger.error("Error al generar tickets");
-					}
-				});
-			} else
-				procesarTickets(params);
+			procesarTickets(params);
 		} catch (ApiException e) {
+			logger.error("Error api generando ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error api generando ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -212,7 +199,7 @@ public class TicketService implements ITicketService {
 				Ticket nvoTicket = new Ticket();
 				nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
 				nvoTicket.setCorrelativo(puesto.getCorrelativo());
-				nvoTicket.setCreado_por(params.getCreado_por());
+				nvoTicket.setCreado_por(auth.getUserToken());
 				nvoTicket.setEliminado_por(0);
 				nvoTicket.setEstado(1);
 				nvoTicket.setFecha_creacion(params.getFechaProceso());
@@ -226,8 +213,10 @@ public class TicketService implements ITicketService {
 			});
 			repository.saveAllTickets(tickets);
 		} catch (ApiException e) {
+			logger.error("Error api procesando ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
+			logger.error("Error api procesando ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

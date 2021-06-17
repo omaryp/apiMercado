@@ -13,6 +13,6 @@ public interface IPuestoComercianteMapper extends IBasicMapper<PuestoComerciante
 	
 	List<PuestoComerciante> getAllPuestosActive() throws SQLException,SQLIntegrityConstraintViolationException; 
 	
-	List<PuestoComerciante> getAllPuestosMercado(int mercados_id)  throws SQLException,SQLIntegrityConstraintViolationException; 
+	List<PuestoComerciante> getAllPuestosMercado(int id)  throws SQLException,SQLIntegrityConstraintViolationException; 
 	
 }

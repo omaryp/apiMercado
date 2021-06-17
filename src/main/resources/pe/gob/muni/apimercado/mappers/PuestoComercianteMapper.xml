@@ -21,7 +21,7 @@
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
-		modifcado_por,
+		modifcado_por
 		from puestos_comerciantes
 	</select>
 	
@@ -37,7 +37,7 @@
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
-		modifcado_por,
+		modifcado_por
 		from puestos_comerciantes
 		where comerciantes_id = #{id} and A.estado = 1
 	</select>
@@ -54,7 +54,7 @@
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
-		modifcado_por,
+		modifcado_por
 		from puestos_comerciantes
 		where estado = 1
 	</select>
@@ -86,9 +86,9 @@
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
-		modifcado_por,
+		modifcado_por
 		from puestos_comerciantes
-		where estado = 1 and puestos_mercados_id = #{id}
+		where estado = 1 and mercados_id = #{id}
 	</select>
 
 	<insert id="saveEntity" parameterType="PuestoComerciante">

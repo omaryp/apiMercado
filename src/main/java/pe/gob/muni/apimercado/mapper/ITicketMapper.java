@@ -10,5 +10,5 @@ import pe.gob.muni.apimercado.model.Ticket;
 
 @Mapper
 public interface ITicketMapper extends IBasicMapper<Ticket> {
-	void saveAllTickets(List<Ticket> tickets) throws SQLException,SQLIntegrityConstraintViolationException;
+	void saveAllTickets(List<Ticket> list) throws SQLException,SQLIntegrityConstraintViolationException;
 }
