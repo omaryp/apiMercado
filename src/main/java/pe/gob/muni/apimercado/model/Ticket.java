@@ -13,7 +13,8 @@ public class Ticket extends BasicEntity {
 	@Min(value=1, message="Atributo puesto_id debe ser != 0")
 	private int puestos_id;
 	@Min(value=1, message="Atributo correlativo debe ser != 0")
-	private int correlativo;
+	private long correlativo;
+	private int pagado;
 	
 	private boolean no_habido;
 	private String observaciones;
@@ -42,11 +43,11 @@ public class Ticket extends BasicEntity {
 		this.puestos_id = puestos_id;
 	}
 
-	public int getCorrelativo() {
+	public long getCorrelativo() {
 		return correlativo;
 	}
 
-	public void setCorrelativo(int correlativo) {
+	public void setCorrelativo(long correlativo) {
 		this.correlativo = correlativo;
 	}
 
@@ -72,6 +73,14 @@ public class Ticket extends BasicEntity {
 
 	public void setUbicaciones_id(int ubicaciones_id) {
 		this.ubicaciones_id = ubicaciones_id;
+	}
+
+	public int getPagado() {
+		return pagado;
+	}
+
+	public void setPagado(int pagado) {
+		this.pagado = pagado;
 	}
 
 		
