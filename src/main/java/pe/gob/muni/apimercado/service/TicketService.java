@@ -227,7 +227,8 @@ public class TicketService implements ITicketService {
 				nvoTicket.setCorrelativo(puesto.getCorrelativo());
 				nvoTicket.setCreado_por(auth.getUserToken());
 				nvoTicket.setEliminado_por(0);
-				nvoTicket.setEstado(0);
+				nvoTicket.setEstado(1);
+				nvoTicket.setPagado(0);
 				nvoTicket.setFecha_creacion(params.getFechaProceso());
 				nvoTicket.setFecha_modifcacion(null);
 				nvoTicket.setMercados_id(puesto.getMercados_id());
