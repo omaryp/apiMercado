@@ -11,7 +11,7 @@ public class PageTableTicket {
 	private Date fecha_fin;
 	private int comerciantes_id;
 	private int mercados_id;
-	private int estado;
+	private int pagado;
 	
 	public int getPage() {
 		return page;
@@ -55,12 +55,11 @@ public class PageTableTicket {
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
 	}
-	public int getEstado() {
-		return estado;
+	public int getPagado() {
+		return pagado;
 	}
-	public void setEstado(int estado) {
-		this.estado = estado;
+	public void setPagado(int pagado) {
+		this.pagado = pagado;
 	}
-
-	
+		
 }
