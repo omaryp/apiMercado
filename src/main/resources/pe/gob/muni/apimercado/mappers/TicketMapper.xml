@@ -148,7 +148,7 @@
         inner join ubicaciones G on G.id = A.ubicaciones_id	
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         <where>
-        	<if test="pagado != '' and  pagado != null"  >
+        	<if test="pagado != 2"  >
 				A.pagado = #{pagado}
 			</if>
 			<if test="fecha_incio != null and fecha_fin != null "  >

@@ -18,7 +18,7 @@ public class TicketDto {
 	private String nombres;
 	private String apellidos;
 	private int estado;
-	private boolean pagado;
+	private int pagado;
 	
 	public int getId() {
 		return id;
@@ -116,10 +116,10 @@ public class TicketDto {
 	public void setEstado(int estado) {
 		this.estado = estado;
 	}
-	public boolean isPagado() {
+	public int getPagado() {
 		return pagado;
 	}
-	public void setPagado(boolean pagado) {
+	public void setPagado(int pagado) {
 		this.pagado = pagado;
 	}
 	
