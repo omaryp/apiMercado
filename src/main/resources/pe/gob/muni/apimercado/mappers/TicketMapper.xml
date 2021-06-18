@@ -19,6 +19,7 @@
 		no_habido,
 		observacion,
 		estado,
+		pagado,
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
@@ -36,6 +37,7 @@
 		correlativo,
 		no_habido,
 		observacion,
+		pagado,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -54,6 +56,7 @@
 		correlativo,
 		no_habido,
 		observacion,
+		pagado,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -70,12 +73,12 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,observaciones,estado,fecha_creacion, creado_por,
+		no_habido,observaciones,pagado,estado,fecha_creacion, creado_por,
 		fecha_modifcacion,
 		modifcado_por,eliminado_por)
 		values(#{mercados_id},#{ubicaciones_id},
 		#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
-		#{observaciones},#{estado},#{fecha_creacion},#{creado_por},
+		#{observaciones},#{pagado},#{estado},#{fecha_creacion},#{creado_por},
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
 
@@ -83,10 +86,10 @@
 		insert into tickets(
 		mercados_id,ubicaciones_id,
 		comerciantes_id,puestos_id,correlativo,no_habido,
-		observaciones,estado,fecha_creacion, creado_por,
+		observaciones,pagado,estado,fecha_creacion, creado_por,
 		fecha_modifcacion,modifcado_por,eliminado_por) values
 		<foreach item="item" collection="list" separator=",">
-			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.estado},#{item.fecha_creacion},#{item.creado_por},#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
+			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.pagado},#{item.estado},#{item.fecha_creacion},#{item.creado_por},#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
 		</foreach>
 	</insert>
 
@@ -106,6 +109,7 @@
 		correlativo = #{correlativo},
 		no_habido = #{no_habido},
 		observaciones = #{observaciones},
+		pagado = #{pagado},
 		estado = #{estado},
 		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por},
@@ -133,7 +137,8 @@
 		D.dni,
 		D.nombres,
 		D.apellidos,
-		A.estado
+		A.estado,
+		A.pagado
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id
@@ -143,7 +148,7 @@
         inner join ubicaciones G on G.id = A.ubicaciones_id	
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         <where>
-        	<if test="pagado == 0 or pagado == 1"  >
+        	<if test="pagado != '' and  pagado != null"  >
 				A.pagado = #{pagado}
 			</if>
 			<if test="fecha_incio != null and fecha_fin != null "  >
