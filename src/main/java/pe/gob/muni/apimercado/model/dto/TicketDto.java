@@ -17,7 +17,7 @@ public class TicketDto {
 	private String dni;
 	private String nombres;
 	private String apellidos;
-	private int pagado;
+	private int estado;
 	
 	public int getId() {
 		return id;
@@ -109,11 +109,11 @@ public class TicketDto {
 	public void setApellidos(String apellidos) {
 		this.apellidos = apellidos;
 	}
-	public int getPagado() {
-		return pagado;
+	public int getEstado() {
+		return estado;
 	}
-	public void setPagado(int pagado) {
-		this.pagado = pagado;
+	public void setEstado(int estado) {
+		this.estado = estado;
 	}
 	
 	
