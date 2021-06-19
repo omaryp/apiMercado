@@ -187,6 +187,7 @@ public class PagoService implements IPagoService {
 				pag.setFecha_creacion(new Date());
 				pag.setCreado_por(auth.getUserToken());
 				pag.setSerie(serie.getCodigo());
+				pag.setFechaPago(new Date());
 				pag.setCorrelativo(serie.getCorrelativo()+1);
 				serie.setCorrelativo(pag.getCorrelativo());
 				if(series.containsKey(serie.getCodigo()))
