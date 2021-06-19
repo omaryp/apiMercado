@@ -21,7 +21,7 @@
 		A.id,A.codigo,A.descripcion,A.conceptos_id,A.correlativo,
 		A.estado,A.fecha_creacion,A.creado_por,
 		A.fecha_modifcacion,A.modifcado_por,
-		eliminado_por
+		A.eliminado_por
 		from series A
 		inner join puestos B on A.conceptos_id = B.conceptos_id
 		where B.id = #{idPuesto} and A.estado = 1

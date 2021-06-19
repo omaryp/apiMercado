@@ -195,6 +195,8 @@ public class PagoService implements IPagoService {
 				
 				repository.saveEntity(pag);
 				
+				ticket.setPagado(1);
+				
 				TicketPago ticPag= new TicketPago();
 				ticPag.setTickets_id(ticket.getId());
 				ticPag.setPagos_id(pag.getId());
