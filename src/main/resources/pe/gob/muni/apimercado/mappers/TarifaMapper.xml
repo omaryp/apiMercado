@@ -19,9 +19,9 @@
 	
 	<select id="getTarifaPuesto" resultMap="TarifaResultMap" >
 		select 
-		id,descripcion,monto,conceptos_id,
-		estado,fecha_inicio,fecha_fin,fecha_creacion,
-		creado_por,fecha_modifcacion,modifcado_por,eliminado_por
+		A.id,A.descripcion,A.monto,A.conceptos_id,
+		A.estado,A.fecha_inicio,A.fecha_fin,A.fecha_creacion,
+		A.creado_por,A.fecha_modifcacion,A.modifcado_por,A.eliminado_por
 	    from tarifas A
 	    inner join puestos B on B.conceptos_id = A.conceptos_id
 	    where B.idPuesto = #{idPuesto} and estado = 1
