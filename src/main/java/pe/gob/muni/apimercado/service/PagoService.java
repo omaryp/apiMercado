@@ -5,7 +5,6 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.util.ArrayList;
 import java.util.Date;
-import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -177,7 +176,6 @@ public class PagoService implements IPagoService {
 	@Override
 	public void pagoTickets(List<Ticket> tickets) throws ApiException, Exception {
 		List<TicketPago> tiPags = new ArrayList<TicketPago>();
-		Map<String, Serie> series = new HashMap<String,Serie>();
 		try {
 			for (Ticket ticket : tickets) {
 				Serie serie = ser.getSeriePuesto(ticket.getPuestos_id());
@@ -189,14 +187,12 @@ public class PagoService implements IPagoService {
 				pag.setSerie(serie.getCodigo());
 				pag.setFecha_pago(new Date());
 				pag.setCorrelativo(serie.getCorrelativo()+1);
-				serie.setCorrelativo(pag.getCorrelativo());
-				if(series.containsKey(serie.getCodigo()))
-					series.replace(serie.getCodigo(), serie);
-				else
-					series.put(serie.getCodigo(), serie);
 				pag.setMonto_pagado(tarifa.getMonto());
 				
 				repository.saveEntity(pag);
+				
+				serie.setCorrelativo(pag.getCorrelativo());
+				ser.updateEntity(serie);
 				
 				ticketSer.marcarTicketPagado(ticket.getId());
 				
@@ -207,9 +203,6 @@ public class PagoService implements IPagoService {
 				tiPags.add(ticPag);
 			}
 			repository.asociarTicketPago(tiPags);
-			for (Serie value : series.values()) {
-				ser.updateEntity(value);
-			}
 		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {

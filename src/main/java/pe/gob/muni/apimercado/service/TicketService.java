@@ -21,6 +21,7 @@ import com.github.pagehelper.PageInfo;
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
+import pe.gob.muni.apimercado.model.dto.TicketNoHabido;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -42,9 +43,6 @@ public class TicketService implements ITicketService {
 	
 	@Autowired
 	private IUsuarioService auth;
-
-	@Autowired
-	private Validador<Ticket> validadorTicket;
 
 	@Autowired
 	private Validador<ProcesoTicket> validadorProceso;
@@ -93,15 +91,9 @@ public class TicketService implements ITicketService {
 	@Override
 	public void saveEntity(Ticket entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorTicket.validarModelo(entity);
-			if (validadorTicket.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
 			entity.setFecha_creacion(new Date());
 			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);
-		} catch (ValidatorException e) {
-			logger.error("Error api validando entidad ticket {} - {}", e.getMessage(), e.getErrores());
-			throw e;
 		} catch (ApiException e) {
 			logger.error("Error api guardando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
@@ -114,9 +106,6 @@ public class TicketService implements ITicketService {
 	@Override
 	public void updateEntity(Ticket entity) throws ApiException, Exception, ValidatorException {
 		try {
-			validadorTicket.validarModelo(entity);
-			if (validadorTicket.isHayErrores())
-				throw new ValidatorException("Hay Errores de validación", validadorTicket.getErrores());
 			entity.setFecha_modifcacion(new Date());
 			entity.setModifcado_por(auth.getUserToken());
 			repository.updateEntity(entity);
@@ -229,7 +218,8 @@ public class TicketService implements ITicketService {
 				nvoTicket.setEliminado_por(0);
 				nvoTicket.setEstado(1);
 				nvoTicket.setPagado(0);
-				nvoTicket.setFecha_creacion(params.getFechaProceso());
+				nvoTicket.setFecha_creacion(new Date());
+				nvoTicket.setFecha_ticket(params.getFechaProceso());
 				nvoTicket.setFecha_modifcacion(null);
 				nvoTicket.setMercados_id(puesto.getMercados_id());
 				nvoTicket.setModifcado_por(0);
@@ -252,7 +242,7 @@ public class TicketService implements ITicketService {
 	@Override
 	public void marcarTicketPagado(int id) throws ApiException, Exception {
 		try {
-			marcarTicketPagado(id);
+			repository.marcarTicketPagado(id);
 		} catch (ApiException e) {
 			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
 			throw e;
@@ -261,6 +251,19 @@ public class TicketService implements ITicketService {
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public void marcarTicketNoHabido(TicketNoHabido ticket) throws ApiException, Exception {
+		try {
+			repository.marcarTicketNoHabido(ticket);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			throw e;
+		}		
 	}
 
 }

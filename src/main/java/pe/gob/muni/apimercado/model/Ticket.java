@@ -1,23 +1,20 @@
 package pe.gob.muni.apimercado.model;
 
-import javax.validation.constraints.Min;
+import java.util.Date;
+
 
 public class Ticket extends BasicEntity {
 	
-	@Min(value=1, message="Atributo mercado_id debe ser != 0")
 	private int mercados_id;
-	@Min(value=1, message="Atributo comerciante_id debe ser != 0")
 	private int comerciantes_id;
-	@Min(value=1, message="Atributo ubicaciones_id debe ser != 0")
 	private int ubicaciones_id;
-	@Min(value=1, message="Atributo puesto_id debe ser != 0")
 	private int puestos_id;
-	@Min(value=1, message="Atributo correlativo debe ser != 0")
 	private long correlativo;
 	private int pagado;
-	
+	private Date fecha_ticket;
 	private boolean no_habido;
 	private String observaciones;
+	private Date fecha_obs;
 
 	public int getMercados_id() {
 		return mercados_id;
@@ -83,5 +80,20 @@ public class Ticket extends BasicEntity {
 		this.pagado = pagado;
 	}
 
-		
+	public Date getFecha_ticket() {
+		return fecha_ticket;
+	}
+
+	public void setFecha_ticket(Date fecha_ticket) {
+		this.fecha_ticket = fecha_ticket;
+	}
+
+	public Date getFecha_obs() {
+		return fecha_obs;
+	}
+
+	public void setFecha_obs(Date fecha_obs) {
+		this.fecha_obs = fecha_obs;
+	}
+
 }

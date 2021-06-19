@@ -21,6 +21,7 @@ public class TicketDto {
 	private String apellidos;
 	private int estado;
 	private int pagado;
+	private Date fecha_ticket;
 	private Date fecha_creacion;
 	
 	public int getId() {
@@ -130,6 +131,12 @@ public class TicketDto {
 	}
 	public void setFecha_creacion(Date fecha_creacion) {
 		this.fecha_creacion = fecha_creacion;
+	}
+	public Date getFecha_ticket() {
+		return fecha_ticket;
+	}
+	public void setFecha_ticket(Date fecha_ticket) {
+		this.fecha_ticket = fecha_ticket;
 	}
 	
 }

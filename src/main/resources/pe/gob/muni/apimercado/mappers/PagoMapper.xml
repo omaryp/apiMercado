@@ -57,7 +57,7 @@
 	
 	<insert id="asociarTicketPago" parameterType="java.util.List">
 		insert into tickets_pagos(tickets_id,pagos_id)
-		values(
+		values
 		<foreach item="item" collection="list" separator=",">
 			(#{item.tickets_id},#{item.pagos_id})
 		</foreach>

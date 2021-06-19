@@ -58,7 +58,7 @@
 		set
 		codigo = #{codigo},descripcion=#{descripcion},
 		conceptos_id=#{conceptos_id},
-		correlativo = #{correlativo}
+		correlativo = #{correlativo},
 		estado = #{estado},fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
 		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}

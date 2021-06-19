@@ -20,6 +20,7 @@
 		observacion,
 		estado,
 		pagado,
+		fecha_ticket,
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
@@ -39,6 +40,7 @@
 		observacion,
 		pagado,
 		estado,
+		fecha_ticket,
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
@@ -58,6 +60,7 @@
 		observacion,
 		pagado,
 		estado,
+		fecha_ticket,
 		fecha_creacion,
 		creado_por,
 		fecha_modifcacion,
@@ -73,12 +76,12 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,observaciones,pagado,estado,fecha_creacion, creado_por,
+		no_habido,observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,
 		modifcado_por,eliminado_por)
 		values(#{mercados_id},#{ubicaciones_id},
 		#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
-		#{observaciones},#{pagado},#{estado},#{fecha_creacion},#{creado_por},
+		#{observaciones},#{pagado},#{estado},#{fecha_ticket},#{fecha_creacion},#{creado_por},
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
 
@@ -86,10 +89,13 @@
 		insert into tickets(
 		mercados_id,ubicaciones_id,
 		comerciantes_id,puestos_id,correlativo,no_habido,
-		observaciones,pagado,estado,fecha_creacion, creado_por,
+		observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,modifcado_por,eliminado_por) values
 		<foreach item="item" collection="list" separator=",">
-			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.pagado},#{item.estado},#{item.fecha_creacion},#{item.creado_por},#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
+			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},
+			#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.pagado},
+			#{item.estado},#{item.fecha_ticket},#{item.fecha_creacion},#{item.creado_por},
+			#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
 		</foreach>
 	</insert>
 
@@ -99,9 +105,17 @@
 		where id = #{id}
 	</update>
 	
-	<update id="marcarTicketPagado">
+	<update id="marcarTicketPagado" parameterType="TicketNoHabido">
 		Update tickets
 		set pagado = 1
+		where id = #{id}
+	</update>
+	
+	<update id="marcarTicketNoHabido">
+		Update tickets
+		set no_habido = #{no_habido},
+		 observaciones = #{observaciones},
+		 fecha_obs = #{fecha_obs}
 		where id = #{id}
 	</update>
 
@@ -117,6 +131,7 @@
 		observaciones = #{observaciones},
 		pagado = #{pagado},
 		estado = #{estado},
+		fecha_ticket = #{fecha_ticket},
 		fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por},
 		fecha_modifcacion = #{fecha_modifcacion},
@@ -145,6 +160,7 @@
 		D.apellidos,
 		A.estado,
 		A.pagado,
+		A.fecha_ticket,
 		A.fecha_creacion
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
@@ -159,7 +175,7 @@
 				A.pagado = #{pagado}
 			</if>
 			<if test="fecha_incio != null and fecha_fin != null "  >
-				AND cast(A.fecha_creacion as date) between cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) 
+				AND cast(A.fecha_ticket as date) between cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) 
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 
