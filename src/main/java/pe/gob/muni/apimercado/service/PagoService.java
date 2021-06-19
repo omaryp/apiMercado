@@ -44,6 +44,8 @@ public class PagoService implements IPagoService {
 	@Autowired
 	private ITarifaService tar;
 	@Autowired
+	private ITicketService ticketSer;
+	@Autowired
 	private Validador<Pago> validadorPago;
 	
 	@Override
@@ -196,6 +198,7 @@ public class PagoService implements IPagoService {
 				repository.saveEntity(pag);
 				
 				ticket.setPagado(1);
+				ticketSer.updateEntity(ticket);
 				
 				TicketPago ticPag= new TicketPago();
 				ticPag.setTickets_id(ticket.getId());

@@ -138,7 +138,8 @@
 		D.nombres,
 		D.apellidos,
 		A.estado,
-		A.pagado
+		A.pagado,
+		A.fecha_creacion
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id

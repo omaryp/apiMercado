@@ -1,5 +1,7 @@
 package pe.gob.muni.apimercado.model.dto;
 
+import java.util.Date;
+
 public class TicketDto {
 
 	private int id;
@@ -19,6 +21,7 @@ public class TicketDto {
 	private String apellidos;
 	private int estado;
 	private int pagado;
+	private Date fecha_creacion;
 	
 	public int getId() {
 		return id;
@@ -121,6 +124,12 @@ public class TicketDto {
 	}
 	public void setPagado(int pagado) {
 		this.pagado = pagado;
+	}
+	public Date getFecha_creacion() {
+		return fecha_creacion;
+	}
+	public void setFecha_creacion(Date fecha_creacion) {
+		this.fecha_creacion = fecha_creacion;
 	}
 	
 }

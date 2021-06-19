@@ -23,7 +23,7 @@
 		estado,fecha_inicio,fecha_fin,fecha_creacion,
 		creado_por,fecha_modifcacion,modifcado_por,eliminado_por
 	    from tarifas A
-	    inner join puestos B.conceptos_id = A.conceptos_id
+	    inner join puestos B B.conceptos_id = A.conceptos_id
 	    where B.idPuesto = #{idPuesto} and estado = 1
 	</select>
 	
