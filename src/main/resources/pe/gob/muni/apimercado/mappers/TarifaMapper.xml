@@ -24,7 +24,7 @@
 		A.creado_por,A.fecha_modifcacion,A.modifcado_por,A.eliminado_por
 	    from tarifas A
 	    inner join puestos B on B.conceptos_id = A.conceptos_id
-	    where B.id = #{idPuesto} and estado = 1
+	    where B.id = #{idPuesto} and A.estado = 1
 	</select>
 	
 	<select id="getAllEntitys" resultMap="TarifaResultMap">
