@@ -3,7 +3,9 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -16,6 +18,9 @@ import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Pago;
+import pe.gob.muni.apimercado.model.Serie;
+import pe.gob.muni.apimercado.model.Tarifa;
+import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -34,6 +39,10 @@ public class PagoService implements IPagoService {
 	private PagoRepository repository;
 	@Autowired
 	private IUsuarioService auth;
+	@Autowired
+	private ISerieService ser;
+	@Autowired
+	private ITarifaService tar;
 	@Autowired
 	private Validador<Pago> validadorPago;
 	
@@ -152,15 +161,55 @@ public class PagoService implements IPagoService {
 	}
 
 	@Override
-	public void asociarTicketPago(TicketPago ticket) throws ApiException {
+	public void asociarTicketPago(List<TicketPago> tickets) throws ApiException, Exception {
 		try {
-			repository.asociarTicketPago(ticket);
+			repository.asociarTicketPago(tickets);
 		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
 			throw e;
 		}
 		
+	}
+
+	@Override
+	public void pagoTickets(List<Ticket> tickets) throws ApiException, Exception {
+		List<TicketPago> tiPags = new ArrayList<TicketPago>();
+		Map<String, Serie> series = new HashMap<String,Serie>();
+		try {
+			for (Ticket ticket : tickets) {
+				Serie serie = ser.getSeriePuesto(ticket.getPuestos_id());
+				Tarifa tarifa = tar.getTarifaPuesto(ticket.getPuestos_id());
+				
+				Pago pag = new Pago();
+				pag.setFecha_creacion(new Date());
+				pag.setCreado_por(auth.getUserToken());
+				pag.setSerie(serie.getCodigo());
+				pag.setCorrelativo(serie.getCorrelativo()+1);
+				serie.setCorrelativo(pag.getCorrelativo());
+				if(series.containsKey(serie.getCodigo()))
+					series.replace(serie.getCodigo(), serie);
+				else
+					series.put(serie.getCodigo(), serie);
+				pag.setMonto_pagado(tarifa.getMonto());
+				
+				repository.saveEntity(pag);
+				
+				TicketPago ticPag= new TicketPago();
+				ticPag.setTickets_id(ticket.getId());
+				ticPag.setPagos_id(pag.getId());
+				
+				tiPags.add(ticPag);
+			}
+			repository.asociarTicketPago(tiPags);
+			for (Serie value : series.values()) {
+				ser.updateEntity(value);
+			}
+		} catch (ApiException e) {
+			throw e;
+		} catch (Exception e) {
+			throw e;
+		}
 	}
 
 }

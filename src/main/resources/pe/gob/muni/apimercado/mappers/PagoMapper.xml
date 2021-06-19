@@ -43,7 +43,7 @@
 		from pagos
 	</select>
 
-	<insert id="saveEntity" parameterType="Pago">
+	<insert id="saveEntity" parameterType="Pago" useGeneratedKeys="true" keyProperty="id"  keyColumn="id"> 
 		insert into pagos(
 		fecha_pago,serie,
 		correlativo,monto_pagado,concepto,observaciones,
@@ -58,8 +58,15 @@
 	<insert id="asociarTicketPago" parameterType="TicketPago">
 		insert into tickets_pagos(
 		tickets_id,pagos_id)
+		values
+	</insert>
+	
+	<insert id="asociarTicketPago" parameterType="java.util.List">
+		insert into tickets_pagos(tickets_id,pagos_id)
 		values(
-		#{tickets_id},#{pagos_id})
+		<foreach item="item" collection="list" separator=",">
+			(#{item.tickets_id},#{item.pagos_id})
+		</foreach>
 	</insert>
 
 	<update id="deleteEntity">
@@ -83,5 +90,18 @@
 		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
 		where id = #{id}
 	</update>
+	
+	<insert id="saveAllPagos" parameterType="java.util.List">
+		insert into pagos(
+		fecha_pago,serie,
+		correlativo,monto_pagado,concepto,observaciones,
+		estado,fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,eliminado_por)
+		values
+		<foreach item="item" collection="list" separator=",">
+			(#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
+			 #{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})	
+		</foreach>
+	</insert>
 
 </mapper>

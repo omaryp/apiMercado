@@ -165,4 +165,17 @@ public class SerieService implements ISerieService {
 		}
 	}
 
+	@Override
+	public Serie getSeriePuesto(int idPuesto) throws ApiException, Exception {
+		try {
+			return repository.getSeriePuesto(idPuesto);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo all series  {} - {}",e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo all series  {} - {}",e.getMessage(), e);
+			throw e;
+		}
+	}
+
 }

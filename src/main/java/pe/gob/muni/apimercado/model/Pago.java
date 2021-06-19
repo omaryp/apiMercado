@@ -6,7 +6,7 @@ public class Pago extends BasicEntity {
 	
 	private Date fechaPago;
 	private String serie;
-	private int correlativo;
+	private long correlativo;
 	private double monto_pagado;
 	private String concepto;
 	private String observaciones;
@@ -23,10 +23,10 @@ public class Pago extends BasicEntity {
 	public void setSerie(String serie) {
 		this.serie = serie;
 	}
-	public int getCorrelativo() {
+	public long getCorrelativo() {
 		return correlativo;
 	}
-	public void setCorrelativo(int correlativo) {
+	public void setCorrelativo(long correlativo) {
 		this.correlativo = correlativo;
 	}
 	public double getMonto_pagado() {

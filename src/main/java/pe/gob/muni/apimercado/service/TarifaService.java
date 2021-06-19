@@ -165,4 +165,17 @@ public class TarifaService implements ITarifaService {
 		}
 	}
 
+	@Override
+	public Tarifa getTarifaPuesto(int idPuesto) throws ApiException, Exception {
+		try {
+			return repository.getTarifaPuesto(idPuesto);
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo all tarifa por puesto {} - {} - {}",idPuesto,e.getMessage(), e);
+			throw e;
+		}catch (Exception e) {
+			logger.error("Error general obteniendo al tarifa por puesto  {} - {} - {}",idPuesto,e.getMessage(), e);
+			throw e;
+		}
+	}
+
 }

@@ -82,7 +82,7 @@
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
 
-	<insert id="saveAllTickets" parameterType="java.util.List">
+	<insert id="saveAllTickets" parameterType="java.util.List" >
 		insert into tickets(
 		mercados_id,ubicaciones_id,
 		comerciantes_id,puestos_id,correlativo,no_habido,
@@ -152,7 +152,7 @@
 				A.pagado = #{pagado}
 			</if>
 			<if test="fecha_incio != null and fecha_fin != null "  >
-				AND A.fecha_creacion between #{fecha_incio} and #{fecha_fin} 
+				AND cast(A.fecha_creacion as date) between cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) 
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 

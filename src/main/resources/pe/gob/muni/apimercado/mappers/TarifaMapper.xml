@@ -17,6 +17,16 @@
 	    from tarifas where idTarifa = #{idTarifa}
 	</select>
 	
+	<select id="getTarifaPuesto" resultMap="TarifaResultMap" >
+		select 
+		id,descripcion,monto,conceptos_id,
+		estado,fecha_inicio,fecha_fin,fecha_creacion,
+		creado_por,fecha_modifcacion,modifcado_por,eliminado_por
+	    from tarifas A
+	    inner join puestos B.conceptos_id = A.conceptos_id
+	    where B.idPuesto = #{idPuesto} and estado = 1
+	</select>
+	
 	<select id="getAllEntitys" resultMap="TarifaResultMap">
 		select id,descripcion,monto,conceptos_id,estado,fecha_inicio,fecha_fin,
 		fecha_creacion,

@@ -12,6 +12,7 @@ public class Serie extends BasicEntity {
 	@NotBlank(message="Atributo descripcion no debe ser vacío.")
 	@NotNull(message="Atributo descripcion no debe ser vacío.")
 	private String descripcion;
+	private long correlativo;
 	@Min(value=1, message="Atributo conceptos_id debe ser != 0")
 	private int conceptos_id;
 	
@@ -33,7 +34,11 @@ public class Serie extends BasicEntity {
 	public void setConceptos_id(int conceptos_id) {
 		this.conceptos_id = conceptos_id;
 	}
-	
-	
-	
+	public long getCorrelativo() {
+		return correlativo;
+	}
+	public void setCorrelativo(long correlativo) {
+		this.correlativo = correlativo;
+	}
+
 }
