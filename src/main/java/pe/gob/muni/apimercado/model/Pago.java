@@ -4,18 +4,19 @@ import java.util.Date;
 
 public class Pago extends BasicEntity {
 	
-	private Date fechaPago;
+	private Date fecha_pago;
 	private String serie;
 	private long correlativo;
 	private double monto_pagado;
 	private String concepto;
 	private String observaciones;
 	
-	public Date getFechaPago() {
-		return fechaPago;
+
+	public Date getFecha_pago() {
+		return fecha_pago;
 	}
-	public void setFechaPago(Date fechaPago) {
-		this.fechaPago = fechaPago;
+	public void setFecha_pago(Date fecha_pago) {
+		this.fecha_pago = fecha_pago;
 	}
 	public String getSerie() {
 		return serie;
