@@ -55,12 +55,6 @@
 		#{modifcado_por},#{eliminado_por})
 	</insert>
 	
-	<insert id="asociarTicketPago" parameterType="TicketPago">
-		insert into tickets_pagos(
-		tickets_id,pagos_id)
-		values
-	</insert>
-	
 	<insert id="asociarTicketPago" parameterType="java.util.List">
 		insert into tickets_pagos(tickets_id,pagos_id)
 		values(
