@@ -98,6 +98,12 @@
 		set estado = 0
 		where id = #{id}
 	</update>
+	
+	<update id="marcarTicketPagado">
+		Update tickets
+		set pagado = 1
+		where id = #{id}
+	</update>
 
 	<update id="updateEntity" parameterType="Ticket">
 		Update tickets

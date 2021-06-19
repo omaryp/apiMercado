@@ -17,4 +17,6 @@ public interface ITicketMapper extends IBasicMapper<Ticket> {
 	
 	List<TicketDto> pagingTickets(PageTableTicket params) throws SQLException,SQLIntegrityConstraintViolationException;
 	
+	void marcarTicketPagado(int id) throws SQLException,SQLIntegrityConstraintViolationException;
+	
 }

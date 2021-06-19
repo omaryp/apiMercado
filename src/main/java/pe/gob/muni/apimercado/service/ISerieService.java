@@ -6,5 +6,5 @@ import pe.gob.muni.apimercado.utils.ApiException;
 public interface ISerieService extends IBasicService<Serie>{
 	
 	Serie getSeriePuesto(int idPuesto) throws ApiException,Exception;
-
+	
 }

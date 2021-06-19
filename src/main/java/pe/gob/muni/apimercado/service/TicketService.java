@@ -249,4 +249,18 @@ public class TicketService implements ITicketService {
 		}
 	}
 
+	@Override
+	public void marcarTicketPagado(int id) throws ApiException, Exception {
+		try {
+			marcarTicketPagado(id);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			throw e;
+		}
+		
+	}
+
 }
