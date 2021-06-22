@@ -95,7 +95,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			perfil = perfilService.getEntity(user.getPerfiles_codigo());
 
 			userDto = new UsuarioDto(user.getUsuario(), user.getPassword(), user.isActivo(), true, true, true, roles);
-			userDto.setId(user.getId());
+			userDto.setId(user.getIdUsuario());
 			userDto.setNombres(user.getNombres());
 			userDto.setApellidos(user.getApellidos());
 			userDto.setCorreo(user.getCorreo());
@@ -232,6 +232,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			entity.setPersonas_id(padre.getId());
 			entity.setUsuario(entity.getUsuario().toUpperCase());
 			entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
+			entity.setActivo(true);
 			repository.saveEntity(entity);
 			
 			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
