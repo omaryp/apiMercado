@@ -133,7 +133,7 @@ public class MercadoService implements IMercadoService {
 				codigo_user = auth.getUserToken();
 				Usuario user = auth.getEntity(codigo_user);
 				if(user.getPerfiles_codigo() == PERFIL_COBRADOR){
-					rpta = repository.getMercadoUserCobrador(user.getId());
+					rpta = repository.getMercadoUserCobrador(user.getIdUsuario());
 				}else {
 					rpta = repository.getAllEntitys();
 				}
