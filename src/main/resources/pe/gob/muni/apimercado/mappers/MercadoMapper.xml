@@ -24,6 +24,26 @@
 		from mercados where id = #{id}
 	</select>
 	
+	<select id="getMercadoUserCobrador" resultMap="MercadoResultMap">
+		select 
+		A.id,
+		A.descripcion,
+		A.nombre,
+		A.direccion,
+		A.zona,
+		A.estado,
+		A.fecha_creacion,
+		A.creado_por,
+		A.fecha_modifcacion,
+		A.modifcado_por,
+		A.eliminado_por
+		from mercados A
+		inner join cobradores B on A.id = B.mercados_id
+		inner join personas C on C.id = B.personas_id
+		inner join usuarios D on D.id = C.id
+		where D.id = #{id}
+	</select>
+	
 	<select id="getAllEntitys" resultMap="MercadoResultMap">
 		select 
 		id,

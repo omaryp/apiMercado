@@ -16,4 +16,5 @@ public interface IMercadoMapper extends IBasicMapper<Mercado> {
 	
 	void deleteUbicacionMercado(UbicacionMercado entity) throws SQLException,SQLIntegrityConstraintViolationException;
 
+	List<Mercado> getMercadoUserCobrador(int id)throws SQLException,SQLIntegrityConstraintViolationException;
 }

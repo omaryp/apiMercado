@@ -4,6 +4,7 @@ import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
 import java.util.List;
 
+
 import org.springframework.stereotype.Repository;
 
 import pe.gob.muni.apimercado.mapper.IMercadoMapper;
@@ -32,5 +33,15 @@ public class MercadoRepository extends BasicRepository<Mercado,IMercadoMapper> {
 		}catch (SQLException e) {
 			throw new ApiException(e.getMessage(),e);
 		} 
+	}
+	
+	public List<Mercado> getMercadoUserCobrador(int id) throws ApiException {
+		try {
+			return mapper.getMercadoUserCobrador(id);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		}
 	}
 }

@@ -19,8 +19,10 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Mercado;
 import pe.gob.muni.apimercado.model.UbicacionMercado;
+import pe.gob.muni.apimercado.model.Usuario;
 import pe.gob.muni.apimercado.repository.MercadoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import static pe.gob.muni.apimercado.utils.Constants.PERFIL_COBRADOR;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
@@ -113,6 +115,7 @@ public class MercadoService implements IMercadoService {
 	public Object searchEntity(Map<String, String> params) throws ApiException, Exception {
 		Object rpta = null;
 		int codigo = 0;
+		int codigo_user = 0;
 		try {
 			if(!params.isEmpty()) {
 				int tipo = Integer.parseInt(params.get("tipo"));
@@ -126,8 +129,16 @@ public class MercadoService implements IMercadoService {
 						rpta = repository.getEntity(codigo);
 						break;
 				}
-			}else
-				rpta = repository.getAllEntitys();
+			}else {
+				codigo_user = auth.getUserToken();
+				Usuario user = auth.getEntity(codigo_user);
+				if(user.getPerfiles_codigo() == PERFIL_COBRADOR){
+					rpta = repository.getMercadoUserCobrador(user.getId());
+				}else {
+					rpta = repository.getAllEntitys();
+				}
+				
+			}
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando entidad mercado  {} - {}", e.getMessage(), e);
