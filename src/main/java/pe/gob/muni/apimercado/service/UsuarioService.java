@@ -274,6 +274,14 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			if(!entity.getPassword().equals(SECRET_PASSWORD))
 				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
 			repository.updateEntity(entity);
+			
+			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
+				Cobrador cob = new Cobrador();
+				cob.setMercados_id(entity.getMercados_id());
+				cob.setPersonas_id(padre.getId());
+				cobRepository.deleteEntity(padre.getId());
+				cobRepository.saveEntity(cob);
+			}
 		}catch (ApiException e) {
 			logger.error("Error api actualizando usuario  {} - {}", e.getMessage(), e);
 			throw e;

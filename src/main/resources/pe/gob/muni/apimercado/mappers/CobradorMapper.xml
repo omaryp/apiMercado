@@ -54,9 +54,8 @@
 
 	<insert id="saveEntity" parameterType="Cobrador">
 		insert into
-		cobradores(
-		personas_id,mercados_id)
-		values(#{personas_id},#{cobradores_id})
+		cobradores(personas_id,mercados_id)
+		values(#{personas_id},#{mercados_id})
 	</insert>
 
 	<update id="updateEntity" parameterType="Cobrador">
@@ -65,6 +64,11 @@
 		personas_id = #{personas_id},
 		mercados_id = #{mercados_id}
 		where id = #{id}
+	</update>
+	
+	<update id="deleteEntity" parameterType="Cobrador">
+		delete from cobradores
+		where personas_id = #{id}
 	</update>
 
 	<select id="pagingEntitys" resultMap="CobradorResultMap"
