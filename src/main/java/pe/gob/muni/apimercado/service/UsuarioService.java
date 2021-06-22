@@ -140,6 +140,8 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		try {
 			Usuario entity = repository.findByUsername(username);
 			entity.setId(entity.getPersonas_id());
+			entity.setPassword(SECRET_PASSWORD);
+			entity.setPassword2(SECRET_PASSWORD);
 			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api get usuario by username {} - {} - {}",username, e.getMessage(), e);
@@ -207,6 +209,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		datos.forEach((entity) -> {
 			entity.setId(entity.getPersonas_id());
 			entity.setPassword(SECRET_PASSWORD);
+			entity.setPassword2(SECRET_PASSWORD);
 			rpta.add(entity);
 		});
 		return rpta;
@@ -339,6 +342,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			Usuario entity = repository.getEntity(id);
 			entity.setId(entity.getPersonas_id());
 			entity.setPassword(SECRET_PASSWORD);
+			entity.setPassword2(SECRET_PASSWORD);
 			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api obteniendo usuario by id {} - {} - {}",id, e.getMessage(), e);
