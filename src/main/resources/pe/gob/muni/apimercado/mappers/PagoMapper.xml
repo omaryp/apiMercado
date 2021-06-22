@@ -110,6 +110,7 @@
 		I.monto_pagado,
 		I.observaciones,
 		A.id tickets_id,
+		A.fecha_ticket;
         B.id puestos_id,
 		B.codigo codigo_puesto,
 		A.mercados_id,
@@ -148,6 +149,9 @@
 				AND A.ubicaciones_id = #{ubicaciones_id}
 			</if>
 		</where>
+		<if test="sort != '' and sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
 </mapper>

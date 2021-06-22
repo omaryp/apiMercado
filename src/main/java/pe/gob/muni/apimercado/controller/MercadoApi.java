@@ -28,7 +28,7 @@ import pe.gob.muni.apimercado.utils.ValidatorException;
 public class MercadoApi extends BasicController<Mercado, IMercadoService> {
 
 	@PostMapping("/ubicacion")
-	public ResponseEntity<?> saveUbicacionMercado(@RequestBody List<UbicacionMercado> entitys) {
+	public ResponseEntity<?> guardarUbicacionMercado(@RequestBody List<UbicacionMercado> entitys) {
 		logger.info("Se recibió entidad - {}",Util.objectToJson(entitys));
 		try {
 			service.guardarUbicacionMercado(entitys);
@@ -44,7 +44,7 @@ public class MercadoApi extends BasicController<Mercado, IMercadoService> {
 	}
 	
 	@PutMapping("/ubicacion")
-	public ResponseEntity<?> deleteRolesPerfil(@RequestBody List<UbicacionMercado> entitys) {
+	public ResponseEntity<?> deleteUbicacionMercado(@RequestBody List<UbicacionMercado> entitys) {
 		logger.info("Se recibió entidad - {}",Util.objectToJson(entitys));
 		try {
 			service.deleteUbicacionMercado(entitys);

@@ -26,6 +26,7 @@ public class PagoDto{
 	private String dni;
 	private String nombres;
 	private String apellidos;
+	private Date fecha_ticket;
 	 
 	public Date getFecha_pago() {
 		return fecha_pago;
@@ -153,6 +154,12 @@ public class PagoDto{
 	}
 	public void setTickets_id(int tickets_id) {
 		this.tickets_id = tickets_id;
+	}
+	public Date getFecha_ticket() {
+		return fecha_ticket;
+	}
+	public void setFecha_ticket(Date fecha_ticket) {
+		this.fecha_ticket = fecha_ticket;
 	}
 
 }

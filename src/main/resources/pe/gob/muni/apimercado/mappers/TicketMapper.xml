@@ -187,6 +187,9 @@
 				AND A.ubicaciones_id = #{ubicaciones_id}
 			</if>
 		</where>
+		<if test="sort != '' and sort != null">
+			ORDER BY ${sort} ${order}
+		</if>
 	</select>
 
 </mapper>
