@@ -5,6 +5,7 @@ public class Cobrador extends Persona {
 	private int idCobrador;
 	private int personas_id;
 	private int mercados_id;
+	private String descripcion;
 	
 	public int getIdCobrador() {
 		return idCobrador;
@@ -24,5 +25,11 @@ public class Cobrador extends Persona {
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
 	}
-	
+	public String getDescripcion() {
+		return descripcion;
+	}
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
 }

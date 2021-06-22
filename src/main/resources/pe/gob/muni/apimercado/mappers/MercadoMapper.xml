@@ -40,7 +40,7 @@
 		from mercados A
 		inner join cobradores B on A.id = B.mercados_id
 		inner join personas C on C.id = B.personas_id
-		inner join usuarios D on D.id = C.id
+		inner join usuarios D on D.personas_id = C.id
 		where D.id = #{id}
 	</select>
 	
