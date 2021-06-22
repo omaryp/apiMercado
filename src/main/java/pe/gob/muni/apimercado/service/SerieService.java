@@ -21,7 +21,7 @@ import pe.gob.muni.apimercado.repository.SerieRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class SerieService implements ISerieService {
@@ -41,7 +41,7 @@ public class SerieService implements ISerieService {
 		logger.info("obteniendo series para busqueda {}.",params);
 		try {
 			List<Serie> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);

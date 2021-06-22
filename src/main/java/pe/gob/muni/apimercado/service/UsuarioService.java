@@ -46,7 +46,7 @@ import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class UsuarioService implements UserDetailsService, IUsuarioService {
@@ -185,7 +185,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 		logger.info("Paginando usuarios{}.",params);
 		try {
 			List<Usuario> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
@@ -232,6 +232,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			
 			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
 				Cobrador cob = new Cobrador();
+				cob.setMercados_id(entity.getMercados_id());
 				cob.setPersonas_id(padre.getId());
 				cobRepository.saveEntity(cob);
 			}

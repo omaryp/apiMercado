@@ -21,13 +21,15 @@ import pe.gob.muni.apimercado.model.Serie;
 import pe.gob.muni.apimercado.model.Tarifa;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
+import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
+import pe.gob.muni.apimercado.utils.dto.PageTablePago;
 
 @Service
 public class PagoService implements IPagoService {
@@ -53,7 +55,7 @@ public class PagoService implements IPagoService {
 		logger.info("obteniendo comerciantes con los filtros {}.",objectToJson(params));
 		try {
 			List<Pago> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
@@ -206,6 +208,27 @@ public class PagoService implements IPagoService {
 		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
+			throw e;
+		}
+	}
+
+	@Override
+	public PageInfo<PagoDto> pagingTickets(Map<String, String> params) throws ApiException, Exception {
+		logger.info("obteniendo tickets con los filtros {}.", objectToJson(params));
+		try {
+			List<PagoDto> rptaData = null;
+			PageTablePago pagData = mapToObject(params, PageTablePago.class);
+			
+			PageHelper.startPage(pagData.getPage(), pagData.getLimit());
+
+			rptaData = repository.pagingPagos(pagData);
+
+			return new PageInfo<PagoDto>(rptaData);
+		} catch (ApiException e) {
+			logger.error("Error api paginando entidades ticket {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general paginando entidades ticket {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

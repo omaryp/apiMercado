@@ -8,13 +8,13 @@ import org.apache.ibatis.annotations.Mapper;
 
 import pe.gob.muni.apimercado.model.Puesto;
 import pe.gob.muni.apimercado.model.dto.PuestoDto;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Mapper
 public interface IPuestoMapper extends IBasicMapper<Puesto> {
 	
 	List<PuestoDto> getAllPuestosDtoMercado(int id) throws SQLException,SQLIntegrityConstraintViolationException; 
 	
-	List<PuestoDto> pagingDtoEntitys(PageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
+	List<PuestoDto> pagingDtoEntitys(GeneralPageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 }

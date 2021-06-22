@@ -99,7 +99,7 @@
       where id = #{idUsuario}
     </update>
     
-    <select id="pagingEntitys" resultMap="UsuarioResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+    <select id="pagingEntitys" resultMap="UsuarioResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select A.id,
 		A.usuario,
 		A.password,
@@ -134,7 +134,7 @@
 		</if>
 	</select>
 	
-	<select id="getAllEntitys" resultMap="UsuarioResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+	<select id="getAllEntitys" resultMap="UsuarioResultMap">
 		select A.id,
 		A.usuario,
 		A.password,

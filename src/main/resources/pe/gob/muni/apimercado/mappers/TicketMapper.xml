@@ -183,6 +183,9 @@
 			<if test="mercados_id != '' and mercados_id != null">
 				AND A.mercados_id = #{mercados_id}
 			</if>
+			<if test="ubicaciones_id != '' and ubicaciones_id != null">
+				AND A.ubicaciones_id = #{ubicaciones_id}
+			</if>
 		</where>
 	</select>
 

@@ -123,7 +123,7 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="PuestoResultMap"
-		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select id,
 		codigo,
 		mercados_id,
@@ -148,7 +148,7 @@
 	</select>
 	
 	<select id="pagingDtoEntitys" resultMap="PuestoDtoResultMap"
-		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select
 		A.id,
 		A.codigo,

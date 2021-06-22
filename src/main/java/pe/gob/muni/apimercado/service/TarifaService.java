@@ -21,7 +21,7 @@ import pe.gob.muni.apimercado.repository.TarifaRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class TarifaService implements ITarifaService {
@@ -43,7 +43,7 @@ public class TarifaService implements ITarifaService {
 		logger.info("paginando tarifas {}.",params);
 		try {
 			List<Tarifa> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);

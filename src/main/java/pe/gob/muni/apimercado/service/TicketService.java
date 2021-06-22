@@ -26,7 +26,7 @@ import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 import pe.gob.muni.apimercado.utils.dto.ProcesoTicket;
 
@@ -52,7 +52,7 @@ public class TicketService implements ITicketService {
 		logger.info("obteniendo tickets con los filtros {}.", objectToJson(params));
 		try {
 			List<Ticket> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(), pagData.getLimit());
 
 			rptaData = repository.pagingEntitys(pagData);
@@ -244,7 +244,7 @@ public class TicketService implements ITicketService {
 		try {
 			repository.marcarTicketPagado(id);
 		} catch (ApiException e) {
-			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			logger.error("Error api marcando ticket pagado - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
@@ -256,12 +256,14 @@ public class TicketService implements ITicketService {
 	@Override
 	public void marcarTicketNoHabido(TicketNoHabido ticket) throws ApiException, Exception {
 		try {
+			ticket.setNo_habido(true);
+			ticket.setFecha_obs(new Date());
 			repository.marcarTicketNoHabido(ticket);
 		} catch (ApiException e) {
-			logger.error("Error api obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			logger.error("Error api marcando ticket no habido - {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
+			logger.error("Error general marcando ticket no habido - {} - {}", e.getMessage(), e);
 			throw e;
 		}		
 	}

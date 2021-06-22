@@ -22,7 +22,7 @@ import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class RolService implements IRolService {
@@ -114,7 +114,7 @@ public class RolService implements IRolService {
 		logger.info("obteniendo roles para busqueda {}.", params);
 		try {
 			List<Rol> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = rolRepository.pagingEntitys(pagData);

@@ -65,7 +65,7 @@
 		where id = #{id}
 	</update>
 	
-	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+	<select id="pagingEntitys" resultMap="ComercianteResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select * from(
 		select A.id,A.ruc,A.razon_social,A.personas_id,
 		B.nombres,

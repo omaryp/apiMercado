@@ -26,7 +26,7 @@ import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class CobradorService implements ICobradorService {
@@ -49,7 +49,7 @@ public class CobradorService implements ICobradorService {
 		logger.info("obteniendo comerciantes con los filtros {}.",objectToJson(params));
 		try {
 			List<Cobrador> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);

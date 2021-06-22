@@ -8,7 +8,9 @@
 	<resultMap id="PagoResultMap" type="Pago" />
 	
 	<resultMap id="TicketPagoResultMap" type="TicketPago" />
-
+	
+	<resultMap id="PagoDtoResultMap" type="PagoDto" />
+	
 	<select id="getEntity" resultMap="PagoResultMap">
 		select id,
 		fecha_pago,
@@ -97,5 +99,55 @@
 			 #{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})	
 		</foreach>
 	</insert>
+	
+	<select id="pagingPagos" resultMap="PagoDtoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">
+		select
+		I.id,
+		I.fecha_pago,
+		I.serie,
+		I.correlativo,
+		I.monto_pagado,
+		I.observaciones,
+		A.id tickets_id,
+        B.id puestos_id,
+		B.codigo codigo_puesto,
+		A.mercados_id,
+		E.descripcion descripcion_mercado,
+		B.conceptos_id,
+		F.descripcion descripcion_concepto,
+		A.ubicaciones_id,
+		G.descripcion descripcion_ubicacion,
+		B.giro_id,
+		H.valor_cadena1 descripcion_giro,
+		A.comerciantes_id,
+		D.dni,
+		D.nombres,
+		D.apellidos
+		from pagos I 
+		inner join tickets_pagos J on J.pagos_id = I.id
+		inner join tickets A on A.id = J.tickets_id
+		inner join puestos B on B.id = A.puestos_id
+        left join comerciantes C on C.id = A.comerciantes_id
+        inner join personas D on D.id = C.personas_id
+        inner join mercados E on E.id = A.mercados_id
+        inner join conceptos F on F.id = B.conceptos_id
+        inner join ubicaciones G on G.id = A.ubicaciones_id	
+        inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
+        <where>
+			<if test="fecha_incio != null and fecha_fin != null "  >
+				cast(I.fecha_pago as date) between cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) 
+			</if>
+			<if test="comerciantes_id != '' and comerciantes_id != null">
+				AND A.comerciantes_id = #{comerciantes_id} 
+			</if>
+			<if test="mercados_id != '' and mercados_id != null">
+				AND A.mercados_id = #{mercados_id}
+			</if>
+			<if test="ubicaciones_id != '' and ubicaciones_id != null">
+				AND A.ubicaciones_id = #{ubicaciones_id}
+			</if>
+		</where>
+	</select>
 
 </mapper>

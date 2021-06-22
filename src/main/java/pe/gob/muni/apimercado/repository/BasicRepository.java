@@ -9,7 +9,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import pe.gob.muni.apimercado.mapper.IBasicMapper;
 import pe.gob.muni.apimercado.model.BasicEntity;
 import pe.gob.muni.apimercado.utils.ApiException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 public class BasicRepository<T extends BasicEntity,M extends IBasicMapper<T>> {
 
@@ -56,7 +56,7 @@ public class BasicRepository<T extends BasicEntity,M extends IBasicMapper<T>> {
 		}
 	}
 		
-	public List<T> pagingEntitys(PageTable parms) throws ApiException{
+	public List<T> pagingEntitys(GeneralPageTable parms) throws ApiException{
 		try {
 			return mapper.pagingEntitys(parms);
 		}catch (SQLIntegrityConstraintViolationException e) {

@@ -2,14 +2,13 @@ package pe.gob.muni.apimercado.utils.dto;
 
 import java.util.Date;
 
-public class PageTableTicket extends BasicPageTable {
+public class PageTablePago extends BasicPageTable {
 
 	private Date fecha_incio;
 	private Date fecha_fin;
 	private int comerciantes_id;
 	private int mercados_id;
 	private int ubicaciones_id;
-	private int pagado;
 	
 	public Date getFecha_incio() {
 		return fecha_incio;
@@ -34,12 +33,6 @@ public class PageTableTicket extends BasicPageTable {
 	}
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
-	}
-	public int getPagado() {
-		return pagado;
-	}
-	public void setPagado(int pagado) {
-		this.pagado = pagado;
 	}
 	public int getUbicaciones_id() {
 		return ubicaciones_id;

@@ -71,7 +71,7 @@
 		where id = #{id}
 	</update>
 	
-	<select id="pagingEntitys" resultMap="PerfilResultMap">
+	<select id="pagingEntitys" resultMap="PerfilResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select A.id,
 		A.nombre,
 		A.descripcion,

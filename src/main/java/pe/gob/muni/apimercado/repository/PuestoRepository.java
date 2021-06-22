@@ -10,7 +10,7 @@ import pe.gob.muni.apimercado.mapper.IPuestoMapper;
 import pe.gob.muni.apimercado.model.Puesto;
 import pe.gob.muni.apimercado.model.dto.PuestoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Repository
 public class PuestoRepository extends BasicRepository<Puesto,IPuestoMapper> {
@@ -25,7 +25,7 @@ public class PuestoRepository extends BasicRepository<Puesto,IPuestoMapper> {
 		} 
 	}
 	
-	public List<PuestoDto> pagingDtoEntitys(PageTable params) throws ApiException{
+	public List<PuestoDto> pagingDtoEntitys(GeneralPageTable params) throws ApiException{
 		try {
 			return mapper.pagingDtoEntitys(params);
 		}catch (SQLIntegrityConstraintViolationException e) {

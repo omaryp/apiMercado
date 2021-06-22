@@ -48,7 +48,7 @@
 		where A.estado = 1 and B.mercados_id = #{id}
 	</select>
 
-	<select id="pagingEntitys" resultMap="UbicacionResultMap">
+	<select id="pagingEntitys" resultMap="UbicacionResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select A.id,
 		A.descripcion,
 		A.estado,

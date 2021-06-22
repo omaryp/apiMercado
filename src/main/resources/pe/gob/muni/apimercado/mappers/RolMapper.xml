@@ -66,7 +66,7 @@
 		where A.estado = 1
 	</select>
 
-	<select id="pagingEntitys" resultMap="RolResultMap">
+	<select id="pagingEntitys" resultMap="RolResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select A.id,
 		A.nombre,
 		A.nombre_menu,

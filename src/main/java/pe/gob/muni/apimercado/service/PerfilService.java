@@ -22,7 +22,7 @@ import pe.gob.muni.apimercado.repository.PerfilRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class PerfilService implements IPerfilService {
@@ -70,7 +70,7 @@ public class PerfilService implements IPerfilService {
 		logger.info("obteniendo entitys {} para busqueda {}.",this.getClass(), params);
 		try {
 			List<Perfil> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);

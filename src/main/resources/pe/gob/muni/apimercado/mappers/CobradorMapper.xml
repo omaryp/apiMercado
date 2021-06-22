@@ -68,7 +68,7 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="CobradorResultMap"
-		parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select * from(
 		select
 		A.id,

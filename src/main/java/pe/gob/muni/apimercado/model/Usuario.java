@@ -29,6 +29,8 @@ public class Usuario extends Persona{
 	
 	private boolean activo;
 	
+	private int mercados_id;
+	
 
 	public int getIdUsuario() {
 		return idUsuario;
@@ -93,7 +95,13 @@ public class Usuario extends Persona{
 	public void setPassword2(String password2) {
 		this.password2 = password2;
 	}
-	
-	
+
+	public int getMercados_id() {
+		return mercados_id;
+	}
+
+	public void setMercados_id(int mercados_id) {
+		this.mercados_id = mercados_id;
+	}
 	
 }

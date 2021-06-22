@@ -10,8 +10,7 @@ public class Pago extends BasicEntity {
 	private double monto_pagado;
 	private String concepto;
 	private String observaciones;
-	
-
+	 
 	public Date getFecha_pago() {
 		return fecha_pago;
 	}

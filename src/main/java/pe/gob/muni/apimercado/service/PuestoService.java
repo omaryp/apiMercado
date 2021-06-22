@@ -23,7 +23,7 @@ import pe.gob.muni.apimercado.repository.PuestoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class PuestoService implements IPuestoService {
@@ -47,7 +47,7 @@ public class PuestoService implements IPuestoService {
 		logger.info("paginando puestos con parámetros {}.",params);
 		try {
 			List<Puesto> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
@@ -197,7 +197,7 @@ public class PuestoService implements IPuestoService {
 	public PageInfo<PuestoDto> pagingDtoEntitys(Map<String, String> params) throws ApiException,Exception {
 		try {
 			List<PuestoDto> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingDtoEntitys(pagData);

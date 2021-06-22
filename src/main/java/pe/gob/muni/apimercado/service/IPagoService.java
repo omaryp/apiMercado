@@ -1,10 +1,14 @@
 package pe.gob.muni.apimercado.service;
 
 import java.util.List;
+import java.util.Map;
+
+import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
+import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 
 public interface IPagoService extends IBasicService<Pago>{
@@ -13,4 +17,5 @@ public interface IPagoService extends IBasicService<Pago>{
 	 
 	 void pagoTickets(List<Ticket> tickets) throws ApiException, Exception;
 	 
+	 PageInfo<PagoDto> pagingTickets(Map<String, String> params) throws ApiException, Exception;
 }

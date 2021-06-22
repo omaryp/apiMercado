@@ -65,7 +65,7 @@
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select id,codigo,descripcion,conceptos_id,correlativo,
 		estado,fecha_creacion,creado_por,
 		fecha_modifcacion,	modifcado_por,

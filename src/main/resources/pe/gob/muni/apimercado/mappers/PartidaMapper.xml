@@ -63,7 +63,7 @@
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="PartidaResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTable">
+	<select id="pagingEntitys" resultMap="PartidaResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select id,
 		codigo,
 		descripcion,

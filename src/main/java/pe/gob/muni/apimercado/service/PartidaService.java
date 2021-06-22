@@ -22,7 +22,7 @@ import pe.gob.muni.apimercado.repository.PartidaRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
-import pe.gob.muni.apimercado.utils.dto.PageTable;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Service
 public class PartidaService implements IPartidaService {
@@ -42,7 +42,7 @@ public class PartidaService implements IPartidaService {
 		logger.info("obteniendo partidas con los filtros {}.",objectToJson(params));
 		try {
 			List<Partida> rptaData = null;
-			PageTable pagData = mapToObject(params, PageTable.class);
+			GeneralPageTable pagData = mapToObject(params, GeneralPageTable.class);
 			PageHelper.startPage(pagData.getPage(),pagData.getLimit());
 			
 			rptaData = repository.pagingEntitys(pagData);
