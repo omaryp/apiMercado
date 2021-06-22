@@ -110,7 +110,7 @@
 		I.monto_pagado,
 		I.observaciones,
 		A.id tickets_id,
-		A.fecha_ticket;
+		A.fecha_ticket,
         B.id puestos_id,
 		B.codigo codigo_puesto,
 		A.mercados_id,
