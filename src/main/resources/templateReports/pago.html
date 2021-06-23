@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+
+<head>
+    <meta charset="UTF-8">
+    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
+        name="viewport">
+    <meta content="ie=edge" http-equiv="X-UA-Compatible">
+    <title>Spring Boot - Thymeleaf</title>
+    <style type="text/css">
+    html {
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
+  line-height: 1.5; 
+  margin: 0px;
+}
+body{
+margin: 3px;
+}
+    	.bold{
+    		font-weight: bold;
+    	}
+    	.text-center{
+    		text-align: center;
+    	}
+    	.max-text{
+    	font-size: 14px;
+    	}
+    	.mid-text{
+    	font-size: 10px;
+    	}
+    	.min-text{
+    	font-size: 8px;
+    	}
+        @page{
+	size: 4in 6in;
+}
+    </style>
+</head>
+<body>
+    <table>
+        <tr>
+            <td ><img th:src="@{/logo_mobile.png}"></td>
+            <td align="center">
+                <div class=" bold max-text">MUNICIPALIDAD DISTRITAL DE 26 DE OCTUBRE</div>
+                <div class=" mid-text">Gerencia de Desarrollo Económico Local</div>
+                <div class=" min-text">R.U.C N° 20529997401</div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <div class="max-text">MERCADOS ZONALES</div>
+                <div class="mid-text">ALQUILER DE PUESTO Y TIENDA EXTERIOR - KIOSOS</div>
+                <div class="max-text">MERCADO SAN MARTIN</div>
+                <div class="mid-text">Valor : <span th:text="${pago.monto_pagado}"></span></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+                <div class=" max-text"> SERIE <span th:text="${pago.serie}"></span>  - N° <span th:text="${pago.correlativo}" > </span></div>
+            </td>
+        </tr>
+        <tr>
+            <td colspan="2" align="center">
+
+                <div class=" max-text">FECHA : <span th:text="${pago.fecha_pago}"></span> </div>
+                <div class=" mid-text">COBRADOR - ARCHIVO</div>
+                <div class=" min-text">Subgerencia de tesorería</div>
+            </td>
+        </tr>
+    </table>
+</html>

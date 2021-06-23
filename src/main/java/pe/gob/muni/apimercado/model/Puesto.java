@@ -16,6 +16,8 @@ public class Puesto extends BasicEntity {
 	@Min(value=1, message="Atributo giro debe ser != 0")
 	private int giro_id;
 	
+	private String codigo_qr;
+	
 	public String getCodigo() {
 		return codigo;
 	}
@@ -45,6 +47,12 @@ public class Puesto extends BasicEntity {
 	}
 	public void setGiro_id(int giro_id) {
 		this.giro_id = giro_id;
+	}
+	public String getCodigo_qr() {
+		return codigo_qr;
+	}
+	public void setCodigo_qr(String codigo_qr) {
+		this.codigo_qr = codigo_qr;
 	}
 	
 }

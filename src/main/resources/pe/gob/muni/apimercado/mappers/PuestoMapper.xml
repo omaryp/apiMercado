@@ -17,6 +17,7 @@
 		ubicaciones_id,
 		conceptos_id,
 		giro_id,
+		codigo_qr,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -34,6 +35,7 @@
 		ubicaciones_id,
 		conceptos_id,
 		giro_id,
+		codigo_qr,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -55,6 +57,7 @@
 		G.descripcion descripcion_ubicacion, 
 		A.giro_id,
 		H.valor_cadena1 descripcion_giro,
+		codigo_qr,
 		B.comerciantes_id,
 		D.dni,
 		D.nombres,
@@ -80,6 +83,7 @@
 		ubicaciones_id,
 		conceptos_id,
 		giro_id,
+		codigo_qr,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -93,11 +97,11 @@
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
 		codigo,mercados_id,ubicaciones_id,conceptos_id,
-		giro_id,estado,fecha_creacion,creado_por,fecha_modifcacion,
+		giro_id,codigo_qr,estado,fecha_creacion,creado_por,fecha_modifcacion,
 		modifcado_por, eliminado_por)
 		values(
 		#{codigo},#{mercados_id},#{ubicaciones_id},#{conceptos_id},
-		#{giro_id},#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
+		#{giro_id},uuid(),#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
 
@@ -130,6 +134,7 @@
 		ubicaciones_id,
 		conceptos_id,
 		giro_id,
+		codigo_qr,
 		estado,
 		fecha_creacion,
 		creado_por,
@@ -160,6 +165,7 @@
 		G.descripcion descripcion_ubicacion,
 		A.giro_id,
 		H.valor_cadena1 descripcion_giro,
+		A.codigo_qr,
 		B.comerciantes_id,
 		D.dni,
 		D.nombres,
