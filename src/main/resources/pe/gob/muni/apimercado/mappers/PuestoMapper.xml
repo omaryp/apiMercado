@@ -57,7 +57,7 @@
 		G.descripcion descripcion_ubicacion, 
 		A.giro_id,
 		H.valor_cadena1 descripcion_giro,
-		codigo_qr,
+		A.codigo_qr,
 		B.comerciantes_id,
 		D.dni,
 		D.nombres,

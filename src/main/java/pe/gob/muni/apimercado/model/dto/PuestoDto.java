@@ -17,6 +17,7 @@ public class PuestoDto {
 	private String nombres;
 	private String apellidos;
 	private int estado;
+	private String codigo_qr;
 	
 	public int getId() {
 		return id;
@@ -107,6 +108,12 @@ public class PuestoDto {
 	}
 	public void setCodigo(String codigo) {
 		this.codigo = codigo;
+	}
+	public String getCodigo_qr() {
+		return codigo_qr;
+	}
+	public void setCodigo_qr(String codigo_qr) {
+		this.codigo_qr = codigo_qr;
 	}
 	
 }
