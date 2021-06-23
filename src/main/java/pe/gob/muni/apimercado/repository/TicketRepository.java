@@ -10,7 +10,7 @@ import org.springframework.stereotype.Repository;
 import pe.gob.muni.apimercado.mapper.ITicketMapper;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
-import pe.gob.muni.apimercado.model.dto.TicketNoHabido;
+import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 
@@ -47,9 +47,9 @@ public class TicketRepository extends BasicRepository<Ticket,ITicketMapper> {
 		} 
 	}
 	
-	public void marcarTicketNoHabido(TicketNoHabido ticket)  throws ApiException {
+	public void marcarEstadoVisitaTicket(TicketVisita ticket)  throws ApiException {
 		try {
-			mapper.marcarTicketNoHabido(ticket);
+			mapper.marcarEstadoVisitaTicket(ticket);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

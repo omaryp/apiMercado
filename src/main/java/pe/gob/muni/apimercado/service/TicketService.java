@@ -2,6 +2,9 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Constants.ACTIVO;
+import static pe.gob.muni.apimercado.utils.Constants.NO_VISTADO;
+import static pe.gob.muni.apimercado.utils.Constants.NO_PAGADO;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
@@ -21,7 +24,7 @@ import com.github.pagehelper.PageInfo;
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
-import pe.gob.muni.apimercado.model.dto.TicketNoHabido;
+import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Validador;
@@ -217,14 +220,14 @@ public class TicketService implements ITicketService {
 					nvoTicket.setCorrelativo(puesto.getCorrelativo());
 					nvoTicket.setCreado_por(auth.getUserToken());
 					nvoTicket.setEliminado_por(0);
-					nvoTicket.setEstado(1);
-					nvoTicket.setPagado(0);
+					nvoTicket.setEstado(ACTIVO);
+					nvoTicket.setPagado(NO_PAGADO);
 					nvoTicket.setFecha_creacion(new Date());
 					nvoTicket.setFecha_ticket(params.getFechaProceso());
 					nvoTicket.setFecha_modifcacion(null);
 					nvoTicket.setMercados_id(puesto.getMercados_id());
 					nvoTicket.setModifcado_por(0);
-					nvoTicket.setNo_habido(false);
+					nvoTicket.setEstado_visita(NO_VISTADO);
 					nvoTicket.setObservaciones("");
 					nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
 					nvoTicket.setPuestos_id(puesto.getPuestos_id());
@@ -259,11 +262,10 @@ public class TicketService implements ITicketService {
 	}
 
 	@Override
-	public void marcarTicketNoHabido(TicketNoHabido ticket) throws ApiException, Exception {
+	public void marcarEstadoVisitaTicket(TicketVisita ticket) throws ApiException, Exception {
 		try {
-			ticket.setNo_habido(true);
 			ticket.setFecha_obs(new Date());
-			repository.marcarTicketNoHabido(ticket);
+			repository.marcarEstadoVisitaTicket(ticket);
 		} catch (ApiException e) {
 			logger.error("Error api marcando ticket no habido - {} - {}", e.getMessage(), e);
 			throw e;

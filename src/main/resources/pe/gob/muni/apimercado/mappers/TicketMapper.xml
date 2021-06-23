@@ -16,7 +16,7 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,
+		estado_visita,
 		observacion,
 		estado,
 		pagado,
@@ -36,7 +36,7 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,
+		estado_visita,
 		observacion,
 		pagado,
 		estado,
@@ -56,7 +56,7 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,
+		estado_visita,
 		observacion,
 		pagado,
 		estado,
@@ -90,11 +90,11 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
-		no_habido,observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
+		estado_visita,observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,
 		modifcado_por,eliminado_por)
 		values(#{mercados_id},#{ubicaciones_id},
-		#{comerciantes_id},#{puestos_id},#{correlativo},#{no_habido},
+		#{comerciantes_id},#{puestos_id},#{correlativo},#{estado_visita},
 		#{observaciones},#{pagado},#{estado},#{fecha_ticket},#{fecha_creacion},#{creado_por},
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -102,12 +102,12 @@
 	<insert id="saveAllTickets" parameterType="java.util.List" >
 		insert into tickets(
 		mercados_id,ubicaciones_id,
-		comerciantes_id,puestos_id,correlativo,no_habido,
+		comerciantes_id,puestos_id,correlativo,estado_visita,
 		observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,modifcado_por,eliminado_por) values
 		<foreach item="item" collection="list" separator=",">
 			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},
-			#{item.correlativo},#{item.no_habido},#{item.observaciones},#{item.pagado},
+			#{item.correlativo},#{item.estado_visita},#{item.observaciones},#{item.pagado},
 			#{item.estado},#{item.fecha_ticket},#{item.fecha_creacion},#{item.creado_por},
 			#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
 		</foreach>
@@ -119,15 +119,16 @@
 		where id = #{id}
 	</update>
 	
-	<update id="marcarTicketPagado" parameterType="TicketNoHabido">
+	<update id="marcarTicketPagado">
 		Update tickets
-		set pagado = 1
+		set pagado = 1,
+		estado_visita = 3
 		where id = #{id}
 	</update>
 	
-	<update id="marcarTicketNoHabido">
+	<update id="marcarEstadoVisitaTicket" parameterType="TicketVisita">
 		Update tickets
-		set no_habido = #{no_habido},
+		set estado_visita = #{estado_visita},
 		 observaciones = #{observaciones},
 		 fecha_obs = #{fecha_obs}
 		where id = #{id}
@@ -141,7 +142,7 @@
 		comerciantes_id = #{comerciantes_id},
 		puestos_id = #{partidas_id},
 		correlativo = #{correlativo},
-		no_habido = #{no_habido},
+		estado_visita = #{estado_visita},
 		observaciones = #{observaciones},
 		pagado = #{pagado},
 		estado = #{estado},
@@ -175,7 +176,10 @@
 		A.estado,
 		A.pagado,
 		A.fecha_ticket,
-		A.fecha_creacion
+		A.fecha_creacion,
+		A.estado_visita,
+		I.valor_cadena1 descripcion_visita,
+		A.observaciones
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id
@@ -184,6 +188,7 @@
         inner join conceptos F on F.id = B.conceptos_id
         inner join ubicaciones G on G.id = A.ubicaciones_id	
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
+        inner join parametros I on I.codigo=3 and H.valor_entero = A.estado_visita
         <where>
         	<if test="pagado != 2"  >
 				A.pagado = #{pagado}

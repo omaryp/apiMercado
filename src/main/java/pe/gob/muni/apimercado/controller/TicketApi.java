@@ -20,7 +20,7 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
-import pe.gob.muni.apimercado.model.dto.TicketNoHabido;
+import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.service.ITicketService;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
@@ -46,11 +46,11 @@ public class TicketApi extends BasicController<Ticket, ITicketService> {
 		}
 	}
 	
-	@PostMapping(path="/nohabido")
-	public ResponseEntity<?> marcarTicketNoHabido(@RequestBody TicketNoHabido ticket) {
+	@PostMapping(path="/visita")
+	public ResponseEntity<?> marcarTicketNoHabido(@RequestBody TicketVisita ticket) {
 		logger.info("Se recibió parámetro para generar tickets - {}",Util.objectToJson(ticket));
 		try {
-			service.marcarTicketNoHabido(ticket);
+			service.marcarEstadoVisitaTicket(ticket);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
 			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);

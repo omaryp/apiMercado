@@ -9,7 +9,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
-import pe.gob.muni.apimercado.model.dto.TicketNoHabido;
+import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 
 @Mapper
@@ -21,7 +21,7 @@ public interface ITicketMapper extends IBasicMapper<Ticket> {
 	
 	void marcarTicketPagado(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	void marcarTicketNoHabido(TicketNoHabido ticket) throws SQLException,SQLIntegrityConstraintViolationException;
+	void marcarEstadoVisitaTicket(TicketVisita ticket) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws SQLException,SQLIntegrityConstraintViolationException;
 	

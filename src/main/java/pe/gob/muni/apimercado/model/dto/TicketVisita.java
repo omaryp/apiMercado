@@ -2,10 +2,10 @@ package pe.gob.muni.apimercado.model.dto;
 
 import java.util.Date;
 
-public class TicketNoHabido {
+public class TicketVisita {
 
 	private int id;
-	private boolean no_habido;
+	private int estado_visita;
 	private String observaciones;
 	private Date fecha_obs;
 	
@@ -15,11 +15,11 @@ public class TicketNoHabido {
 	public void setId(int id) {
 		this.id = id;
 	}
-	public boolean isNo_habido() {
-		return no_habido;
+	public int getEstado_visita() {
+		return estado_visita;
 	}
-	public void setNo_habido(boolean no_habido) {
-		this.no_habido = no_habido;
+	public void setEstado_visita(int estado_visita) {
+		this.estado_visita = estado_visita;
 	}
 	public String getObservaciones() {
 		return observaciones;

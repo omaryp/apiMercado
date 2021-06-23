@@ -12,7 +12,7 @@ public class Ticket extends BasicEntity {
 	private long correlativo;
 	private int pagado;
 	private Date fecha_ticket;
-	private boolean no_habido;
+	private int estado_visita;
 	private String observaciones;
 	private Date fecha_obs;
 
@@ -48,12 +48,12 @@ public class Ticket extends BasicEntity {
 		this.correlativo = correlativo;
 	}
 
-	public boolean isNo_habido() {
-		return no_habido;
+	public int getEstado_visita() {
+		return estado_visita;
 	}
 
-	public void setNo_habido(boolean no_habido) {
-		this.no_habido = no_habido;
+	public void setEstado_visita(int estado_visita) {
+		this.estado_visita = estado_visita;
 	}
 
 	public String getObservaciones() {

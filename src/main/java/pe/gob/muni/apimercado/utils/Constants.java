@@ -36,4 +36,14 @@ public class Constants {
 	public final static int DESACTIVADO = 0;
 	
 	public final static int PERFIL_COBRADOR = 2;
+	
+	//constantes para el estado de visita
+	public final static int NO_VISTADO = 0;
+	public final static int VISITADO_NO_HABIDO = 1;
+	public final static int VISITADO_NO_PAGO = 2;
+	public final static int VISITADO = 3;
+	
+	//constantes para pago de tckets
+	public final static int NO_PAGADO = 0;
+	public final static int PAGADO = 1;
 }

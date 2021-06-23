@@ -23,6 +23,9 @@ public class TicketDto {
 	private int pagado;
 	private Date fecha_ticket;
 	private Date fecha_creacion;
+	private int ticket_visita;
+	private String descripcion_visita;
+	private String observaciones;
 	
 	public int getId() {
 		return id;
@@ -137,6 +140,24 @@ public class TicketDto {
 	}
 	public void setFecha_ticket(Date fecha_ticket) {
 		this.fecha_ticket = fecha_ticket;
+	}
+	public int getTicket_visita() {
+		return ticket_visita;
+	}
+	public void setTicket_visita(int ticket_visita) {
+		this.ticket_visita = ticket_visita;
+	}
+	public String getObservaciones() {
+		return observaciones;
+	}
+	public void setObservaciones(String observaciones) {
+		this.observaciones = observaciones;
+	}
+	public String getDescripcion_visita() {
+		return descripcion_visita;
+	}
+	public void setDescripcion_visita(String descripcion_visita) {
+		this.descripcion_visita = descripcion_visita;
 	}
 	
 }
