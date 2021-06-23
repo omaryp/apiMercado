@@ -68,6 +68,20 @@
 		eliminado_por
 		from tickets
 	</select>
+	
+	<select id="getTicketsFechaMercado" resultMap="int">
+		select
+			count(*)
+		from tickets
+		<where>
+        	<if test="mercados_id != 0"  >
+				mercados_id = #{mercados_id}
+			</if>
+			<if test="fecha_ticket != null "  >
+				AND cast(fecha_ticket as date) = cast(#{fecha_ticket} as date)
+			</if>
+		</where>
+	</select>
 
 	<insert id="saveEntity" parameterType="Ticket">
 		insert into tickets(

@@ -209,31 +209,37 @@ public class TicketService implements ITicketService {
 		List<PuestoComerciante> puestos;
 		final List<Ticket> tickets = new ArrayList<Ticket>();	
 		try {
-			puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
-			puestos.forEach((puesto) -> {
-				Ticket nvoTicket = new Ticket();
-				nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
-				nvoTicket.setCorrelativo(puesto.getCorrelativo());
-				nvoTicket.setCreado_por(auth.getUserToken());
-				nvoTicket.setEliminado_por(0);
-				nvoTicket.setEstado(1);
-				nvoTicket.setPagado(0);
-				nvoTicket.setFecha_creacion(new Date());
-				nvoTicket.setFecha_ticket(params.getFechaProceso());
-				nvoTicket.setFecha_modifcacion(null);
-				nvoTicket.setMercados_id(puesto.getMercados_id());
-				nvoTicket.setModifcado_por(0);
-				nvoTicket.setNo_habido(false);
-				nvoTicket.setObservaciones("");
-				nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
-				nvoTicket.setPuestos_id(puesto.getPuestos_id());
-				tickets.add(nvoTicket);
-			});
-			repository.saveAllTickets(tickets);
-		} catch (ApiException e) {
+			if(getTicketsFechaMercado(params.getMercados_id(), params.getFechaProceso()) == 0) {
+				puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
+				puestos.forEach((puesto) -> {
+					Ticket nvoTicket = new Ticket();
+					nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
+					nvoTicket.setCorrelativo(puesto.getCorrelativo());
+					nvoTicket.setCreado_por(auth.getUserToken());
+					nvoTicket.setEliminado_por(0);
+					nvoTicket.setEstado(1);
+					nvoTicket.setPagado(0);
+					nvoTicket.setFecha_creacion(new Date());
+					nvoTicket.setFecha_ticket(params.getFechaProceso());
+					nvoTicket.setFecha_modifcacion(null);
+					nvoTicket.setMercados_id(puesto.getMercados_id());
+					nvoTicket.setModifcado_por(0);
+					nvoTicket.setNo_habido(false);
+					nvoTicket.setObservaciones("");
+					nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
+					nvoTicket.setPuestos_id(puesto.getPuestos_id());
+					tickets.add(nvoTicket);
+				});
+				repository.saveAllTickets(tickets);
+			}else throw new ValidatorException("Ya existen tickets para esta fecha");
+			
+		}catch (ValidatorException e) {
+			logger.error("Error de validación al crear tickets - {} - {} ", e.getMessage(), e);
+			throw e;
+		}catch (ApiException e) {
 			logger.error("Error api procesando ticket - {} - {}", e.getMessage(), e);
 			throw e;
-		} catch (Exception e) {
+		}catch (Exception e) {
 			logger.error("Error api procesando ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
@@ -250,7 +256,6 @@ public class TicketService implements ITicketService {
 			logger.error("Error general obteniendo entidades ticket - {} - {}", e.getMessage(), e);
 			throw e;
 		}
-		
 	}
 
 	@Override
@@ -266,6 +271,19 @@ public class TicketService implements ITicketService {
 			logger.error("Error general marcando ticket no habido - {} - {}", e.getMessage(), e);
 			throw e;
 		}		
+	}
+
+	@Override
+	public int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws ApiException, Exception {
+		try {
+			return repository.getTicketsFechaMercado(mercados_id,fecha_ticket);
+		} catch (ApiException e) {
+			logger.error("Error api verificando ticket ya creados - {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general verificando ticket ya creados - {} - {}", e.getMessage(), e);
+			throw e;
+		}	
 	}
 
 }

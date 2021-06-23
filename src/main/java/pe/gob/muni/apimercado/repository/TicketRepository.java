@@ -2,6 +2,7 @@ package pe.gob.muni.apimercado.repository;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Date;
 import java.util.List;
 
 import org.springframework.stereotype.Repository;
@@ -49,6 +50,16 @@ public class TicketRepository extends BasicRepository<Ticket,ITicketMapper> {
 	public void marcarTicketNoHabido(TicketNoHabido ticket)  throws ApiException {
 		try {
 			mapper.marcarTicketNoHabido(ticket);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
+	public int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws ApiException {
+		try {
+			return mapper.getTicketsFechaMercado(mercados_id,fecha_ticket);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

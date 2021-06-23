@@ -2,6 +2,7 @@ package pe.gob.muni.apimercado.mapper;
 
 import java.sql.SQLException;
 import java.sql.SQLIntegrityConstraintViolationException;
+import java.util.Date;
 import java.util.List;
 
 import org.apache.ibatis.annotations.Mapper;
@@ -21,5 +22,7 @@ public interface ITicketMapper extends IBasicMapper<Ticket> {
 	void marcarTicketPagado(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	void marcarTicketNoHabido(TicketNoHabido ticket) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 }

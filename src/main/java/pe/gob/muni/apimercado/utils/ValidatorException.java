@@ -16,6 +16,12 @@ public class ValidatorException extends Exception {
 		this.message=message;
 		this.errores = errores;
 	}
+	
+	public ValidatorException(String message) {
+		super(message);
+		this.message=message;
+		this.errores = null;
+	}
 
 	public String getMessage() {
 		return message;
