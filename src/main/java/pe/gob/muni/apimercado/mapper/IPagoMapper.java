@@ -21,4 +21,8 @@ public interface IPagoMapper extends IBasicMapper<Pago> {
 	List<PagoDto> pagingPagos(PageTablePago params) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	PagoDto getEntityPagoDto(int id) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	PagoDto getEntityPagoDtoTicket(int id) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	
 }

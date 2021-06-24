@@ -6,7 +6,6 @@ import java.util.Map;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.BasicEntity;
-import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 

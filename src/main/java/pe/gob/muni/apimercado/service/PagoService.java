@@ -272,5 +272,18 @@ public class PagoService implements IPagoService {
 			throw e;
 		}
 	}
+	
+	@Override
+	public PagoDto getEntityPagoDtoTicket(int id) throws ApiException, Exception {
+		try {
+			return repository.getEntityPagoDtoTicket(id);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo detalle pago por ticket {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo detalle pago por ticket{} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
 
 }

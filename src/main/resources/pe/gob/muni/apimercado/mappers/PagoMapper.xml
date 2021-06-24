@@ -125,6 +125,44 @@
         where I.id = #{id}
 	</select>
 	
+	<select id="getEntityPagoDtoTicket" resultMap="PagoDtoResultMap"
+		parameterType="int">
+		select
+		I.id,
+		I.fecha_pago,
+		I.serie,
+		I.correlativo,
+		I.monto_pagado,
+		I.observaciones,
+		A.id tickets_id,
+		A.fecha_ticket,
+        B.id puestos_id,
+		B.codigo codigo_puesto,
+		A.mercados_id,
+		E.descripcion descripcion_mercado,
+		B.conceptos_id,
+		F.descripcion descripcion_concepto,
+		A.ubicaciones_id,
+		G.descripcion descripcion_ubicacion,
+		B.giro_id,
+		H.valor_cadena1 descripcion_giro,
+		A.comerciantes_id,
+		D.dni,
+		D.nombres,
+		D.apellidos
+		from pagos I 
+		inner join tickets_pagos J on J.pagos_id = I.id
+		inner join tickets A on A.id = J.tickets_id
+		inner join puestos B on B.id = A.puestos_id
+        left join comerciantes C on C.id = A.comerciantes_id
+        inner join personas D on D.id = C.personas_id
+        inner join mercados E on E.id = A.mercados_id
+        inner join conceptos F on F.id = B.conceptos_id
+        inner join ubicaciones G on G.id = A.ubicaciones_id	
+        inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
+        where A.id = #{id}
+	</select>
+	
 	<insert id="saveAllPagos" parameterType="java.util.List">
 		insert into pagos(
 		fecha_pago,serie,

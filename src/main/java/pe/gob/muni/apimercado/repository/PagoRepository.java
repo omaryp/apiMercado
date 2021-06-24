@@ -56,4 +56,14 @@ public class PagoRepository extends BasicRepository<Pago,IPagoMapper> {
 		} 
 	}
 	
+	public PagoDto getEntityPagoDtoTicket(int id)throws ApiException {
+		try {
+			return mapper.getEntityPagoDtoTicket(id);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
 }
