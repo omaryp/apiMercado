@@ -47,6 +47,22 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		}
 	}
 	
+	@GetMapping(path="/{codigo}")
+	public ResponseEntity<?> getEntityPagoDto(@PathVariable int codigo) {
+		logger.info("Se recibió parametro para obtener datos de pago - {}",codigo);
+		try {
+			PagoDto rpta = service.getEntityPagoDto(codigo);
+			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
 	@GetMapping(path="/pagPago")
 	public ResponseEntity<?> paginacionTickets(@RequestParam Map<String, String> params) {
 		logger.info("Se recibió parámetro para paginar pagos - {}",Util.objectToJson(params));

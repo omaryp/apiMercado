@@ -87,7 +87,7 @@
 		where id = #{id}
 	</update>
 	
-	<select id="getEntityPaoDto" resultMap="PagoDtoResultMap"
+	<select id="getEntityPagoDto" resultMap="PagoDtoResultMap"
 		parameterType="int">
 		select
 		I.id,

@@ -7,6 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.io.File;
+import java.util.TimeZone;
 
 import javax.annotation.PostConstruct;
 
@@ -37,6 +38,7 @@ public class ApirestApplication {
 		file = new File(Environment.getUserHome() + configAplicativo.getRutaConfigLog4j2());
 		context.setConfigLocation(file.toURI());
 		logger.info("Log4j2 cargado desde el archivo : " + file.getAbsolutePath());
+		TimeZone.setDefault(TimeZone.getTimeZone("GMT-5")); 
 	}
 
 	public static void main(String[] args) {

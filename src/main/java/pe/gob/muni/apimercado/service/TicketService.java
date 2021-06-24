@@ -249,9 +249,9 @@ public class TicketService implements ITicketService {
 	}
 
 	@Override
-	public void marcarTicketPagado(int id) throws ApiException, Exception {
+	public void marcarTicketPagado(int id,int estado_visita) throws ApiException, Exception {
 		try {
-			repository.marcarTicketPagado(id);
+			repository.marcarTicketPagado(id,estado_visita);
 		} catch (ApiException e) {
 			logger.error("Error api marcando ticket pagado - {} - {}", e.getMessage(), e);
 			throw e;

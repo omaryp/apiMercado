@@ -6,6 +6,7 @@ import java.util.Map;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.BasicEntity;
+import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 
@@ -24,4 +25,5 @@ public interface IBasicService<T extends BasicEntity> {
 	void updateEntity(T entity) throws ApiException,Exception,ValidatorException; 
 	
 	void deleteEntity(int id) throws ApiException,Exception;
+
 }

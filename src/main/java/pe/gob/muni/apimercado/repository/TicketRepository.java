@@ -37,9 +37,9 @@ public class TicketRepository extends BasicRepository<Ticket,ITicketMapper> {
 		} 
 	}
 	
-	public void marcarTicketPagado(int id)  throws ApiException {
+	public void marcarTicketPagado(int id,int estado_visita)  throws ApiException {
 		try {
-			mapper.marcarTicketPagado(id);
+			mapper.marcarTicketPagado(id,estado_visita);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

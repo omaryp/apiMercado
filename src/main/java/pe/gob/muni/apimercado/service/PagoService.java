@@ -2,6 +2,8 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Constants.VISITADO;
+import static pe.gob.muni.apimercado.utils.Constants.NO_VISTADO;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -199,7 +201,10 @@ public class PagoService implements IPagoService {
 				serie.setCorrelativo(pag.getCorrelativo());
 				ser.updateEntity(serie);
 				
-				ticketSer.marcarTicketPagado(ticket.getId());
+				if(ticket.getFecha_ticket().equals(new Date()))
+					ticketSer.marcarTicketPagado(ticket.getId(),VISITADO);
+				else
+					ticketSer.marcarTicketPagado(ticket.getId(), NO_VISTADO);
 				
 				TicketPago ticPag= new TicketPago();
 				ticPag.setTickets_id(ticket.getId());
@@ -241,7 +246,7 @@ public class PagoService implements IPagoService {
 		logger.info("generando reporte pago {} ticket", id);
 		try {
 			Map<String, Object> params = new HashMap<String,Object>();
-			PagoDto dto = repository.getEntityPaoDto(id);
+			PagoDto dto = getEntityPagoDto(id);
 			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
 			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
 			params.put("pago", dto);
@@ -251,6 +256,19 @@ public class PagoService implements IPagoService {
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public PagoDto getEntityPagoDto(int id) throws ApiException, Exception {
+		try {
+			return repository.getEntityPagoDto(id);
+		} catch (ApiException e) {
+			logger.error("Error api obteniendo detelle pago  {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo detelle pago{} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

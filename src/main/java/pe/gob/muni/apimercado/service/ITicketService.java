@@ -17,7 +17,7 @@ public interface ITicketService extends IBasicService<Ticket>{
 
 	PageInfo<TicketDto> pagingTickets(Map<String, String> params) throws ApiException, Exception;
 	
-	void marcarTicketPagado(int id) throws ApiException, Exception;
+	void marcarTicketPagado(int id,int estado_visita) throws ApiException, Exception;
 	
 	void marcarEstadoVisitaTicket(TicketVisita ticket)  throws ApiException,Exception;
 	
