@@ -19,4 +19,6 @@ public interface IPagoMapper extends IBasicMapper<Pago> {
 	void saveAllPagos(List<Pago> pagos) throws SQLException,SQLIntegrityConstraintViolationException;
 	
 	List<PagoDto> pagingPagos(PageTablePago params) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	PagoDto getEntityPaoDto(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 }

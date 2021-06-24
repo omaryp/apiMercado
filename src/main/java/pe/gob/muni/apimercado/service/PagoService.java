@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -46,6 +47,8 @@ public class PagoService implements IPagoService {
 	private ITarifaService tar;
 	@Autowired
 	private ITicketService ticketSer;
+	@Autowired
+	private IReportService report;
 	@Autowired
 	private Validador<Pago> validadorPago;
 	
@@ -229,6 +232,25 @@ public class PagoService implements IPagoService {
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general paginando entidades ticket {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
+	@Override
+	public byte[] reporteTicketPago(int id) throws ApiException, Exception {
+		logger.info("generando reporte pago {} ticket", id);
+		try {
+			Map<String, Object> params = new HashMap<String,Object>();
+			PagoDto dto = repository.getEntityPaoDto(id);
+			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
+			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
+			params.put("pago", dto);
+			return report.generarReporte("pago", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

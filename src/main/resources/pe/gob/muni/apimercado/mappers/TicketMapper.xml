@@ -69,7 +69,7 @@
 		from tickets
 	</select>
 	
-	<select id="getTicketsFechaMercado" resultMap="int">
+	<select id="getTicketsFechaMercado" resultType="int">
 		select
 			count(*)
 		from tickets

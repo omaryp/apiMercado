@@ -49,8 +49,8 @@ margin: 3px;
         <tr>
             <td colspan="2" align="center">
                 <div class="max-text">MERCADOS ZONALES</div>
-                <div class="mid-text">ALQUILER DE PUESTO Y TIENDA EXTERIOR - KIOSOS</div>
-                <div class="max-text">MERCADO SAN MARTIN</div>
+                <div class="mid-text"><span th:text="${pago.descripcion_concepto}"></span></div>
+                <div class="max-text"><span th:text="${pago.descripcion_mercado}"></span></div>
                 <div class="mid-text">Valor : <span th:text="${pago.monto_pagado}"></span></div>
             </td>
         </tr>
