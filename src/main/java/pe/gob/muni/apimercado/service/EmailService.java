@@ -45,7 +45,7 @@ public class EmailService implements IEmailService {
 	}
 
 	@Override
-	public void enviarMensaje(String destinatario, String asunto, String mensaje, String rutaArchivoAdjunto)
+	public void enviarMensaje(String destinatario, String asunto, String mensaje, String rutaArchivoAdjunto,String nombreArchivo)
 			throws ApiException, Exception {
 		MimeMessage message = emailSender.createMimeMessage();
 		MimeMessageHelper helper;
@@ -56,7 +56,7 @@ public class EmailService implements IEmailService {
 			helper.setText(mensaje);
 
 			FileSystemResource file = new FileSystemResource(new File(rutaArchivoAdjunto));
-			helper.addAttachment("Invoice", file);
+			helper.addAttachment(nombreArchivo, file);
 
 			emailSender.send(message);
 		} catch (MessagingException e) {

@@ -301,6 +301,7 @@ public class PagoService implements IPagoService {
 	public void enviarCorreo(EnvioDto entity) throws ApiException, Exception {
 		logger.info("Enviando mensaje a {} pago {} ", entity.getCorreo(), entity.getId_pago());
 		String rutaTemp = "";
+		String nombre = "";
 		String asunto = "";
 		String mensaje = "";
 		byte [] adjunto = null;
@@ -310,14 +311,15 @@ public class PagoService implements IPagoService {
 			dto = getEntityPagoDto(entity.getId_pago());
 			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
 			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
-			asunto = paramsApi.getAsunto()+" : "+dto.getSerie()+" - "+dto.getCorrelativo();
+			nombre = dto.getSerie()+dto.getCorrelativo()+".pdf";
+			asunto = paramsApi.getAsunto()+" : "+nombre;
 			params.put("pago", dto);
 			params.put("titulo", asunto);
 			adjunto = report.generarReporte("pago", params);
-			rutaTemp = "/temp/pago_"+dto.getSerie()+dto.getCorrelativo()+".pdf";
+			rutaTemp = "/temp/pago_"+nombre;
 			mensaje = paramsApi.getMensaje();
 			writeBytesToFileApache(rutaTemp, adjunto);
-			email.enviarMensaje(entity.getCorreo(), asunto, mensaje, rutaTemp);
+			email.enviarMensaje(entity.getCorreo(), asunto, mensaje, rutaTemp,nombre);
 			logger.info("Se envio mensaje correctamente a {}", entity.getCorreo());
 		} catch (Exception e) {
 			logger.error("Error enviando mensaje a {} pago {} - {} - {} ", entity.getCorreo(), entity.getId_pago(),e.getMessage(),e);
