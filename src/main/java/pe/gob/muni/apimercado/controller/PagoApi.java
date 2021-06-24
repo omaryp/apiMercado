@@ -28,6 +28,7 @@ import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.service.IPagoService;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
+import pe.gob.muni.apimercado.utils.dto.EnvioDto;
 
 @RestController
 @RequestMapping("/pago")
@@ -71,6 +72,22 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		try {
 			PagoDto rpta = service.getEntityPagoDtoTicket(codigo);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
+	@PostMapping(path="/enviar")
+	public ResponseEntity<?> enviarMensaje(@RequestBody EnvioDto entity) {
+		logger.info("Se recibió parametro para enviar mensaje de pago - {}",Util.objectToJson(entity));
+		try {
+			service.enviarCorreo(entity);
+			return respuestaApi("Mensaje se envió correctamente", "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
 			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);

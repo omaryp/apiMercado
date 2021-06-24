@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service;
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
+import pe.gob.muni.apimercado.config.ParametrosApiRest;
 import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.Serie;
 import pe.gob.muni.apimercado.model.Tarifa;
@@ -27,10 +28,13 @@ import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import static pe.gob.muni.apimercado.utils.Util.writeBytesToFileApache;
+
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
+import pe.gob.muni.apimercado.utils.dto.EnvioDto;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 import pe.gob.muni.apimercado.utils.dto.PageTablePago;
 
@@ -51,6 +55,10 @@ public class PagoService implements IPagoService {
 	private ITicketService ticketSer;
 	@Autowired
 	private IReportService report;
+	@Autowired
+	private IEmailService email;
+	@Autowired
+	private ParametrosApiRest paramsApi;
 	@Autowired
 	private Validador<Pago> validadorPago;
 	
@@ -245,10 +253,13 @@ public class PagoService implements IPagoService {
 	public byte[] reporteTicketPago(int id) throws ApiException, Exception {
 		logger.info("generando reporte pago {} ticket", id);
 		try {
+			String titulo = "";
 			Map<String, Object> params = new HashMap<String,Object>();
 			PagoDto dto = getEntityPagoDto(id);
 			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
 			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
+			titulo = dto.getSerie()+" "+dto.getCorrelativo();
+			params.put("titulo", titulo);
 			params.put("pago", dto);
 			return report.generarReporte("pago", params);
 		} catch (ApiException e) {
@@ -283,6 +294,34 @@ public class PagoService implements IPagoService {
 		} catch (Exception e) {
 			logger.error("Error general obteniendo detalle pago por ticket{} - {}", e.getMessage(), e);
 			throw e;
+		}
+	}
+
+	@Override
+	public void enviarCorreo(EnvioDto entity) throws ApiException, Exception {
+		logger.info("Enviando mensaje a {} pago {} ", entity.getCorreo(), entity.getId_pago());
+		String rutaTemp = "";
+		String asunto = "";
+		String mensaje = "";
+		byte [] adjunto = null;
+		Map<String, Object> params = new HashMap<String,Object>();
+		PagoDto  dto = null;
+		try {
+			dto = getEntityPagoDto(entity.getId_pago());
+			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
+			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
+			asunto = paramsApi.getAsunto()+" : "+dto.getSerie()+" - "+dto.getCorrelativo();
+			params.put("pago", dto);
+			params.put("titulo", asunto);
+			adjunto = report.generarReporte("pago", params);
+			rutaTemp = "/temp/pago_"+dto.getSerie()+dto.getCorrelativo()+".pdf";
+			mensaje = paramsApi.getMensaje();
+			writeBytesToFileApache(rutaTemp, adjunto);
+			email.enviarMensaje(entity.getCorreo(), asunto, mensaje, rutaTemp);
+			logger.info("Se envio mensaje correctamente a {}", entity.getCorreo());
+		} catch (Exception e) {
+			logger.error("Error enviando mensaje a {} pago {} - {} - {} ", entity.getCorreo(), entity.getId_pago(),e.getMessage(),e);
+			throw new ApiException("Error al enviar mensaje de correo a "+entity.getCorreo(), null);
 		}
 	}
 

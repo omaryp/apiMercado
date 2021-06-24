@@ -196,6 +196,9 @@
 			<if test="fecha_incio != null and fecha_fin != null "  >
 				AND cast(A.fecha_ticket as date) between cast(#{fecha_incio} as date) and date_add(cast(#{fecha_fin} as date),INTERVAL 1 DAY) 
 			</if>
+			<if test="codigo_qr != null and codigo_qr != null "  >
+				AND B.codigo_qr = #{codigo_qr}
+			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 
 			</if>

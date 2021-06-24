@@ -12,6 +12,12 @@ public class ParametrosApiRest {
 	
 	@Value("${config.api.reporte.resource.url}")
 	private String resource_url;
+	
+	@Value("${config.aplicativos.mail.properties.asunto}")
+	private String asunto;
+	
+	@Value("${config.aplicativos.mail.properties.mensaje}")
+	private String mensaje;
 
 	public String getRutaConfigLog4j2() {
 		return rutaConfigLog4j2;
@@ -23,6 +29,14 @@ public class ParametrosApiRest {
 
 	public String getResource_url() {
 		return resource_url;
+	}
+
+	public String getAsunto() {
+		return asunto;
+	}
+
+	public String getMensaje() {
+		return mensaje;
 	}
 	
 }

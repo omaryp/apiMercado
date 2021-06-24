@@ -26,10 +26,10 @@
         <AsyncLogger name="com.journaldev" level="INFO"/>			
 		<AsyncLogger name="org.springframework" level="INFO"/>
     	<AsyncLogger name="org.hibernate" level="INFO"/>
-    	<AsyncLogger name="pe.gob.muni" level="INFO"/>
+    	<AsyncLogger name="pe.gob.muni.apimercado" level="INFO"/>
         <AsyncRoot>
             <AppenderRef ref="Console" level="ALL" />
-            <AppenderRef ref="AppFileLog" level="DEBUG"/>
+            <AppenderRef ref="AppFileLog" level="ALL"/>
         </AsyncRoot>
     </Loggers>
 </Configuration>

@@ -10,6 +10,7 @@ public class PageTableTicket extends BasicPageTable {
 	private int mercados_id;
 	private int ubicaciones_id;
 	private int pagado;
+	private String codigo_qr;
 	
 	public Date getFecha_incio() {
 		return fecha_incio;
@@ -46,6 +47,12 @@ public class PageTableTicket extends BasicPageTable {
 	}
 	public void setUbicaciones_id(int ubicaciones_id) {
 		this.ubicaciones_id = ubicaciones_id;
+	}
+	public String getCodigo_qr() {
+		return codigo_qr;
+	}
+	public void setCodigo_qr(String codigo_qr) {
+		this.codigo_qr = codigo_qr;
 	}
 
 }

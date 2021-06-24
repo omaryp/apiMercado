@@ -10,6 +10,7 @@ import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.dto.EnvioDto;
 
 public interface IPagoService extends IBasicService<Pago>{
 	
@@ -24,4 +25,6 @@ public interface IPagoService extends IBasicService<Pago>{
 	 PagoDto getEntityPagoDto(int id) throws ApiException, Exception;
 	 
 	 PagoDto getEntityPagoDtoTicket(int id) throws ApiException, Exception;
+	 
+	 void enviarCorreo(EnvioDto entity) throws ApiException, Exception;
 }
