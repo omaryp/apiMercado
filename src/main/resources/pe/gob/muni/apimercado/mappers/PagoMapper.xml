@@ -175,7 +175,7 @@
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         <where>
 			<if test="fecha_incio != null and fecha_fin != null "  >
-				cast(I.fecha_pago as date) between cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) 
+				cast(I.fecha_pago as date) between cast(#{fecha_incio} as date) and date_add(cast(#{fecha_fin} as date),INTERVAL 1 DAY) 
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 

@@ -212,30 +212,32 @@ public class TicketService implements ITicketService {
 		List<PuestoComerciante> puestos;
 		final List<Ticket> tickets = new ArrayList<Ticket>();	
 		try {
-			if(getTicketsFechaMercado(params.getMercados_id(), params.getFechaProceso()) == 0) {
-				puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
-				puestos.forEach((puesto) -> {
-					Ticket nvoTicket = new Ticket();
-					nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
-					nvoTicket.setCorrelativo(puesto.getCorrelativo());
-					nvoTicket.setCreado_por(auth.getUserToken());
-					nvoTicket.setEliminado_por(0);
-					nvoTicket.setEstado(ACTIVO);
-					nvoTicket.setPagado(NO_PAGADO);
-					nvoTicket.setFecha_creacion(new Date());
-					nvoTicket.setFecha_ticket(params.getFechaProceso());
-					nvoTicket.setFecha_modifcacion(null);
-					nvoTicket.setMercados_id(puesto.getMercados_id());
-					nvoTicket.setModifcado_por(0);
-					nvoTicket.setEstado_visita(NO_VISTADO);
-					nvoTicket.setObservaciones("");
-					nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
-					nvoTicket.setPuestos_id(puesto.getPuestos_id());
-					tickets.add(nvoTicket);
-				});
-				repository.saveAllTickets(tickets);
-			}else throw new ValidatorException("Ya existen tickets para esta fecha");
-			
+            Date fecha_actual = new Date();
+			if(!params.getFechaProceso().after(fecha_actual)) {
+				if(getTicketsFechaMercado(params.getMercados_id(), params.getFechaProceso()) == 0) {
+					puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
+					puestos.forEach((puesto) -> {
+						Ticket nvoTicket = new Ticket();
+						nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
+						nvoTicket.setCorrelativo(puesto.getCorrelativo());
+						nvoTicket.setCreado_por(auth.getUserToken());
+						nvoTicket.setEliminado_por(0);
+						nvoTicket.setEstado(ACTIVO);
+						nvoTicket.setPagado(NO_PAGADO);
+						nvoTicket.setFecha_creacion(fecha_actual);
+						nvoTicket.setFecha_ticket(params.getFechaProceso());
+						nvoTicket.setFecha_modifcacion(null);
+						nvoTicket.setMercados_id(puesto.getMercados_id());
+						nvoTicket.setModifcado_por(0);
+						nvoTicket.setEstado_visita(NO_VISTADO);
+						nvoTicket.setObservaciones("");
+						nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
+						nvoTicket.setPuestos_id(puesto.getPuestos_id());
+						tickets.add(nvoTicket);
+					});
+					repository.saveAllTickets(tickets);
+				}else throw new ValidatorException("Ya existen tickets para esta fecha.");
+			} else throw new ValidatorException("Generación de tickets solo se permite hasta la fecha actual.");
 		}catch (ValidatorException e) {
 			logger.error("Error de validación al crear tickets - {} - {} ", e.getMessage(), e);
 			throw e;

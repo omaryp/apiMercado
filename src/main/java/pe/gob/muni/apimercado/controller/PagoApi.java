@@ -8,7 +8,9 @@ import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -84,7 +86,10 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		logger.info("Se recibió parámetro para obtener reporte pago - {}",codigo);
 		try {
 			byte [] rpta = service.reporteTicketPago(codigo);
-			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
 		}catch (ApiException e) {
 			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
