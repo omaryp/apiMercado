@@ -9,6 +9,8 @@ import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 import java.io.File;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.Map;
 
 import javax.servlet.http.HttpServletResponse;
@@ -41,6 +43,17 @@ public class Util {
 	public static void writeBytesToFileApache(String fileOutput, byte[] bytes) throws IOException {
 
 		FileUtils.writeByteArrayToFile(new File(fileOutput), bytes);
+
+	}
+	
+	public static boolean isDateEquals(Date date1,Date date2) throws IOException {
+		SimpleDateFormat cDate1 = new SimpleDateFormat("yyyy-MM-dd");
+        String ccDate1 = cDate1.format(date1);
+
+        SimpleDateFormat cDate2 = new SimpleDateFormat("yyyy-MM-dd");
+        String ccDate2 = cDate2.format(date2);
+		
+        return ccDate1.equals(ccDate2);
 
 	}
 

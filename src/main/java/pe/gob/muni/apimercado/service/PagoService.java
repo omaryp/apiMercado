@@ -28,10 +28,12 @@ import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
-import static pe.gob.muni.apimercado.utils.Util.writeBytesToFileApache;
 
+import static pe.gob.muni.apimercado.utils.Util.isDateEquals;
+import static pe.gob.muni.apimercado.utils.Util.writeBytesToFileApache;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
+
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.EnvioDto;
@@ -209,7 +211,7 @@ public class PagoService implements IPagoService {
 				serie.setCorrelativo(pag.getCorrelativo());
 				ser.updateEntity(serie);
 				
-				if(ticket.getFecha_ticket().equals(new Date()))
+				if(isDateEquals(ticket.getFecha_ticket(), new Date()))
 					ticketSer.marcarTicketPagado(ticket.getId(),VISITADO);
 				else
 					ticketSer.marcarTicketPagado(ticket.getId(), NO_VISTADO);
