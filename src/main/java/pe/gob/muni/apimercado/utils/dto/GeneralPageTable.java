@@ -4,6 +4,7 @@ public class GeneralPageTable extends BasicPageTable {
 	
 	private String search;
 	private int filter;
+	private boolean sin_comer;
 	
 	public String getSearch() {
 		return search;
@@ -19,6 +20,14 @@ public class GeneralPageTable extends BasicPageTable {
 
 	public void setFilter(int filter) {
 		this.filter = filter;
+	}
+
+	public boolean isSin_comer() {
+		return sin_comer;
+	}
+
+	public void setSin_comer(boolean sin_comer) {
+		this.sin_comer = sin_comer;
 	}
 	
 }

@@ -26,6 +26,9 @@ public class TicketDto {
 	private int estado_visita;
 	private String descripcion_visita;
 	private String observaciones;
+	private String correo;
+	private String telefono;
+	
 	
 	public int getId() {
 		return id;
@@ -158,6 +161,18 @@ public class TicketDto {
 	}
 	public void setEstado_visita(int estado_visita) {
 		this.estado_visita = estado_visita;
+	}
+	public String getCorreo() {
+		return correo;
+	}
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 	
 }

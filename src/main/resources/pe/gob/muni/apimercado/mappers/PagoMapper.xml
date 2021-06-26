@@ -111,7 +111,9 @@
 		A.comerciantes_id,
 		D.dni,
 		D.nombres,
-		D.apellidos
+		D.apellidos,
+		D.correo,
+		D.telefono
 		from pagos I 
 		inner join tickets_pagos J on J.pagos_id = I.id
 		inner join tickets A on A.id = J.tickets_id
@@ -149,7 +151,9 @@
 		A.comerciantes_id,
 		D.dni,
 		D.nombres,
-		D.apellidos
+		D.apellidos,
+		D.correo,
+		D.telefono
 		from pagos I 
 		inner join tickets_pagos J on J.pagos_id = I.id
 		inner join tickets A on A.id = J.tickets_id
@@ -200,7 +204,9 @@
 		A.comerciantes_id,
 		D.dni,
 		D.nombres,
-		D.apellidos
+		D.apellidos,
+		D.correo,
+		D.telefono
 		from pagos I 
 		inner join tickets_pagos J on J.pagos_id = I.id
 		inner join tickets A on A.id = J.tickets_id
@@ -213,7 +219,7 @@
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         <where>
 			<if test="fecha_incio != null and fecha_fin != null "  >
-				cast(I.fecha_pago as date) between cast(#{fecha_incio} as date) and date_add(cast(#{fecha_fin} as date),INTERVAL 1 DAY) 
+				 cast(I.fecha_pago as date) >= #{fecha_incio} and #{fecha_fin} >= cast(I.fecha_pago as date) 
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 

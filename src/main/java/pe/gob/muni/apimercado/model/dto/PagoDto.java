@@ -26,6 +26,8 @@ public class PagoDto{
 	private String dni;
 	private String nombres;
 	private String apellidos;
+	private String correo;
+	private String telefono;
 	private Date fecha_ticket;
 	 
 	public Date getFecha_pago() {
@@ -160,6 +162,18 @@ public class PagoDto{
 	}
 	public void setFecha_ticket(Date fecha_ticket) {
 		this.fecha_ticket = fecha_ticket;
+	}
+	public String getCorreo() {
+		return correo;
+	}
+	public void setCorreo(String correo) {
+		this.correo = correo;
+	}
+	public String getTelefono() {
+		return telefono;
+	}
+	public void setTelefono(String telefono) {
+		this.telefono = telefono;
 	}
 
 }

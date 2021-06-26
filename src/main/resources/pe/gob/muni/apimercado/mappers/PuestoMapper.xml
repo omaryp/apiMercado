@@ -64,7 +64,7 @@
 		D.apellidos,
 		A.estado
 		from puestos A
-		inner join puestos_comerciantes B on A.id = B.puestos_id
+		left join puestos_comerciantes B on A.id = B.puestos_id
 		left join comerciantes C on C.id = B.comerciantes_id 
 		inner join personas D on D.id = C.personas_id
 		inner join mercados E on E.id = A.mercados_id
@@ -172,8 +172,7 @@
 		D.apellidos,
 		A.estado
 		from puestos A
-		inner join puestos_comerciantes B on
-		A.id = B.puestos_id
+		left join puestos_comerciantes B on A.id = B.puestos_id
 		left join comerciantes C on C.id = B.comerciantes_id
 		inner join personas D on D.id = C.personas_id
 		inner join mercados E on E.id = A.mercados_id
@@ -185,10 +184,10 @@
 				D.apellidos LIKE CONCAT(#{search},'%')
 			</if>
 			<if test="filter != '' and filter != null">
-				<if test="search != '' and search != null">
-					and
-				</if>
-				A.mercados_id = #{filter}
+				and A.mercados_id = #{filter}
+			</if>
+			<if test="sin_comer != '' and sin_comer != null">
+				and B.comerciantes_id IS NULL
 			</if>
 		</where>
 		Order by LPAD(A.codigo,20,'0') ASC,ubicaciones_id
