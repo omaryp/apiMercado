@@ -196,7 +196,7 @@
 				A.pagado = #{pagado}
 			</if>
 			<if test="fecha_incio != null and fecha_fin != null "  >
-				AND cast(A.fecha_ticket as date) >= #{fecha_incio} and #{fecha_fin} >= cast(A.fecha_ticket as date) 
+				AND A.fecha_ticket  >= cast(#{fecha_incio} as date)  and cast(#{fecha_fin} as date) >= A.fecha_ticket
 			</if>
 			<if test="codigo_qr != null and codigo_qr != null "  >
 				AND B.codigo_qr = #{codigo_qr}
