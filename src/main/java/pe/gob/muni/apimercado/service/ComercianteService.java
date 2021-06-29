@@ -217,20 +217,25 @@ public class ComercianteService implements IComercianteService {
 	public byte[] reporteAsistencia(Map<String, String> params) throws ApiException, Exception {
 		logger.info("generando reporte de asistencia por comerciante - {}", objectToJson(params));
 		try {
-			String titulo = "Reporte Asistencia Comerciantes";
+			String titulo = "Reporte Asistencia Comerciantes ";
+			String mercado = "";
 			Map<String, Object> paramReport= new HashMap<String,Object>();
 			PageTableTicket queryParams = new PageTableTicket();
 			queryParams = mapToObject(params, PageTableTicket.class);
 			File f = resource.getResource("static/logo_1.png");
             String encodstring = encodeFileToBase64Binary(f);
 			List<TicketDto> datos = ticketRepository.pagingTickets(queryParams);
-			
+			mercado = datos.get(0).getDescripcion_mercado();
 			final Map<String, List<TicketDto>> rolModulo = datos.stream().collect(Collectors.groupingBy(TicketDto::getKeyOrder));
 			
 			paramReport.put("titulo", titulo);
 			paramReport.put("datos", rolModulo);
 			paramReport.put("fecha_reporte", new Date());
 			paramReport.put("imagen", encodstring);
+			paramReport.put("mercado", mercado);
+			paramReport.put("fecha_incio", queryParams.getFecha_incio());
+			paramReport.put("fecha_fin", queryParams.getFecha_fin());
+			
 			return report.generarReporte("reporteAsistencia", paramReport);
 			
 		} catch (ApiException e) {

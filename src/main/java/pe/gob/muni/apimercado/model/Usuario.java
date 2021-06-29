@@ -25,6 +25,8 @@ public class Usuario extends Persona{
 	@Min(value=1, message="Atributo código de perfil debe ser != 0")
 	private int perfiles_codigo;
 	
+	private String nombre_perfil;
+	
 	private int personas_id;
 	
 	private boolean activo;
@@ -102,6 +104,14 @@ public class Usuario extends Persona{
 
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
+	}
+
+	public String getNombre_perfil() {
+		return nombre_perfil;
+	}
+
+	public void setNombre_perfil(String nombre_perfil) {
+		this.nombre_perfil = nombre_perfil;
 	}
 	
 }

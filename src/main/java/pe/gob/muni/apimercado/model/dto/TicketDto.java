@@ -26,6 +26,7 @@ public class TicketDto {
 	private int estado_visita;
 	private String descripcion_visita;
 	private String observaciones;
+	private Date fecha_visita;
 	private String correo;
 	private String telefono;
 	
@@ -176,6 +177,14 @@ public class TicketDto {
 	}
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+
+	public Date getFecha_visita() {
+		return fecha_visita;
+	}
+
+	public void setFecha_visita(Date fecha_visita) {
+		this.fecha_visita = fecha_visita;
 	}
 	
 }

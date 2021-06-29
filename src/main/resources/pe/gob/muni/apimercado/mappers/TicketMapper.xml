@@ -181,7 +181,8 @@
 		A.fecha_creacion,
 		A.estado_visita,
 		I.valor_cadena1 descripcion_visita,
-		A.observaciones
+		A.observaciones,
+		A.fecha_obs fecha_visita
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id
