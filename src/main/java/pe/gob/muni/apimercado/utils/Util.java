@@ -7,7 +7,6 @@ import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;

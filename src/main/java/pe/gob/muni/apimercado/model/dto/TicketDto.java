@@ -29,6 +29,9 @@ public class TicketDto {
 	private String correo;
 	private String telefono;
 	
+	public String getKeyOrder() {
+		return comerciantes_id+"-"+puestos_id;
+	}
 	
 	public int getId() {
 		return id;

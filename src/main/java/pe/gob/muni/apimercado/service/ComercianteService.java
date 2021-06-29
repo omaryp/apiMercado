@@ -3,11 +3,13 @@ package pe.gob.muni.apimercado.service;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -19,16 +21,21 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.Persona;
+import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.repository.ComercianteRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
+import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ResourceProject;
 
+import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
 import static pe.gob.muni.apimercado.utils.Util.getPersona;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
+import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 
 @Service
 public class ComercianteService implements IComercianteService {
@@ -40,11 +47,15 @@ public class ComercianteService implements IComercianteService {
 	@Autowired
 	private PersonaRepository perRepository;
 	@Autowired
+	private TicketRepository ticketRepository;
+	@Autowired
 	private IUsuarioService auth;
 	@Autowired
 	private IReportService report;
 	@Autowired
 	private Validador<Comerciante> validadorComerciante;
+	@Autowired
+	private ResourceProject resource;
 	
 	@Override
 	public PageInfo<Comerciante> pagingEntitys(Map<String, String> params)
@@ -203,13 +214,25 @@ public class ComercianteService implements IComercianteService {
 	}
 	
 	@Override
-	public byte[] reporteAsistencia(int id) throws ApiException, Exception {
-		logger.info("generando reporte pago {} ticket", id);
+	public byte[] reporteAsistencia(Map<String, String> params) throws ApiException, Exception {
+		logger.info("generando reporte de asistencia por comerciante - {}", objectToJson(params));
 		try {
-			String titulo = "Reporte Asistencia Comerciante";
-			Map<String, Object> params = new HashMap<String,Object>();
-			params.put("titulo", titulo);
-			return report.generarReporte("reporteAsistencia", params);
+			String titulo = "Reporte Asistencia Comerciantes";
+			Map<String, Object> paramReport= new HashMap<String,Object>();
+			PageTableTicket queryParams = new PageTableTicket();
+			queryParams = mapToObject(params, PageTableTicket.class);
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+			List<TicketDto> datos = ticketRepository.pagingTickets(queryParams);
+			
+			final Map<String, List<TicketDto>> rolModulo = datos.stream().collect(Collectors.groupingBy(TicketDto::getKeyOrder));
+			
+			paramReport.put("titulo", titulo);
+			paramReport.put("datos", rolModulo);
+			paramReport.put("fecha_reporte", new Date());
+			paramReport.put("imagen", encodstring);
+			return report.generarReporte("reporteAsistencia", paramReport);
+			
 		} catch (ApiException e) {
 			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
 			throw e;

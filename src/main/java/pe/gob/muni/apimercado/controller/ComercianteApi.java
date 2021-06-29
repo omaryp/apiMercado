@@ -4,13 +4,15 @@ import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
 import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 
+import java.util.Map;
+
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.gob.muni.apimercado.model.Comerciante;
@@ -22,11 +24,11 @@ import pe.gob.muni.apimercado.utils.ApiException;
 public class ComercianteApi extends BasicController<Comerciante, IComercianteService> {
 	
 	
-	@GetMapping(path="/report/asistencia/{codigo}")
-	public ResponseEntity<?> reporteAsistencia(@PathVariable int codigo) {
-		logger.info("Se recibió parámetro para obtener reporte de asistencia de comerciante- {}",codigo);
+	@GetMapping(path="/report/asistencia")
+	public ResponseEntity<?> reporteAsistencia(@RequestParam Map<String, String> params) {
+		logger.info("Se recibió parámetro para obtener reporte de asistencia de comerciante- {}",params);
 		try {
-			byte [] rpta = service.reporteAsistencia(codigo);
+			byte [] rpta = service.reporteAsistencia(params);
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)
