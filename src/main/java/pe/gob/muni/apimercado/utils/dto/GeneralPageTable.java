@@ -5,6 +5,7 @@ public class GeneralPageTable extends BasicPageTable {
 	private String search;
 	private int filter;
 	private boolean sin_comer;
+	private String codigo;
 	
 	public String getSearch() {
 		return search;
@@ -28,6 +29,14 @@ public class GeneralPageTable extends BasicPageTable {
 
 	public void setSin_comer(boolean sin_comer) {
 		this.sin_comer = sin_comer;
+	}
+
+	public String getCodigo() {
+		return codigo;
+	}
+
+	public void setCodigo(String codigo) {
+		this.codigo = codigo;
 	}
 	
 }
