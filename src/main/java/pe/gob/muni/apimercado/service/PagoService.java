@@ -201,7 +201,9 @@ public class PagoService implements IPagoService {
 
 	@Override
 	public void pagoTickets(List<Ticket> tickets) throws ApiException, Exception {
+		logger.info("pagando tickets {}.", objectToJson(tickets));
 		List<TicketPago> tiPags = new ArrayList<TicketPago>();
+		List<EnvioDto> envios = new ArrayList<EnvioDto>();
 		try {
 			for (Ticket ticket : tickets) {
 				Serie serie = ser.getSeriePuesto(ticket.getPuestos_id());
@@ -236,12 +238,29 @@ public class PagoService implements IPagoService {
 				EnvioDto envio = new EnvioDto();
 				envio.setCorreo(comerciante.getCorreo());
 				envio.setId_pago(pag.getId());
-				enviarCorreo(envio);
+				envios.add(envio);
 			}
 			repository.asociarTicketPago(tiPags);
+			enviarCorreosMasivo(envios);
 		} catch (ApiException e) {
 			throw e;
 		} catch (Exception e) {
+			throw e;
+		}
+	}
+	
+	public void enviarCorreosMasivo(List<EnvioDto> envios) throws ApiException,Exception {
+		logger.info("Enviando correos de forma masiva {}.", objectToJson(envios));
+		try {
+			for (EnvioDto envioDto : envios) {
+				enviarCorreo(envioDto);
+			}
+		}catch (ApiException e) {
+			logger.info("Error api enviando correos de forma masiva {}.", objectToJson(envios));
+			throw e;
+		}
+		catch (Exception e) {
+			logger.info("Error general enviando correos de forma masiva {}.", objectToJson(envios));
 			throw e;
 		}
 	}
@@ -285,10 +304,10 @@ public class PagoService implements IPagoService {
 			return report.generarReporte("pago", params);
 		} catch (ApiException e) {
 			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
-			throw e;
+			throw new ApiException("Error generando reporte tiket de pago "+id,null);
 		} catch (Exception e) {
 			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
-			throw e;
+			throw new ApiException("Error generando reporte tiket de pago "+id,null);
 		}
 	}
 	
