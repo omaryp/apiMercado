@@ -39,7 +39,7 @@ margin: 3px;
 <body>
     <table>
         <tr>
-            <td ><img th:src="@{/logo_mobile.png}"></td>
+            <td ><img th:src="@{'data:image/jpeg;base64,'+${imagen}}"></td>
             <td align="center">
                 <div class=" bold max-text">MUNICIPALIDAD DISTRITAL DE 26 DE OCTUBRE</div>
                 <div class=" mid-text">Gerencia de Desarrollo Económico Local</div>
@@ -62,7 +62,7 @@ margin: 3px;
         <tr>
             <td colspan="2" align="center">
 
-                <div class=" max-text">FECHA : <span th:text="${pago.fecha_pago}"></span> </div>
+                <div class=" max-text">FECHA : <span th:text=" ${#dates.format(pago.fecha_pago, 'dd/MM/yyyy')}"></span> </div>
                 <div class=" mid-text">COBRADOR - ARCHIVO</div>
                 <div class=" min-text">Subgerencia de tesorería</div>
             </td>

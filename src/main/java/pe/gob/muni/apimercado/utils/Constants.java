@@ -46,4 +46,6 @@ public class Constants {
 	//constantes para pago de tckets
 	public final static int NO_PAGADO = 0;
 	public final static int PAGADO = 1;
+	
+	public static final String RESOURCE_DEUDA = "/ticket/deuda";
 }

@@ -1,6 +1,7 @@
 package pe.gob.muni.apimercado.config.security;
 
 import static pe.gob.muni.apimercado.utils.Constants.LOGIN_URL;
+import static pe.gob.muni.apimercado.utils.Constants.RESOURCE_DEUDA;
 
 import java.util.Arrays;
 
@@ -45,6 +46,7 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 			.cors().and()
 			.csrf().disable()
 			.authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+			.antMatchers(HttpMethod.GET, RESOURCE_DEUDA).permitAll()
 			.anyRequest().authenticated().and()
 				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()));

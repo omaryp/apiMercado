@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Constants.VISITADO;
 import static pe.gob.muni.apimercado.utils.Constants.NO_VISTADO;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
@@ -28,7 +29,9 @@ import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ResourceProject;
 
+import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
 import static pe.gob.muni.apimercado.utils.Util.isDateEquals;
 import static pe.gob.muni.apimercado.utils.Util.writeBytesToFileApache;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
@@ -61,6 +64,8 @@ public class PagoService implements IPagoService {
 	private IEmailService email;
 	@Autowired
 	private ParametrosApiRest paramsApi;
+	@Autowired
+	private ResourceProject resource;
 	@Autowired
 	private Validador<Pago> validadorPago;
 	
@@ -256,6 +261,8 @@ public class PagoService implements IPagoService {
 		logger.info("generando reporte pago {} ticket", id);
 		try {
 			String titulo = "";
+			File f = resource.getResource("static/logo_mobile.png");
+            String encodstring = encodeFileToBase64Binary(f);
 			Map<String, Object> params = new HashMap<String,Object>();
 			PagoDto dto = getEntityPagoDto(id);
 			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
@@ -263,6 +270,7 @@ public class PagoService implements IPagoService {
 			titulo = dto.getSerie()+" "+dto.getCorrelativo();
 			params.put("titulo", titulo);
 			params.put("pago", dto);
+			params.put("imagen", encodstring);
 			return report.generarReporte("pago", params);
 		} catch (ApiException e) {
 			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);

@@ -45,7 +45,7 @@ public class ReportService implements IReportService {
 				context.setVariable(k, v);
 			});
 			
-			String orderHtml = templateEngine.process("pago", context);
+			String orderHtml = templateEngine.process(template, context);
 
 			ByteArrayOutputStream target = new ByteArrayOutputStream();
 			ConverterProperties converterProperties = new ConverterProperties();

@@ -5,6 +5,7 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -36,13 +37,12 @@ public class ComercianteService implements IComercianteService {
 
 	@Autowired
 	private ComercianteRepository repository;
-	
 	@Autowired
 	private PersonaRepository perRepository;
-	
 	@Autowired
 	private IUsuarioService auth;
-
+	@Autowired
+	private IReportService report;
 	@Autowired
 	private Validador<Comerciante> validadorComerciante;
 	
@@ -198,6 +198,23 @@ public class ComercianteService implements IComercianteService {
 			throw e;
 		}catch (Exception e) {
 			logger.error("Error general obteniendo all entitys comerciante {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public byte[] reporteAsistencia(int id) throws ApiException, Exception {
+		logger.info("generando reporte pago {} ticket", id);
+		try {
+			String titulo = "Reporte Asistencia Comerciante";
+			Map<String, Object> params = new HashMap<String,Object>();
+			params.put("titulo", titulo);
+			return report.generarReporte("reporteAsistencia", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

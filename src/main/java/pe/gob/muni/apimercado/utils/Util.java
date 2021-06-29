@@ -7,9 +7,12 @@ import pe.gob.muni.apimercado.model.Persona;
 import pe.gob.muni.apimercado.utils.dto.RespuestaApi;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
+import java.util.Base64;
 import java.util.Date;
 import java.util.Map;
 
@@ -56,6 +59,19 @@ public class Util {
         return ccDate1.equals(ccDate2);
 
 	}
+	
+	 public static String encodeFileToBase64Binary(File file)throws ApiException{
+         String encodedString = null;
+         try {
+        	 byte[] fileContent = FileUtils.readFileToByteArray(file);
+             encodedString = Base64.getEncoder().encodeToString(fileContent);
+         } catch (FileNotFoundException e) {
+             throw new ApiException("No se encontró archivo", e);
+         } catch (IOException e) {
+        	 throw new ApiException("Error de entrada y salida", e);
+         }
+         return encodedString;
+     }
 
 	public static <T> T jsonToObject(String jsonString, Class<T> clazz) {
 		T obj = null;

@@ -78,4 +78,20 @@ public class TicketApi extends BasicController<Ticket, ITicketService> {
 		}
 	}
 	
+	@GetMapping(path="/deuda")
+	public ResponseEntity<?> deudaComerciante(@RequestParam Map<String, String> params) {
+		logger.info("Se recibió parámetro para generar tickets - {}",Util.objectToJson(params));
+		try {
+			PageInfo<TicketDto> rpta = service.pagingTickets(params);
+			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
 }

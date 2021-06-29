@@ -201,6 +201,9 @@
 			<if test="codigo_qr != null and codigo_qr != null "  >
 				AND B.codigo_qr = #{codigo_qr}
 			</if>
+			<if test="dni != null and dni != null "  >
+				AND D.dni = #{dni}
+			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
 				AND A.comerciantes_id = #{comerciantes_id} 
 			</if>
