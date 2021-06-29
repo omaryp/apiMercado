@@ -26,6 +26,7 @@ import pe.gob.muni.apimercado.repository.ComercianteRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import static pe.gob.muni.apimercado.utils.Constants.NO_PAGADO;
 import pe.gob.muni.apimercado.utils.ResourceProject;
 
 import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
@@ -239,10 +240,45 @@ public class ComercianteService implements IComercianteService {
 			return report.generarReporte("reporteAsistencia", paramReport);
 			
 		} catch (ApiException e) {
-			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
+			logger.error("Error api generando reporte de asistencia de comerciantes {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
-			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
+			logger.error("Error general generando reporte de asistencia de comerciantes {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public byte[] reporteDeuda(Map<String, String> params) throws ApiException, Exception {
+		logger.info("generando reporte de asistencia por comerciante - {}", objectToJson(params));
+		try {
+			String titulo = "Reporte Deuda de Comerciantes ";
+			String mercado = "";
+			Map<String, Object> paramReport= new HashMap<String,Object>();
+			PageTableTicket queryParams = new PageTableTicket();
+			queryParams = mapToObject(params, PageTableTicket.class);
+			queryParams.setPagado(NO_PAGADO);
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+			List<TicketDto> datos = ticketRepository.pagingTickets(queryParams);
+			mercado = datos.get(0).getDescripcion_mercado();
+			final Map<String, List<TicketDto>> rolModulo = datos.stream().collect(Collectors.groupingBy(TicketDto::getKeyOrder));
+			
+			paramReport.put("titulo", titulo);
+			paramReport.put("datos", rolModulo);
+			paramReport.put("fecha_reporte", new Date());
+			paramReport.put("imagen", encodstring);
+			paramReport.put("mercado", mercado);
+			paramReport.put("fecha_incio", queryParams.getFecha_incio());
+			paramReport.put("fecha_fin", queryParams.getFecha_fin());
+			
+			return report.generarReporte("reporteDeuda", paramReport);
+			
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de deudas  {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de deudas {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

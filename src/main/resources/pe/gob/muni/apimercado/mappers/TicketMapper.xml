@@ -182,7 +182,8 @@
 		A.estado_visita,
 		I.valor_cadena1 descripcion_visita,
 		A.observaciones,
-		A.fecha_obs fecha_visita
+		A.fecha_obs fecha_visita,
+		J.monto
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id
@@ -192,6 +193,7 @@
         inner join ubicaciones G on G.id = A.ubicaciones_id	
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         inner join parametros I on I.codigo=3 and I.valor_entero = A.estado_visita
+        inner join tarifas J on J.conceptos_id = F.id and J.estado = 1
         <where>
         	<if test="pagado != 2"  >
 				A.pagado = #{pagado}

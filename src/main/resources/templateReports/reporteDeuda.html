@@ -185,6 +185,7 @@ bottom-right {
 								<td>Estado</td>
 								<td>Observacion</td>
 								<td>Fecha Visita</td>
+								<td>Monto</td>
 							</tr>
 						</thead>
 						<tbody>
@@ -193,6 +194,11 @@ bottom-right {
 								<td th:text="${ticket.descripcion_visita}"></td>
 								<td th:text="${ticket.observaciones}"></td>
 								<td th:text="${#dates.format(ticket.fecha_visita, 'dd/MM/yyyy')}"></td>
+								<td th:text="${ticket.monto}"></td>
+							</tr>
+							<tr>
+							<td colspan="4"></td>
+							<td th:text="${#aggregates.sum(element.value.![monto])}"></td>
 							</tr>
 						</tbody>
 					</table>

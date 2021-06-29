@@ -29,6 +29,7 @@ public class TicketDto {
 	private Date fecha_visita;
 	private String correo;
 	private String telefono;
+	private double monto;
 	
 	public String getKeyOrder() {
 		return comerciantes_id+"-"+puestos_id;
@@ -185,6 +186,14 @@ public class TicketDto {
 
 	public void setFecha_visita(Date fecha_visita) {
 		this.fecha_visita = fecha_visita;
+	}
+
+	public double getMonto() {
+		return monto;
+	}
+
+	public void setMonto(double monto) {
+		this.monto = monto;
 	}
 	
 }

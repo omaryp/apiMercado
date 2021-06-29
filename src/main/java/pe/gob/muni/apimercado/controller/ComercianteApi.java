@@ -42,5 +42,24 @@ public class ComercianteApi extends BasicController<Comerciante, IComercianteSer
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}
+	
+	@GetMapping(path="/report/deuda")
+	public ResponseEntity<?> reporteDeuda(@RequestParam Map<String, String> params) {
+		logger.info("Se recibió parámetro para obtener reporte de asistencia de comerciante- {}",params);
+		try {
+			byte [] rpta = service.reporteDeuda(params);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
 
 }
