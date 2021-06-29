@@ -160,9 +160,9 @@ bottom-right {
 	</div>
 	<div class="container">
 		<h3>
-			<span th:text="${titulo}"></span> del <span th:text=" ${#dates.format(fecha_incio, 'dd/MM/yyyy')} "></span> hasta <span th:text="${#dates.format(fecha_fin, 'dd/MM/yyyy')}"></span>
+			<span th:text="${titulo}"></span> del <span th:text=" ${#dates.format(fecha_incio, 'dd/MM/yyyy')} "></span> al <span th:text="${#dates.format(fecha_fin, 'dd/MM/yyyy')}"></span>
 		</h3>
-		<div th:each="element : ${datos}">
+		<div th:each="element : ${datos}" class="titulo-4">
 			<table class="tbl-report tbl-100" border="1">
 				<tr >
 					<td><span th:text="${element.value[0].nombres}"></span> <span
