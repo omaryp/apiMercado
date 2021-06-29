@@ -51,6 +51,7 @@
 	<select id="pagingEntitys" resultMap="UbicacionResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select A.id,
 		A.descripcion,
+        C.descripcion nombre_mercado,
 		A.estado,
 		A.fecha_creacion,
 		A.creado_por,
@@ -58,6 +59,8 @@
 		A.modifcado_por,
 		A.eliminado_por
 		from ubicaciones A
+		inner join ubicaciones_mercados B on A.id = B.ubicaciones_id
+        inner join mercados C on B.mercados_id = C.id
 		<where>
 			<if test="search != null">
 				CONCAT(A.descripcion) LIKE CONCAT(#{search},'%')

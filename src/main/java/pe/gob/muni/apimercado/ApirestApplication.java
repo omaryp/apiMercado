@@ -16,11 +16,13 @@ import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.PropertySource;
+import org.springframework.scheduling.annotation.EnableAsync;
 
 import pe.gob.muni.apimercado.config.ParametrosApiRest;
 import pe.gob.muni.apimercado.utils.Environment;
 
 @SpringBootApplication
+@EnableAsync
 @ComponentScan({"pe.gob.muni.apimercado"})
 @MapperScan("pe.gob.muni.apimercado.mapper")
 @PropertySource("file:${user.home}/apimercado/config/application.properties")

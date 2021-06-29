@@ -15,12 +15,14 @@ import java.util.Map;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Async;
 import org.springframework.stereotype.Service;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.config.ParametrosApiRest;
+import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.Serie;
 import pe.gob.muni.apimercado.model.Tarifa;
@@ -54,6 +56,8 @@ public class PagoService implements IPagoService {
 	private IUsuarioService auth;
 	@Autowired
 	private ISerieService ser;
+	@Autowired
+	private IComercianteService com;
 	@Autowired
 	private ITarifaService tar;
 	@Autowired
@@ -215,7 +219,7 @@ public class PagoService implements IPagoService {
 				
 				serie.setCorrelativo(pag.getCorrelativo());
 				ser.updateEntity(serie);
-				
+								
 				if(isDateEquals(ticket.getFecha_ticket(), new Date()))
 					ticketSer.marcarTicketPagado(ticket.getId(),VISITADO);
 				else
@@ -226,6 +230,13 @@ public class PagoService implements IPagoService {
 				ticPag.setPagos_id(pag.getId());
 				
 				tiPags.add(ticPag);
+				
+				//enviamos comprobante al correo registrado
+				Comerciante comerciante = com.getEntity(ticket.getComerciantes_id());
+				EnvioDto envio = new EnvioDto();
+				envio.setCorreo(comerciante.getCorreo());
+				envio.setId_pago(pag.getId());
+				enviarCorreo(envio);
 			}
 			repository.asociarTicketPago(tiPags);
 		} catch (ApiException e) {
@@ -308,6 +319,7 @@ public class PagoService implements IPagoService {
 	}
 
 	@Override
+	@Async
 	public void enviarCorreo(EnvioDto entity) throws ApiException, Exception {
 		logger.info("Enviando mensaje a {} pago {} ", entity.getCorreo(), entity.getId_pago());
 		String rutaTemp = "";
@@ -315,22 +327,19 @@ public class PagoService implements IPagoService {
 		String asunto = "";
 		String mensaje = "";
 		byte [] adjunto = null;
-		Map<String, Object> params = new HashMap<String,Object>();
-		PagoDto  dto = null;
 		try {
-			dto = getEntityPagoDto(entity.getId_pago());
-			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
-			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
-			nombre = dto.getSerie()+dto.getCorrelativo()+".pdf";
-			asunto = paramsApi.getAsunto()+" : "+nombre;
-			params.put("pago", dto);
-			params.put("titulo", asunto);
-			adjunto = report.generarReporte("pago", params);
-			rutaTemp = "/temp/pago_"+nombre;
-			mensaje = paramsApi.getMensaje();
-			writeBytesToFileApache(rutaTemp, adjunto);
-			email.enviarMensaje(entity.getCorreo(), asunto, mensaje, rutaTemp,nombre);
-			logger.info("Se envio mensaje correctamente a {}", entity.getCorreo());
+			if(!entity.getCorreo().equals("") && !entity.getCorreo().equals(null)) {
+				nombre = "comprobante_pago.pdf";
+				asunto = paramsApi.getAsunto()+" : "+nombre;
+				adjunto = reporteTicketPago(entity.getId_pago());
+				rutaTemp = "/temp/pago_"+nombre;
+				mensaje = paramsApi.getMensaje();
+				writeBytesToFileApache(rutaTemp, adjunto);
+				email.enviarMensaje(entity.getCorreo(), asunto, mensaje, rutaTemp,nombre);
+				logger.info("Se envio mensaje correctamente a {}", entity.getCorreo());
+			}else
+				logger.info("No se envió comprobante a {} del pago {}", entity.getCorreo(),entity.getCorreo());
+			
 		} catch (Exception e) {
 			logger.error("Error enviando mensaje a {} pago {} - {} - {} ", entity.getCorreo(), entity.getId_pago(),e.getMessage(),e);
 			throw new ApiException("Error al enviar mensaje de correo a "+entity.getCorreo(), null);
