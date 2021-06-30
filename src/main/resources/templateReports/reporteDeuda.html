@@ -194,11 +194,11 @@ bottom-right {
 								<td th:text="${ticket.descripcion_visita}"></td>
 								<td th:text="${ticket.observaciones}"></td>
 								<td th:text="${#dates.format(ticket.fecha_visita, 'dd/MM/yyyy')}"></td>
-								<td th:text="${ticket.monto}"></td>
+								<td class="text-right ">S./<span th:text="${#numbers.formatDecimal(ticket.monto, 0, 'COMMA', 2, 'POINT')}"></span></td>
 							</tr>
 							<tr>
-							<td colspan="4"></td>
-							<td th:text="${#aggregates.sum(element.value.![monto])}"></td>
+							<td colspan="4">Total</td>
+							<td class="text-right ">S./<span th:text=" ${#numbers.formatDecimal(#aggregates.sum(element.value.![monto]), 0, 'COMMA', 2, 'POINT')}"></span> </td>
 							</tr>
 						</tbody>
 					</table>

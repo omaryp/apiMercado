@@ -87,7 +87,7 @@ bottom-right {
 }
 
 .cuerpo{
-	font-size: 10px;
+	font-size: 8px;
 }
 
 .titulo-1, .titulo-2, .titulo-3, .titulo-4 {
@@ -165,23 +165,33 @@ bottom-right {
 		<table class="tbl-report tbl-100 cuerpo" border="1">
 			<thead>
 				<tr>
+					<td>Apellidos y Nombres</td>
+					<td>Dni</td>
+					<td>Sexo</td>
+					<td>Correo</td>
+					<td>Fecha Nacimiento</td>
+					<td>Telefono</td>
+					<td>Dirección</td>
 					<td>Mercado</td>
 					<td>Puesto</td>
-					<td>Ubicacion</td>
-					<td>Giro</td>
-					<td>Comerciante</td>
+					<td>Ubicación</td>
 				</tr>
 			</thead>
 			
 			<tbody>
-				<tr th:each="puesto : ${datos}">
-					<td th:text="${puesto.descripcion_mercado}"></td>
-					<td th:text="${puesto.codigo}"></td>
-					<td th:text="${puesto.descripcion_ubicacion}"></td>
-					<td th:text="${puesto.descripcion_giro}"></td>
-					<td><span th:text="${puesto.dni}"></span> - <span
-						th:text="${puesto.apellidos}"></span> <span
-						th:text="${puesto.nombres}"></span></td>
+				<tr th:each="comerciante : ${datos}">
+				<td><span
+						th:text="${comerciante.apellidos}"></span> <span
+						th:text="${comerciante.nombres}"></span></td>
+					<td th:text="${comerciante.dni}"></td>
+					<td th:text="${comerciante.sexo}"></td>
+					<td th:text="${comerciante.correo}"></td>
+					<td th:text="${#dates.format(comerciante.fecha_nacimiento, 'dd/MM/yyyy')}"></td>
+					<td th:text="${comerciante.telefono}"></td>
+					<td th:text="${comerciante.direccion}"></td>
+					<td th:text="${comerciante.mercado}"></td>
+					<td th:text="${comerciante.puesto}"></td>
+					<td th:text="${comerciante.ubicacion}"></td>
 				</tr>
 			</tbody>
 		</table>

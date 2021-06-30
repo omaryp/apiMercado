@@ -21,6 +21,7 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.Persona;
+import pe.gob.muni.apimercado.model.dto.ComercianteDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.repository.ComercianteRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
@@ -261,24 +262,67 @@ public class ComercianteService implements IComercianteService {
 			File f = resource.getResource("static/logo_1.png");
             String encodstring = encodeFileToBase64Binary(f);
 			List<TicketDto> datos = ticketRepository.pagingTickets(queryParams);
-			mercado = datos.get(0).getDescripcion_mercado();
-			final Map<String, List<TicketDto>> rolModulo = datos.stream().collect(Collectors.groupingBy(TicketDto::getKeyOrder));
+			if(datos.size() != 0) {
+				mercado = datos.get(0).getDescripcion_mercado();
+				final Map<String, List<TicketDto>> rolModulo = datos.stream().collect(Collectors.groupingBy(TicketDto::getKeyOrder));
+				
+				paramReport.put("titulo", titulo);
+				paramReport.put("datos", rolModulo);
+				paramReport.put("fecha_reporte", new Date());
+				paramReport.put("imagen", encodstring);
+				paramReport.put("mercado", mercado);
+				paramReport.put("fecha_incio", queryParams.getFecha_incio());
+				paramReport.put("fecha_fin", queryParams.getFecha_fin());
+				
+				return report.generarReporte("reporteDeuda", paramReport);
+			} else throw new ValidatorException("No existe deudas !");
 			
-			paramReport.put("titulo", titulo);
-			paramReport.put("datos", rolModulo);
-			paramReport.put("fecha_reporte", new Date());
-			paramReport.put("imagen", encodstring);
-			paramReport.put("mercado", mercado);
-			paramReport.put("fecha_incio", queryParams.getFecha_incio());
-			paramReport.put("fecha_fin", queryParams.getFecha_fin());
 			
-			return report.generarReporte("reporteDeuda", paramReport);
-			
-		} catch (ApiException e) {
+		} catch (ValidatorException e) {
+			logger.error("Error de validacion al generar reporte de deuda  {} - {}", e.getMessage(), e);
+			throw e;
+		}catch (ApiException e) {
 			logger.error("Error api generando reporte de deudas  {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general generando reporte de deudas {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public byte[] reporteComericantes() throws ApiException,Exception {
+		logger.info("generando reporte comerciantes");
+		try {
+			String titulo = "Reporte de Comerciantes";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<ComercianteDto> puestos = datosReporteComerciante();
+			params.put("titulo", titulo);
+			params.put("datos", puestos);
+			params.put("imagen", encodstring);
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reporteComerciante", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de comerciantes {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de comerciantes",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de comerciantes {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de comerciantes ",null);
+		}
+	}
+	
+	public List<ComercianteDto> datosReporteComerciante() throws ApiException,Exception {
+		try {
+			List<ComercianteDto> rptaData = null;
+			rptaData = repository.getDatosReporte();
+			return rptaData;
+		}catch (ApiException e) {
+			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obetener puestos por mercado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

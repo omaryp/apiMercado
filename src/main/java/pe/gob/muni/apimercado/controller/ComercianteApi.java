@@ -1,5 +1,6 @@
 package pe.gob.muni.apimercado.controller;
 
+import static pe.gob.muni.apimercado.utils.Constants.DATOS_NO_VALIDOS;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
 import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
@@ -18,6 +19,8 @@ import org.springframework.web.bind.annotation.RestController;
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.service.IComercianteService;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.Util;
+import pe.gob.muni.apimercado.utils.ValidatorException;
 
 @RestController
 @RequestMapping("/comerciante")
@@ -52,6 +55,9 @@ public class ComercianteApi extends BasicController<Comerciante, IComercianteSer
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)
 	                .body(rpta);
+		}catch (ValidatorException e) {
+			logger.error("Errores de validacion en reporte de deuda - {}",Util.objectToJson(params));
+			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		}catch (ApiException e) {
 			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
@@ -62,6 +68,23 @@ public class ComercianteApi extends BasicController<Comerciante, IComercianteSer
 		}
 	}
 	
-	
+	@GetMapping(path="/report")
+	public ResponseEntity<?> reporteComerciantes() {
+		logger.info("Se recibió petición para generar reporte de comerciantes");
+		try {
+			byte [] rpta = service.reporteComericantes();
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
 
 }

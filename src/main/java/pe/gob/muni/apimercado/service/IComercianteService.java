@@ -10,5 +10,7 @@ public interface IComercianteService extends IBasicService<Comerciante>{
 	byte[] reporteAsistencia(Map<String, String> params) throws ApiException, Exception;
 
 	byte[] reporteDeuda(Map<String, String> params) throws ApiException, Exception;
+
+	byte[] reporteComericantes() throws ApiException, Exception;
 	
 }

@@ -11,6 +11,8 @@
 	<resultMap id="ComercianteResultMap" type="Comerciante" extends="PersonaResultMap">
 		<id property="idComerciante" column="id"/>
 	</resultMap>
+	
+	<resultMap id="ComercianteDtoResultMap" type="ComercianteDto" />
 
 	<select id="getEntity" resultMap="ComercianteResultMap">
 		select A.id,A.ruc,A.razon_social,A.personas_id,
@@ -48,6 +50,32 @@
 		B.modifcado_por,
 		B.eliminado_por
 		 from comerciantes A , personas B where A.personas_id = B.id
+	</select>
+	
+	<select id="getDatosReporte" resultMap="ComercianteDtoResultMap">
+		select 
+		A.id,
+		A.ruc,
+		A.razon_social,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		coalesce(H.valor_cadena1,'') sexo,
+		D.codigo puesto,
+		E.descripcion mercado,
+		G.descripcion ubicacion
+		from comerciantes A 
+		inner join personas B on A.personas_id = B.id
+		inner join puestos_comerciantes C on C.comerciantes_id = A.id and C.estado = 1
+		inner join puestos D on D.id = C.puestos_id
+		inner join mercados E on E.id = D.mercados_id
+		inner join ubicaciones G on G.id = D.ubicaciones_id 
+		left join parametros H on H.codigo=4 and H.valor_cadena2 = B.sexo
+		order by B.apellidos
 	</select>
 
 	<insert id="saveEntity" parameterType="Comerciante">
