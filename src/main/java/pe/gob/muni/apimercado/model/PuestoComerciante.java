@@ -14,7 +14,7 @@ public class PuestoComerciante extends BasicEntity {
 	private int comerciantes_id;
 	@Min(value=1, message="Atributo ubicacion_id debe ser != 0")
 	private int ubicaciones_id;
-	private int correlativo;
+	private long correlativo;
 	private Date fecha_fin;
 	
 	public int getMercados_id() {
@@ -35,12 +35,7 @@ public class PuestoComerciante extends BasicEntity {
 	public void setComerciantes_id(int comerciantes_id) {
 		this.comerciantes_id = comerciantes_id;
 	}
-	public int getCorrelativo() {
-		return correlativo;
-	}
-	public void setCorrelativo(int correlativo) {
-		this.correlativo = correlativo;
-	}
+	
 	public Date getFecha_fin() {
 		return fecha_fin;
 	}
@@ -52,6 +47,12 @@ public class PuestoComerciante extends BasicEntity {
 	}
 	public void setUbicaciones_id(int ubicaciones_id) {
 		this.ubicaciones_id = ubicaciones_id;
+	}
+	public long getCorrelativo() {
+		return correlativo;
+	}
+	public void setCorrelativo(long correlativo) {
+		this.correlativo = correlativo;
 	}
 	
 		

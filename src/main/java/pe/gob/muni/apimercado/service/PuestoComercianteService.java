@@ -61,12 +61,13 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 	public void saveEntity(PuestoComerciante entity) throws ApiException, Exception, ValidatorException {
 		try {
 			PuestoComerciante actual = getEntity(entity.getComerciantes_id());
-			actual.setFecha_fin(new Date());
-			actual.setFecha_modifcacion(new Date());
-			actual.setEstado(0);
-			actual.setModifcado_por(auth.getUserToken());
-			repository.updateEntity(actual);
-			
+			if(null != actual) {
+				actual.setFecha_fin(new Date());
+				actual.setFecha_modifcacion(new Date());
+				actual.setEstado(0);
+				actual.setModifcado_por(auth.getUserToken());
+				repository.updateEntity(actual);
+			}
 			entity.setCreado_por(auth.getUserToken());
 			entity.setFecha_creacion(new Date());
 			entity.setEstado(1);
