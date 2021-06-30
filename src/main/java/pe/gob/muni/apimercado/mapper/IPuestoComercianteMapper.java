@@ -15,4 +15,7 @@ public interface IPuestoComercianteMapper extends IBasicMapper<PuestoComerciante
 	
 	List<PuestoComerciante> getAllPuestosMercado(int id)  throws SQLException,SQLIntegrityConstraintViolationException; 
 	
+	PuestoComerciante getPuestoComercianteMercado(int comerciantes_id, int mercados_id) throws SQLException,SQLIntegrityConstraintViolationException; 
+
+	void eliminarPuestoComerciante(int comerciante,int puesto) throws SQLException,SQLIntegrityConstraintViolationException;
 }

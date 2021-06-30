@@ -2,9 +2,12 @@ package pe.gob.muni.apimercado.service;
 
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
+import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 
+import java.io.File;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -21,6 +24,7 @@ import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.dto.PuestoDto;
 import pe.gob.muni.apimercado.repository.PuestoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ResourceProject;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
@@ -35,11 +39,15 @@ public class PuestoService implements IPuestoService {
 	@Autowired
 	private IUsuarioService auth;
 	@Autowired
+	private ResourceProject resource;
+	@Autowired
 	private PuestoRepository repository;
 	@Autowired
 	private Validador<Puesto> validadorPuesto;
 	@Autowired
 	private Validador<PuestoComerciante> validadorPuestoC;
+	@Autowired
+	private IReportService report;
 	
 	@Override
 	public PageInfo<Puesto> pagingEntitys(Map<String, String> params)
@@ -158,6 +166,20 @@ public class PuestoService implements IPuestoService {
 			throw e;
 		}
 	}
+	
+	@Override
+	public void eliminarPuestoComerciante(int comerciante,int puesto) throws ApiException, Exception {
+		try {
+			pcService.eliminarPuestoComerciante(comerciante,puesto);
+		}catch (ApiException e) {
+			logger.error("Error api obtiendo entidad puesto {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obteniendo entidad puesto {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+
 
 	@Override
 	public List<Puesto> getAllEntitys() throws ApiException, Exception {
@@ -189,6 +211,44 @@ public class PuestoService implements IPuestoService {
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general asociando puesto comerciante {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public byte[] reportePuestos() throws ApiException,Exception {
+		logger.info("generando reporte puestos");
+		try {
+			String titulo = "Reporte de Puestos";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<PuestoDto> puestos = datosReortePuestos();
+			params.put("titulo", titulo);
+			params.put("datos", puestos);
+			params.put("imagen", encodstring);
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reportePuestos", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de puestos {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de puestos",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de puestos {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de puestos ",null);
+		}
+	}
+	
+	public List<PuestoDto> datosReortePuestos() throws ApiException,Exception {
+		try {
+			List<PuestoDto> rptaData = null;
+			GeneralPageTable pagData = new GeneralPageTable();
+			rptaData = repository.pagingDtoEntitys(pagData);
+			return rptaData;
+		}catch (ApiException e) {
+			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obetener puestos por mercado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

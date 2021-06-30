@@ -9,5 +9,9 @@ public interface IPuestoComercianteService extends IBasicService<PuestoComercian
 	
 	List<PuestoComerciante> getAllPuestosActive() throws ApiException; 
 	
-	List<PuestoComerciante> getAllPuestosMercado(int mercados_id) throws ApiException; 
+	List<PuestoComerciante> getAllPuestosMercado(int mercados_id) throws ApiException;
+
+	PuestoComerciante getPuestoComercianteMercado(int comerciantes_id, int mercados_id) throws ApiException;
+
+	void eliminarPuestoComerciante(int comerciante, int puesto) throws ApiException, Exception; 
 }

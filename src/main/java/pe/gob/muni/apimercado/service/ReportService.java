@@ -54,7 +54,7 @@ public class ReportService implements IReportService {
 			HtmlConverter.convertToPdf(orderHtml, target, converterProperties);
 
 			byte[] pdfBytes = target.toByteArray();
-
+			logger.info("Se generó reporte correctamente {}", template);
 			return pdfBytes;
 		} catch (Exception e) {
 			logger.error("Error al generar reporte con plantilla {} {} {}", template, e.getMessage(),e);

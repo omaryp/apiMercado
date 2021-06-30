@@ -60,7 +60,7 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 	@Override
 	public void saveEntity(PuestoComerciante entity) throws ApiException, Exception, ValidatorException {
 		try {
-			PuestoComerciante actual = getEntity(entity.getComerciantes_id());
+			PuestoComerciante actual = getPuestoComercianteMercado(entity.getComerciantes_id(),entity.getMercados_id());
 			if(null != actual) {
 				actual.setFecha_fin(new Date());
 				actual.setFecha_modifcacion(new Date());
@@ -77,6 +77,19 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general guardando entidad puestocomerciante {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public void eliminarPuestoComerciante(int comerciante,int puesto)throws ApiException, Exception{
+		try {
+			repository.eliminarPuestoComerciante(comerciante,puesto);
+		}catch (ApiException e) {
+			logger.error("Error api eliminar puesto {} - comerciante {}", puesto, comerciante, e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general puesto {} - comerciante {}",puesto, comerciante, e.getMessage(), e);
 			throw e;
 		}
 	}
@@ -115,6 +128,19 @@ public class PuestoComercianteService implements IPuestoComercianteService {
 			throw e;
 		} catch (Exception e) {
 			logger.error("Error general obetener puestos por mercado {} - {}", e.getMessage(), e);
+			throw e;
+		}
+	}
+	
+	@Override
+	public PuestoComerciante getPuestoComercianteMercado(int comerciantes_id,int mercados_id)throws ApiException {
+		try {
+			return repository.getPuestoComercianteMercado(comerciantes_id, mercados_id);
+		}catch (ApiException e) {
+			logger.error("Error api obtener puestos por comerciante y mercado {} - {}", e.getMessage(), e);
+			throw e;
+		} catch (Exception e) {
+			logger.error("Error general obtener puestos por comerciante y mercado {} - {}", e.getMessage(), e);
 			throw e;
 		}
 	}

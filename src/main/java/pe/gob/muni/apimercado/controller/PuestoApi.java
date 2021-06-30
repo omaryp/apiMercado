@@ -9,7 +9,9 @@ import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 import java.util.List;
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -51,6 +53,21 @@ public class PuestoApi extends BasicController<Puesto, IPuestoService> {
 		}
 	}
 	
+	@PostMapping("/{puesto}/comerciante/{comerciante}")
+	public ResponseEntity<?> eliminarPuestoComerciante(@PathVariable int puesto,@PathVariable int comerciante) {
+		logger.info("Se prepara para eliminar puesto {} - de comerciante {}",puesto,comerciante);
+		try {
+			service.eliminarPuestoComerciante(comerciante, puesto);
+			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+		} catch (ApiException e) {
+			logger.error("Error de api al procesar peticion guardar - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
 	@GetMapping("/mercado/{id}")
 	public ResponseEntity<?> getAllPuestosMercado(@PathVariable int id) {
 		logger.info("Se recibió codigo mercado - {}",id);
@@ -73,6 +90,25 @@ public class PuestoApi extends BasicController<Puesto, IPuestoService> {
 		try {
 			PageInfo<PuestoDto> rpta = service.pagingDtoEntitys(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
+		}catch (ApiException e) {
+			logger.error("Error al procesar peticion paginacion - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de la aplicación paginacion - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);
+		}
+	}
+	
+	@GetMapping(path = "/report")
+	public ResponseEntity<?> reportePuestos() {
+		logger.info("Iniciando a generar reporte de puestos");
+		try {
+			byte[] rpta = service.reportePuestos();
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_puestos.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
 		}catch (ApiException e) {
 			logger.error("Error al procesar peticion paginacion - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);

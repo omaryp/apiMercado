@@ -18,4 +18,8 @@ public interface IPuestoService extends IBasicService<Puesto>{
 	PageInfo<PuestoDto> pagingDtoEntitys(Map<String, String> params) throws ApiException,Exception;
 
 	List<PuestoDto> getAllPuestosDtoMercado(int idMercado) throws ApiException;
+
+	void eliminarPuestoComerciante(int comerciante, int puesto) throws ApiException, Exception;
+
+	byte[] reportePuestos() throws ApiException, Exception;
 }

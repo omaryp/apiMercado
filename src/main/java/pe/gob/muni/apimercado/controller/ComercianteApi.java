@@ -61,5 +61,7 @@ public class ComercianteApi extends BasicController<Comerciante, IComercianteSer
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}
+	
+	
 
 }

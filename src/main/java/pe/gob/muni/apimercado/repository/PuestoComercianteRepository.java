@@ -34,4 +34,28 @@ public class PuestoComercianteRepository extends BasicRepository<PuestoComercian
 		} 
 	}
 	
+	public PuestoComerciante getPuestoComercianteMercado(int comerciantes_id,int mercados_id)throws ApiException {
+		try {
+			return mapper.getPuestoComercianteMercado(comerciantes_id, mercados_id);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
+	public void eliminarPuestoComerciante(int comerciante,int puesto)throws ApiException {
+		try {
+			mapper.eliminarPuestoComerciante(comerciante, puesto);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
+	
+	
+	
+	
 }
