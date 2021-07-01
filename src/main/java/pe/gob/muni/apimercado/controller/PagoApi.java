@@ -115,10 +115,29 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 	}
 	
 	@GetMapping(path="/report/{codigo}")
-	public ResponseEntity<?> reportePago(@PathVariable int codigo) {
+	public ResponseEntity<?> reporteTicketPago(@PathVariable int codigo) {
 		logger.info("Se recibió parámetro para obtener reporte pago - {}",codigo);
 		try {
 			byte [] rpta = service.reporteTicketPago(codigo);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
+	@GetMapping(path="/report")
+	public ResponseEntity<?> reportePagos(@RequestParam Map<String,String> params) {
+		logger.info("Se recibió parámetro para obtener reporte pagos - {}",params);
+		try {
+			byte [] rpta = service.reportePagos(params);
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)

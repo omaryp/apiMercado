@@ -29,6 +29,7 @@ public class PagoDto{
 	private String correo;
 	private String telefono;
 	private Date fecha_ticket;
+	private double monto;
 	 
 	public Date getFecha_pago() {
 		return fecha_pago;
@@ -174,6 +175,12 @@ public class PagoDto{
 	}
 	public void setTelefono(String telefono) {
 		this.telefono = telefono;
+	}
+	public double getMonto() {
+		return monto;
+	}
+	public void setMonto(double monto) {
+		this.monto = monto;
 	}
 
 }

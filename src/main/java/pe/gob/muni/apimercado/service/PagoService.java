@@ -364,5 +364,36 @@ public class PagoService implements IPagoService {
 			throw new ApiException("Error al enviar mensaje de correo a "+entity.getCorreo(), null);
 		}
 	}
+	
+	@Override
+	public byte[] reportePagos(Map<String, String> datos) throws ApiException, Exception {
+		logger.info("generando reporte de pagos {} ", objectToJson(datos));
+		try {
+			String titulo = "Reporte de Pagos";
+			String mercado = "";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+            PageTablePago pagData = mapToObject(datos, PageTablePago.class);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<PagoDto> pagos = repository.pagingPagos(pagData);
+			mercado = (datos.containsKey("mercados_id")) ? pagos.get(0).getDescripcion_mercado()  : "";
+			params.put("titulo", titulo);
+			params.put("datos", pagos);
+			params.put("imagen", encodstring);
+			params.put("mercado", mercado);
+			params.put("fecha_inicio", pagData.getFecha_incio());
+			params.put("fecha_fin", pagData.getFecha_fin());
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reportePagos", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de comerciantes {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de comerciantes",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de comerciantes {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte de comerciantes ",null);
+		}
+	}
+	
+	
 
 }

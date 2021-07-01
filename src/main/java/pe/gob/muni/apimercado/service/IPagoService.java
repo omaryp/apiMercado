@@ -27,4 +27,6 @@ public interface IPagoService extends IBasicService<Pago>{
 	 PagoDto getEntityPagoDtoTicket(int id) throws ApiException, Exception;
 	 
 	 void enviarCorreo(EnvioDto entity) throws ApiException, Exception;
+
+	byte[] reportePagos(Map<String, String> params) throws ApiException, Exception;
 }

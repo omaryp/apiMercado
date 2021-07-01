@@ -206,7 +206,8 @@
 		D.nombres,
 		D.apellidos,
 		D.correo,
-		D.telefono
+		D.telefono,
+		I.monto_pagado
 		from pagos I 
 		inner join tickets_pagos J on J.pagos_id = I.id
 		inner join tickets A on A.id = J.tickets_id
