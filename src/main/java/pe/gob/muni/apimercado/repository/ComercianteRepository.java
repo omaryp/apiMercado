@@ -10,13 +10,14 @@ import pe.gob.muni.apimercado.mapper.IComercianteMapper;
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.dto.ComercianteDto;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 
 @Repository
 public class ComercianteRepository extends BasicRepository<Comerciante,IComercianteMapper> {
 	
-	public List<ComercianteDto> getDatosReporte()  throws ApiException {
+	public List<ComercianteDto> getDatosReporte(GeneralPageTable pagData)  throws ApiException {
 		try {
-			return mapper.getDatosReporte();
+			return mapper.getDatosReporte(pagData);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

@@ -7,7 +7,6 @@ public class PageTablePago extends BasicPageTable {
 	private Date fecha_incio;
 	private Date fecha_fin;
 	private int comerciantes_id;
-	private int mercados_id;
 	private int ubicaciones_id;
 	
 	public Date getFecha_incio() {
@@ -27,12 +26,6 @@ public class PageTablePago extends BasicPageTable {
 	}
 	public void setComerciantes_id(int comerciantes_id) {
 		this.comerciantes_id = comerciantes_id;
-	}
-	public int getMercados_id() {
-		return mercados_id;
-	}
-	public void setMercados_id(int mercados_id) {
-		this.mercados_id = mercados_id;
 	}
 	public int getUbicaciones_id() {
 		return ubicaciones_id;

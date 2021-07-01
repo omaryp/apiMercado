@@ -7,6 +7,7 @@ public class BasicPageTable {
 	private int limit = 10;
 	private String sort;
 	private String order;
+	private int mercados_id;
 	
 	public int getPage() {
 		return page;
@@ -37,6 +38,12 @@ public class BasicPageTable {
 	}
 	public void setOrder(String order) {
 		this.order = order;
+	}
+	public int getMercados_id() {
+		return mercados_id;
+	}
+	public void setMercados_id(int mercados_id) {
+		this.mercados_id = mercados_id;
 	}
 
 }

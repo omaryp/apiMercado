@@ -52,7 +52,7 @@
 		 from comerciantes A , personas B where A.personas_id = B.id
 	</select>
 	
-	<select id="getDatosReporte" resultMap="ComercianteDtoResultMap">
+	<select id="getDatosReporte" resultMap="ComercianteDtoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
 		select 
 		A.id,
 		A.ruc,
@@ -75,6 +75,11 @@
 		inner join mercados E on E.id = D.mercados_id
 		inner join ubicaciones G on G.id = D.ubicaciones_id 
 		left join parametros H on H.codigo=4 and H.valor_cadena2 = B.sexo
+		<where>
+        	<if test="mercados_id != 0"  >
+				D.mercados_id = #{mercados_id}
+			</if>
+		</where>
 		order by B.apellidos
 	</select>
 

@@ -21,5 +21,5 @@ public interface IPuestoService extends IBasicService<Puesto>{
 
 	void eliminarPuestoComerciante(int comerciante, int puesto) throws ApiException, Exception;
 
-	byte[] reportePuestos() throws ApiException, Exception;
+	byte[] reportePuestos(Map<String, String> datos) throws ApiException, Exception;
 }

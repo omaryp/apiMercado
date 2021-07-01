@@ -69,10 +69,10 @@ public class ComercianteApi extends BasicController<Comerciante, IComercianteSer
 	}
 	
 	@GetMapping(path="/report")
-	public ResponseEntity<?> reporteComerciantes() {
+	public ResponseEntity<?> reporteComerciantes(@RequestParam Map<String, String> params) {
 		logger.info("Se recibió petición para generar reporte de comerciantes");
 		try {
-			byte [] rpta = service.reporteComericantes();
+			byte [] rpta = service.reporteComericantes(params);
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)

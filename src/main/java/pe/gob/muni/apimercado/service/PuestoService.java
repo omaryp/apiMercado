@@ -216,18 +216,21 @@ public class PuestoService implements IPuestoService {
 	}
 	
 	@Override
-	public byte[] reportePuestos() throws ApiException,Exception {
+	public byte[] reportePuestos(Map<String, String> datos) throws ApiException,Exception {
 		logger.info("generando reporte puestos");
 		try {
 			String titulo = "Reporte de Puestos";
+			String mercado = "";
 			File f = resource.getResource("static/logo_1.png");
             String encodstring = encodeFileToBase64Binary(f);
 			Map<String, Object> params = new HashMap<String,Object>();
-			List<PuestoDto> puestos = datosReortePuestos();
+			List<PuestoDto> puestos = datosReortePuestos(datos);
+			mercado = (datos.isEmpty())?"":puestos.get(0).getDescripcion_mercado();
 			params.put("titulo", titulo);
 			params.put("datos", puestos);
 			params.put("imagen", encodstring);
 			params.put("fecha_reporte", new Date());
+			params.put("mercado", mercado);
 			return report.generarReporte("reportePuestos", params);
 		} catch (ApiException e) {
 			logger.error("Error api generando reporte de puestos {} - {}", e.getMessage(), e);
@@ -238,10 +241,10 @@ public class PuestoService implements IPuestoService {
 		}
 	}
 	
-	public List<PuestoDto> datosReortePuestos() throws ApiException,Exception {
+	public List<PuestoDto> datosReortePuestos(Map<String, String> datos) throws ApiException,Exception {
 		try {
 			List<PuestoDto> rptaData = null;
-			GeneralPageTable pagData = new GeneralPageTable();
+			GeneralPageTable pagData = mapToObject(datos, GeneralPageTable.class);
 			rptaData = repository.pagingDtoEntitys(pagData);
 			return rptaData;
 		}catch (ApiException e) {

@@ -15,6 +15,7 @@ import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.github.pagehelper.PageHelper;
 import com.github.pagehelper.PageInfo;
@@ -291,17 +292,20 @@ public class ComercianteService implements IComercianteService {
 	}
 	
 	@Override
-	public byte[] reporteComericantes() throws ApiException,Exception {
+	public byte[] reporteComericantes(@RequestParam Map<String, String> datos) throws ApiException,Exception {
 		logger.info("generando reporte comerciantes");
 		try {
 			String titulo = "Reporte de Comerciantes";
+			String mercado = "";
 			File f = resource.getResource("static/logo_1.png");
             String encodstring = encodeFileToBase64Binary(f);
 			Map<String, Object> params = new HashMap<String,Object>();
-			List<ComercianteDto> puestos = datosReporteComerciante();
+			List<ComercianteDto> puestos = datosReporteComerciante(datos);
+			mercado = (datos.isEmpty()) ? "" : puestos.get(0).getMercado();
 			params.put("titulo", titulo);
 			params.put("datos", puestos);
 			params.put("imagen", encodstring);
+			params.put("mercado", mercado);
 			params.put("fecha_reporte", new Date());
 			return report.generarReporte("reporteComerciante", params);
 		} catch (ApiException e) {
@@ -313,10 +317,11 @@ public class ComercianteService implements IComercianteService {
 		}
 	}
 	
-	public List<ComercianteDto> datosReporteComerciante() throws ApiException,Exception {
+	public List<ComercianteDto> datosReporteComerciante(@RequestParam Map<String, String> datos) throws ApiException,Exception {
 		try {
 			List<ComercianteDto> rptaData = null;
-			rptaData = repository.getDatosReporte();
+			GeneralPageTable pagData = mapToObject(datos, GeneralPageTable.class);
+			rptaData = repository.getDatosReporte(pagData);
 			return rptaData;
 		}catch (ApiException e) {
 			logger.error("Error api obetener puestos por mercado {} - {}", e.getMessage(), e);

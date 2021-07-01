@@ -102,10 +102,10 @@ public class PuestoApi extends BasicController<Puesto, IPuestoService> {
 	}
 	
 	@GetMapping(path = "/report")
-	public ResponseEntity<?> reportePuestos() {
+	public ResponseEntity<?> reportePuestos(@RequestParam Map<String, String> datos) {
 		logger.info("Iniciando a generar reporte de puestos");
 		try {
-			byte[] rpta = service.reportePuestos();
+			byte[] rpta = service.reportePuestos(datos);
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=reporte_puestos.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)
