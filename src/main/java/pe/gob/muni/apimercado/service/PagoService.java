@@ -386,11 +386,11 @@ public class PagoService implements IPagoService {
 			params.put("fecha_reporte", new Date());
 			return report.generarReporte("reportePagos", params);
 		} catch (ApiException e) {
-			logger.error("Error api generando reporte de comerciantes {} - {}", e.getMessage(), e);
-			throw new ApiException("Error generando reporte de comerciantes",null);
+			logger.error("Error api generando reporte de pagos {} - {} - {}", e.getMessage(), e,datos);
+			throw new ApiException("Error generando reporte de pagos",null);
 		} catch (Exception e) {
-			logger.error("Error general generando reporte de comerciantes {} - {}", e.getMessage(), e);
-			throw new ApiException("Error generando reporte de comerciantes ",null);
+			logger.error("Error general generando reporte de pagos {} - {} - {}", e.getMessage(), datos);
+			throw new ApiException("Error generando reporte de pagos ",null);
 		}
 	}
 	

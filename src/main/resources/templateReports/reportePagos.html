@@ -164,9 +164,11 @@ bottom-right {
 	</div>
 	<div class="container">
 		<h3>
-			<span th:text="${titulo}"></span> <span
-				th:if="${fecha_inicio != null}"
-				th:text="del ${fecha_inicio} al ${fecha_fin} "></span>
+			<span th:text="${titulo}"></span> 
+			<span th:if="${fecha_inicio != null}"> del </span> 
+			<span th:if="${fecha_inicio != null}" th:text=" ${#dates.format(fecha_inicio, 'dd/MM/yyyy')} "></span>
+			<span th:if="${fecha_inicio != null}"> al </span> 
+			<span th:if="${fecha_inicio != null}" th:text=" ${#dates.format(fecha_fin, 'dd/MM/yyyy')} "></span>
 		</h3>
 		<table class="tbl-report tbl-100 cuerpo" border="1">
 			<thead>
