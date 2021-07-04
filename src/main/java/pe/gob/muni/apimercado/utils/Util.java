@@ -135,5 +135,10 @@ public class Util {
 		persona.setTelefono(entity.getTelefono());
 		return persona;
 	}
+	
+	public static String formatearFecha(String format,Date fecha) {
+		SimpleDateFormat objSDF = new SimpleDateFormat(format);
+		return objSDF.format(fecha);
+	}
 
 }

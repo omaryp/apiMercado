@@ -1,71 +1,202 @@
-<!doctype html>
-<html lang="en" xmlns:th="http://www.thymeleaf.org">
-
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:layout="http://www.ultraq.net.nz/thymeleaf/layout" lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0"
-        name="viewport">
-    <meta content="ie=edge" http-equiv="X-UA-Compatible">
-    <title th:text="${titulo}"></title>
-    <style type="text/css">
-    html {
-  font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif, "Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol", "Noto Color Emoji"; /* 1 */
-  line-height: 1.5; 
-  margin: 0px;
-}
-body{
-margin: 3px;
-}
-    	.bold{
-    		font-weight: bold;
-    	}
-    	.text-center{
-    		text-align: center;
-    	}
-    	.max-text{
-    	font-size: 14px;
-    	}
-    	.mid-text{
-    	font-size: 10px;
-    	}
-    	.min-text{
-    	font-size: 8px;
-    	}
-        @page{
-	size: 4in 6in;
-}
-    </style>
+<meta charset="UTF-8">
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title th:text="${titulo}"></title>
 </head>
 <body>
-    <table>
-        <tr>
-            <td ><img th:src="@{'data:image/jpeg;base64,'+${imagen}}"></td>
-            <td align="center">
-                <div class=" bold max-text">MUNICIPALIDAD DISTRITAL DE 26 DE OCTUBRE</div>
-                <div class=" mid-text">Gerencia de Desarrollo Económico Local</div>
-                <div class=" min-text">R.U.C N° 20529997401</div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <div class="max-text">MERCADOS ZONALES</div>
-                <div class="mid-text"><span th:text="${pago.descripcion_concepto}"></span></div>
-                <div class="max-text"><span th:text="${pago.descripcion_mercado}"></span></div>
-                <div class="mid-text">Valor : <span th:text="${pago.monto_pagado}"></span></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
-                <div class=" max-text"> SERIE <span th:text="${pago.serie}"></span>  - N° <span th:text="${pago.correlativo}" > </span></div>
-            </td>
-        </tr>
-        <tr>
-            <td colspan="2" align="center">
+<style>
+html {
+	font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI",
+		Roboto, "Helvetica Neue", Arial, "Noto Sans", sans-serif,
+		"Apple Color Emoji", "Segoe UI Emoji", "Segoe UI Symbol",
+		"Noto Color Emoji"; /* 1 */
+	line-height: 1.5;
+	margin: 0px;
+}
 
-                <div class=" max-text">FECHA : <span th:text=" ${#dates.format(pago.fecha_pago, 'dd/MM/yyyy')}"></span> </div>
-                <div class=" mid-text">COBRADOR - ARCHIVO</div>
-                <div class=" min-text">Subgerencia de tesorería</div>
-            </td>
-        </tr>
-    </table>
+body {
+	padding: 0px;
+	margin: 0px;
+	border: 0px;
+}
+
+div.header {
+	display: block;
+	text-align: center;
+	position: running(header);
+	padding: 15px;
+}
+
+@page {
+	size: 3.3in 3.5in;
+	margin-left: 0cm;
+	margin-right: 0cm;
+	margin-bottom: 1.5cm;
+	margin-top: 3.5cm;
+}
+
+@page { @top-center { content:element(header);
+	
+}
+
+@
+bottom-left {
+	margin: 10pt 0 10pt 10pt;
+	border-top: .25pt solid #666;
+	font-size: 9pt;
+	color: #000;
+}
+
+@
+bottom-center {
+	margin: 10pt 10pt 10pt 0;
+	border-top: .25pt solid #666;
+	font-size: 9pt;
+	color: #000;
+}
+
+@
+bottom-right {
+	margin: 10pt 10pt 10pt 0;
+	border-top: .25pt solid #666;
+	font-size: 9pt;
+	color: #000;
+	content: "";
+}
+
+}
+.titulo-1 {
+	font-size: 20px;
+}
+
+.titulo-2 {
+	font-size: 14px;
+}
+
+.titulo-3 {
+	font-size: 13px;
+}
+
+.titulo-4 {
+	font-size: 10px;
+}
+
+.max-text {
+	font-size: 12px;
+}
+
+.mid-text {
+	font-size: 10px;
+}
+
+.min-text {
+	font-size: 8px;
+}
+
+.titulo-1, .titulo-2, .titulo-3, .titulo-4 {
+	font-weight: bold;
+}
+
+.text-right {
+	text-align: right;
+	padding-right: 27px;
+}
+
+.text-center {
+	text-align: center;
+}
+
+.tbl-border td, .tbl-border th {
+	border: 1px solid;
+}
+
+.tbl-dashed td {
+	border-bottom: 0.5px darkgrey dashed;
+}
+
+.tbl-dashed th {
+	border: 0.5px darkblue;
+	padding: 6px;
+}
+
+.tbl-100 {
+	width: 100%;
+}
+
+.tbl-a4 {
+	width: 600px
+}
+
+.tbl-report {
+	border-collapse: collapse;
+}
+
+.tbl-report thead tr, .tbl-report thead th {
+	background-color: #1370B3;
+	color: white;
+	font-weight: bold;
+	text-align: center;
+	border: 1px solid !important;
+}
+
+.container {
+	padding-left: 20px;
+}
+</style>
+	<div class="header">
+		<table id="cabecera" style="width: 100%; margin-top: 0px; padding-top: 0px">
+			<tr>
+				<td><img width="66px" height="77px"
+					th:src="@{'data:image/jpeg;base64,'+${imagen}}"></td>
+				<td align="center">
+					<div class="titulo-4">MUNICIPALIDAD DISTRITAL DE 26 DE
+						OCTUBRE</div>
+					<div class=" mid-text">Gerencia de Desarrollo Económico Local</div>
+					<div class=" titulo-4">R.U.C N° 20529997401</div>
+				</td>
+			</tr>
+		</table>
+	</div>
+	<div class="container text-center">
+		<table th:each="pago : ${pagos}">
+			<tr>
+				<td colspan="2" align="center">
+					<div class="titulo-3">MERCADOS ZONALES</div>
+					<div class="mid-text">
+						<span th:text="${pago.descripcion_concepto}"></span>
+					</div>
+					<div class="max-text">
+						<span th:text="${pago.descripcion_mercado}"></span>
+					</div>
+					<div class="titulo-4">
+						Valor : S./<span
+							th:text="${#numbers.formatDecimal(pago.monto_pagado, 0, 'COMMA', 2, 'POINT')}"></span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+					<div class=" max-text">
+						SERIE <span th:text="${pago.serie}"></span> - N° <span
+							th:text="${pago.correlativo}"> </span>
+					</div>
+				</td>
+			</tr>
+			<tr>
+				<td colspan="2" align="center">
+
+					<div class=" max-text">
+						FECHA : <span
+							th:text=" ${#dates.format(pago.fecha_pago, 'dd/MM/yyyy')}"></span>
+					</div>
+					<div class=" mid-text">COBRADOR - ARCHIVO</div>
+					<div class=" mid-text">Subgerencia de tesorería</div>
+				</td>
+			</tr>
+		</table>
+	</div>
 </html>

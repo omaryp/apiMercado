@@ -32,6 +32,7 @@ import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ResourceProject;
+import pe.gob.muni.apimercado.utils.Util;
 
 import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
 import static pe.gob.muni.apimercado.utils.Util.isDateEquals;
@@ -287,28 +288,39 @@ public class PagoService implements IPagoService {
 	}
 
 	@Override
-	public byte[] reporteTicketPago(int id) throws ApiException, Exception {
-		logger.info("generando reporte pago {} ticket", id);
+	public byte[] reporteTicketPago(Map<String,String> datos) throws ApiException, Exception {
+		logger.info("generando reporte pago {} ticket", objectToJson(datos));
 		try {
 			String titulo = "";
 			File f = resource.getResource("static/logo_mobile.png");
             String encodstring = encodeFileToBase64Binary(f);
+            PageTablePago pagData = mapToObject(datos, PageTablePago.class);
 			Map<String, Object> params = new HashMap<String,Object>();
-			PagoDto dto = getEntityPagoDto(id);
-			dto.setDescripcion_concepto(dto.getDescripcion_concepto().toUpperCase());
-			dto.setDescripcion_mercado(dto.getDescripcion_mercado().toUpperCase());
-			titulo = dto.getSerie()+" "+dto.getCorrelativo();
+			List<PagoDto> pagos = repository.pagingPagos(pagData);
+			pagos = cambiarDatos(pagos);
+			titulo = pagos.size() == 1 ? "Comprobante "+pagos.get(0).getSerie() +" - "+pagos.get(0).getCorrelativo()  : "Comprobantes del "+Util.formatearFecha("dd-MM-aaaa", pagData.getFecha_incio());
 			params.put("titulo", titulo);
-			params.put("pago", dto);
+			params.put("pagos", pagos);
 			params.put("imagen", encodstring);
 			return report.generarReporte("pago", params);
 		} catch (ApiException e) {
-			logger.error("Error api generando reporte ticket pagado  {} - {}", e.getMessage(), e);
-			throw new ApiException("Error generando reporte tiket de pago "+id,null);
+			logger.error("Error api generando reporte tickets pagados  {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte tiket de pagos ",null);
 		} catch (Exception e) {
-			logger.error("Error general generando reporte ticket pagado {} - {}", e.getMessage(), e);
-			throw new ApiException("Error generando reporte tiket de pago "+id,null);
+			logger.error("Error general generando reporte tickets pagados {} - {}", e.getMessage(), e);
+			throw new ApiException("Error generando reporte tikets de pagos ",null);
 		}
+	}
+	
+	
+	public List<PagoDto> cambiarDatos(List<PagoDto> datos){
+		List<PagoDto> rpta = new ArrayList<PagoDto>();
+		for (PagoDto pagoDto : datos) {
+			pagoDto.setDescripcion_concepto(pagoDto.getDescripcion_concepto().toUpperCase());
+			pagoDto.setDescripcion_mercado(pagoDto.getDescripcion_mercado().toUpperCase());
+			rpta.add(pagoDto);
+		}
+		return rpta;
 	}
 	
 	@Override
@@ -350,7 +362,9 @@ public class PagoService implements IPagoService {
 			if(!entity.getCorreo().equals("") && !entity.getCorreo().equals(null)) {
 				nombre = "comprobante_pago.pdf";
 				asunto = paramsApi.getAsunto()+" : "+nombre;
-				adjunto = reporteTicketPago(entity.getId_pago());
+				Map<String, String> params = new HashMap<>();
+				params.put("codigo", String.valueOf(entity.getId_pago()));
+				adjunto = reporteTicketPago(params);
 				rutaTemp = "/temp/pago_"+nombre;
 				mensaje = paramsApi.getMensaje();
 				writeBytesToFileApache(rutaTemp, adjunto);

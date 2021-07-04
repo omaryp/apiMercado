@@ -4,6 +4,7 @@ import static pe.gob.muni.apimercado.utils.Constants.ERROR_AL_PROCESAR_PETICION;
 import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
 import static pe.gob.muni.apimercado.utils.Constants.TRANSACCION_OK;
 import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
+import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
 import java.util.List;
 import java.util.Map;
@@ -27,7 +28,6 @@ import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.service.IPagoService;
 import pe.gob.muni.apimercado.utils.ApiException;
-import pe.gob.muni.apimercado.utils.Util;
 import pe.gob.muni.apimercado.utils.dto.EnvioDto;
 
 @RestController
@@ -36,7 +36,7 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		
 	@PostMapping("/tickets")
 	public ResponseEntity<?> pagoTickets(@RequestBody List<Ticket> entitys) {
-		logger.info("Se recibió perfil - {}",Util.objectToJson(entitys));
+		logger.info("Se recibió perfil - {}",objectToJson(entitys));
 		try {
 			service.pagoTickets(entitys);
 			return respuestaApi(null, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
@@ -84,7 +84,7 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 	
 	@PostMapping(path="/enviar")
 	public ResponseEntity<?> enviarMensaje(@RequestBody EnvioDto entity) {
-		logger.info("Se recibió parametro para enviar mensaje de pago - {}",Util.objectToJson(entity));
+		logger.info("Se recibió parametro para enviar mensaje de pago - {}",objectToJson(entity));
 		try {
 			service.enviarCorreo(entity);
 			return respuestaApi("Mensaje se envió correctamente", "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
@@ -100,7 +100,7 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 	
 	@GetMapping(path="/pagPago")
 	public ResponseEntity<?> paginacionTickets(@RequestParam Map<String, String> params) {
-		logger.info("Se recibió parámetro para paginar pagos - {}",Util.objectToJson(params));
+		logger.info("Se recibió parámetro para paginar pagos - {}",objectToJson(params));
 		try {
 			PageInfo<PagoDto> rpta = service.pagingTickets(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
@@ -114,11 +114,11 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		}
 	}
 	
-	@GetMapping(path="/report/{codigo}")
-	public ResponseEntity<?> reporteTicketPago(@PathVariable int codigo) {
-		logger.info("Se recibió parámetro para obtener reporte pago - {}",codigo);
+	@GetMapping(path="/report/ticket")
+	public ResponseEntity<?> reporteTicketPago(@RequestParam Map<String,String> params) {
+		logger.info("Se recibió parámetro para obtener reporte pago - {}",objectToJson(params));
 		try {
-			byte [] rpta = service.reporteTicketPago(codigo);
+			byte [] rpta = service.reporteTicketPago(params);
 			return ResponseEntity.ok()
 					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=order.pdf")
 	                .contentType(MediaType.APPLICATION_PDF)

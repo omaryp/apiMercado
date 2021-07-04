@@ -20,7 +20,7 @@ public interface IPagoService extends IBasicService<Pago>{
 	 
 	 PageInfo<PagoDto> pagingTickets(Map<String, String> params) throws ApiException, Exception;
 	 
-	 byte[] reporteTicketPago(int id) throws ApiException, Exception;
+	 byte[] reporteTicketPago(Map<String,String> params) throws ApiException, Exception;
 	 
 	 PagoDto getEntityPagoDto(int id) throws ApiException, Exception;
 	 

@@ -8,6 +8,7 @@ public class PageTablePago extends BasicPageTable {
 	private Date fecha_fin;
 	private int comerciantes_id;
 	private int ubicaciones_id;
+	private int codigo;
 	
 	public Date getFecha_incio() {
 		return fecha_incio;
@@ -32,6 +33,12 @@ public class PageTablePago extends BasicPageTable {
 	}
 	public void setUbicaciones_id(int ubicaciones_id) {
 		this.ubicaciones_id = ubicaciones_id;
+	}
+	public int getCodigo() {
+		return codigo;
+	}
+	public void setCodigo(int codigo) {
+		this.codigo = codigo;
 	}
 
 }
