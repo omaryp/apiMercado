@@ -37,7 +37,7 @@ public class DashBoardService implements IDashBoardService {
 			datos.setCobrado(repository.totalCobrado(pagData));
 			datos.setPendiente(repository.totalPendiente(pagData));
 			datos.setTop_10_deudores(repository.top_10_deudores(pagData));
-			datos.setTop_10_puntuales(repository.top_10_puntuales(pagData));
+			datos.setMayor_recaudacion(repository.mayor_recaudacion(pagData));
 			
 			return datos;
 

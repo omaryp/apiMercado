@@ -2,15 +2,14 @@ package pe.gob.muni.apimercado.model.dto;
 
 import java.util.List;
 
-import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.utils.dto.Monto;
 
 public class DashboardDto {
 	
 	private long comerciantes;
 	private long puestos;
-	private List<Comerciante> top_10_puntuales;
-	private List<Comerciante> top_10_deudores;
+	private List<ComercianteMontoDto> mayor_recaudacion;
+	private List<ComercianteMontoDto> top_10_deudores;
 	private List<Monto> cobrado;
 	private List<Monto> pendiente;
 	
@@ -26,16 +25,16 @@ public class DashboardDto {
 	public void setPuestos(long puestos) {
 		this.puestos = puestos;
 	}
-	public List<Comerciante> getTop_10_puntuales() {
-		return top_10_puntuales;
+	public List<ComercianteMontoDto> getMayor_recaudacion() {
+		return mayor_recaudacion;
 	}
-	public void setTop_10_puntuales(List<Comerciante> top_10_puntuales) {
-		this.top_10_puntuales = top_10_puntuales;
+	public void setMayor_recaudacion(List<ComercianteMontoDto> mayor_recaudacion) {
+		this.mayor_recaudacion = mayor_recaudacion;
 	}
-	public List<Comerciante> getTop_10_deudores() {
+	public List<ComercianteMontoDto> getTop_10_deudores() {
 		return top_10_deudores;
 	}
-	public void setTop_10_deudores(List<Comerciante> top_10_deudores) {
+	public void setTop_10_deudores(List<ComercianteMontoDto> top_10_deudores) {
 		this.top_10_deudores = top_10_deudores;
 	}
 	public List<Monto> getCobrado() {

@@ -8,7 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import pe.gob.muni.apimercado.mapper.IDashBoardMapper;
-import pe.gob.muni.apimercado.model.Comerciante;
+import pe.gob.muni.apimercado.model.dto.ComercianteMontoDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
 import pe.gob.muni.apimercado.utils.dto.Monto;
@@ -18,9 +18,9 @@ public class DashBoardRepository {
 	@Autowired
 	IDashBoardMapper mapper;
 	
-	public List<Comerciante> top_10_puntuales(GeneralPageTable pagData) throws ApiException {
+	public List<ComercianteMontoDto> mayor_recaudacion(GeneralPageTable pagData) throws ApiException {
 		try {
-			return mapper.top_10_deudores(pagData);
+			return mapper.mayor_recaudacion(pagData);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {
@@ -28,7 +28,7 @@ public class DashBoardRepository {
 		} 
 	}
 	
-	public List<Comerciante> top_10_deudores(GeneralPageTable pagData) throws ApiException {
+	public List<ComercianteMontoDto> top_10_deudores(GeneralPageTable pagData) throws ApiException {
 		try {
 			return mapper.top_10_deudores(pagData);
 		}catch (SQLIntegrityConstraintViolationException e) {
