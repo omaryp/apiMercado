@@ -298,7 +298,7 @@ public class PagoService implements IPagoService {
 			Map<String, Object> params = new HashMap<String,Object>();
 			List<PagoDto> pagos = repository.pagingPagos(pagData);
 			pagos = cambiarDatos(pagos);
-			titulo = pagos.size() == 1 ? "Comprobante "+pagos.get(0).getSerie() +" - "+pagos.get(0).getCorrelativo()  : "Comprobantes del "+Util.formatearFecha("dd-MM-aaaa", pagData.getFecha_incio());
+			titulo = pagos.size() == 1 ? "Comprobante "+pagos.get(0).getSerie() +" - "+pagos.get(0).getCorrelativo()  : "Comprobantes del "+Util.formatearFecha("dd-MM-yyyy", pagData.getFecha_incio());
 			params.put("titulo", titulo);
 			params.put("pagos", pagos);
 			params.put("imagen", encodstring);

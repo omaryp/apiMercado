@@ -86,6 +86,10 @@ bottom-right {
 	font-size: 10px;
 }
 
+.cuerpo{
+	font-size: 10px;
+}
+
 .titulo-1, .titulo-2, .titulo-3, .titulo-4 {
 	font-weight: bold;
 }
@@ -141,7 +145,7 @@ bottom-right {
 		<table id="cabecera"
 			style="width: 100%; margin-top: 0px; padding-top: 0px">
 			<tr>
-				<td rowspan="4" style="width: 20%"><img width="300"
+				<td rowspan="4" style="width: 20%"><img width="300" height="50"
 					th:src="@{'data:image/jpeg;base64,'+${imagen}}" /></td>
 				<td colspan="10" class="text-right titulo-1" align="right"
 					style="width: 80%"><span th:text="${titulo}"></span></td>
@@ -160,53 +164,41 @@ bottom-right {
 	</div>
 	<div class="container">
 		<h3>
-			<span th:text="${titulo}"></span> del <span th:text=" ${#dates.format(fecha_incio, 'dd/MM/yyyy')} "></span> al <span th:text="${#dates.format(fecha_fin, 'dd/MM/yyyy')}"></span>
+			<span th:text="${titulo}"></span> 
+			<span th:if="${fecha_inicio != null}"> del </span> 
+			<span th:if="${fecha_inicio != null}" th:text=" ${#dates.format(fecha_inicio, 'dd/MM/yyyy')} "></span>
+			<span th:if="${fecha_inicio != null}"> al </span> 
+			<span th:if="${fecha_inicio != null}" th:text=" ${#dates.format(fecha_fin, 'dd/MM/yyyy')} "></span>
 		</h3>
-		<div th:each="element : ${datos}" class="titulo-4">
-			<table class="tbl-report tbl-100" border="1">
-				<tr >
-					<td><span th:text="${element.value[0].nombres}"></span> <span
-						th:text="${element.value[0].apellidos}"></span></td>
+		<table class="tbl-report tbl-100 cuerpo" border="1">
+			<thead>
+				<tr>
+					<td>Comerciante</td>
+					<td>Mercado</td>
+					<td>Puesto</td>
+					<td>Tarifa</td>
+					<td>Nro. Tickets Deuda</td>
+					<td>Total</td>
+				</tr>
+			</thead>
+			
+			<tbody>
+				<tr th:each="deuda : ${datos}">
+					<td><span th:text="${deuda.dni}"></span> - <span
+						th:text="${deuda.apellidos}"></span> <span
+						th:text="${deuda.nombres}"></span></td>
+					<td th:text="${deuda.mercado}"></td>
+					<td th:text="${deuda.puesto}"></td>
+					<td class="text-right">S./<span th:text="${#numbers.formatDecimal(deuda.tarifa, 0, 'COMMA', 2, 'POINT')}"></span></td>
+					<td class="text-right" th:text="${deuda.nroTickets}"></td>
+					<td class="text-right">S./<span th:text="${#numbers.formatDecimal(deuda.total, 0, 'COMMA', 2, 'POINT')}"></span></td>
 				</tr>
 				<tr>
-					<td>DNI :  <span th:text="${element.value[0].dni}"></span>
-					</td>
-				</tr>
-				<tr>
-					<td>PUESTO : <span th:text="${element.value[0].codigo_puesto}"></span>
-						- UBICACIÓN : <span th:text="${element.value[0].descripcion_ubicacion}"></span>
-					</td>
-				</tr>
-				<tr>
-					<table class="tbl-report tbl-100" border="1">
-						<thead>
-							<tr>
-								<td>Fecha Ticket</td>
-								<td>Estado</td>
-								<td>Observacion</td>
-								<td>Fecha Visita</td>
-								<td>Monto</td>
-							</tr>
-						</thead>
-						<tbody>
-							<tr th:each="ticket : ${element.value}">
-								<td th:text="${#dates.format(ticket.fecha_ticket, 'dd/MM/yyyy')}"></td>
-								<td th:text="${ticket.descripcion_visita}"></td>
-								<td th:text="${ticket.observaciones}"></td>
-								<td th:text="${#dates.format(ticket.fecha_visita, 'dd/MM/yyyy')}"></td>
-								<td class="text-right">S./<span th:text="${#numbers.formatDecimal(ticket.monto, 0, 'COMMA', 2, 'POINT')}"></span></td>
-							</tr>
-							<tr>
-							<td colspan="4">Total</td>
-							<td class="text-right ">S./<span th:text=" ${#numbers.formatDecimal(#aggregates.sum(element.value.![monto]), 0, 'COMMA', 2, 'POINT')}"></span> </td>
-							</tr>
-						</tbody>
-					</table>
-				</tr>
-			</table>
-			<p>&nbsp;</p>
-		</div>
-		
+					<td colspan="5">Total</td>
+					<td class="text-right ">S./<span th:text="${#numbers.formatDecimal(#aggregates.sum(datos.![total]), 0, 'COMMA', 2, 'POINT')}"></span> </td>
+					</tr>
+			</tbody>
+		</table>
 	</div>
 </body>
 </html>

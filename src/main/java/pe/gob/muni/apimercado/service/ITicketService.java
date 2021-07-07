@@ -21,6 +21,8 @@ public interface ITicketService extends IBasicService<Ticket>{
 	
 	void marcarEstadoVisitaTicket(TicketVisita ticket)  throws ApiException,Exception;
 	
-	int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws ApiException, Exception ;
+	int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws ApiException, Exception;
+	
+	byte[] deudaConsolidado(Map<String, String> params) throws ApiException, Exception;
 	
 }

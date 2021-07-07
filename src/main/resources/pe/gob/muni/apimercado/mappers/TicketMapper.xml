@@ -8,6 +8,8 @@
 	<resultMap id="TicketResultMap" type="Ticket"/>
 	
 	<resultMap id="TicketDtoResultMap" type="TicketDto" />
+	
+	<resultMap id="DeudaDtoResultMap" type="DeudaDto" />
 
 	<select id="getEntity" resultMap="TicketResultMap">
 		select id,
@@ -67,6 +69,38 @@
 		modifcado_por,
 		eliminado_por
 		from tickets
+	</select>
+	
+	<select id="deudaConsolidada" resultMap="DeudaDtoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTableTicket">
+		select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni) nroTickets,sum(tarifa) total from(
+		select
+		D.dni,
+		D.nombres,
+		D.apellidos,
+        E.descripcion mercado,
+        B.codigo puesto,
+		J.monto tarifa
+		from tickets A
+		inner join puestos B on B.id = A.puestos_id
+        inner join comerciantes C on C.id = A.comerciantes_id
+        inner join personas D on D.id = C.personas_id
+        inner join mercados E on E.id = A.mercados_id
+		inner join conceptos F on F.id = B.conceptos_id
+        inner join tarifas J on J.conceptos_id = F.id and J.estado = 1
+        <where>
+        	A.pagado = 0
+			<if test="fecha_incio != null and fecha_fin != null "  >
+				AND A.fecha_ticket  >= cast(#{fecha_incio} as date)  and cast(#{fecha_fin} as date) >= A.fecha_ticket
+			</if>
+			<if test="comerciantes_id != '' and comerciantes_id != null">
+				AND A.comerciantes_id = #{comerciantes_id} 
+			</if>
+			<if test="mercados_id != '' and mercados_id != null">
+				AND A.mercados_id = #{mercados_id}
+			</if>
+		</where>
+        ) T
+        group by dni,nombres,apellidos,mercado,puesto,tarifa
 	</select>
 	
 	<select id="getTicketsFechaMercado" resultType="int">

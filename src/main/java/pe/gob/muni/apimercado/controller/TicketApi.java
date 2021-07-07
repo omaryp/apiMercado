@@ -7,7 +7,9 @@ import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 
 import java.util.Map;
 
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -80,16 +82,35 @@ public class TicketApi extends BasicController<Ticket, ITicketService> {
 	
 	@GetMapping(path="/deuda")
 	public ResponseEntity<?> deudaComerciante(@RequestParam Map<String, String> params) {
-		logger.info("Se recibió parámetro para generar tickets - {}",Util.objectToJson(params));
+		logger.info("Se recibió parámetro para generar reporte deuda comerciante - {}",Util.objectToJson(params));
 		try {
 			PageInfo<TicketDto> rpta = service.pagingTickets(params);
 			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
 		}catch (ApiException e) {
-			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			logger.error("Error de api al generar reporte deuda comerciante - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			logger.error("Error general de api al procesar reporte deuda comerciante - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
+	@GetMapping(path="/report/deuda/consolidado")
+	public ResponseEntity<?> deudaConsolidado(@RequestParam Map<String, String> params) {
+		logger.info("Se recibió parámetro para generar reporte deuda consolidado - {}",Util.objectToJson(params));
+		try {
+			byte [] rpta = service.deudaConsolidado(params);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=deudaConsolidado.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al procesar reporte deuda consolidado - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error general de api al procesar reporte deuda consolidado - {}- {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}

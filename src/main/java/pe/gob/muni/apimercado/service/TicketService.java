@@ -5,11 +5,14 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 import static pe.gob.muni.apimercado.utils.Constants.ACTIVO;
 import static pe.gob.muni.apimercado.utils.Constants.NO_VISTADO;
 import static pe.gob.muni.apimercado.utils.Constants.NO_PAGADO;
+import static pe.gob.muni.apimercado.utils.Util.encodeFileToBase64Binary;
 import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
 
+import java.io.File;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
@@ -23,10 +26,12 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
+import pe.gob.muni.apimercado.model.dto.DeudaDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.repository.TicketRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
+import pe.gob.muni.apimercado.utils.ResourceProject;
 import pe.gob.muni.apimercado.utils.Validador;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.GeneralPageTable;
@@ -49,6 +54,12 @@ public class TicketService implements ITicketService {
 
 	@Autowired
 	private Validador<ProcesoTicket> validadorProceso;
+	
+	@Autowired
+	private ResourceProject resource;
+	
+	@Autowired
+	private IReportService report;
 
 	@Override
 	public PageInfo<Ticket> pagingEntitys(Map<String, String> params) throws ApiException, Exception {
@@ -288,6 +299,35 @@ public class TicketService implements ITicketService {
 			logger.error("Error general verificando ticket ya creados - {} - {}", e.getMessage(), e);
 			throw e;
 		}	
+	}
+
+	@Override
+	public byte[] deudaConsolidado(Map<String, String> datos) throws ApiException, Exception {
+		logger.info("generando reporte de deudas consolidado{} ", objectToJson(datos));
+		try {
+			String titulo = "Reporte de Deuda";
+			String mercado = "";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+            PageTableTicket pagData = mapToObject(datos, PageTableTicket.class);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<DeudaDto> deudas = repository.deudaConsolidada(pagData);
+			mercado = deudas.get(0).getMercado();
+			params.put("titulo", titulo);
+			params.put("datos", deudas);
+			params.put("imagen", encodstring);
+			params.put("mercado", mercado);
+			params.put("fecha_inicio", pagData.getFecha_incio());
+			params.put("fecha_fin", pagData.getFecha_fin());
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reporteDeudaConsolidado", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de deudas consolidado {} - {} - {}", e.getMessage(), e,datos);
+			throw new ApiException("Error generando reporte de deudas consolidado",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de deudas consolidado {} - {} - {}", e.getMessage(), datos);
+			throw new ApiException("Error generando reporte de deudas consolidado ",null);
+		}
 	}
 
 }
