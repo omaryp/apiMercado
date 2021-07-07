@@ -1,11 +1,9 @@
 package pe.gob.muni.apimercado.utils.dto;
 
-import java.util.Date;
 
 public class PageTableTicket extends BasicPageTable {
 
-	private Date fecha_incio;
-	private Date fecha_fin;
+	
 	private int comerciantes_id;
 	private int mercados_id;
 	private int ubicaciones_id;
@@ -13,18 +11,6 @@ public class PageTableTicket extends BasicPageTable {
 	private String codigo_qr;
 	private String dni;
 	
-	public Date getFecha_incio() {
-		return fecha_incio;
-	}
-	public void setFecha_incio(Date fecha_incio) {
-		this.fecha_incio = fecha_incio;
-	}
-	public Date getFecha_fin() {
-		return fecha_fin;
-	}
-	public void setFecha_fin(Date fecha_fin) {
-		this.fecha_fin = fecha_fin;
-	}
 	public int getComerciantes_id() {
 		return comerciantes_id;
 	}

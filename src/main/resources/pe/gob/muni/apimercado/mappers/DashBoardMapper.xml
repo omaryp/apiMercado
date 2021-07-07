@@ -1,0 +1,155 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper
+	namespace="pe.gob.muni.apimercado.mapper.IDashBoardMapper">
+
+	<resultMap id="PersonaResultMap" type="Persona" />
+
+	<resultMap id="ComercianteResultMap" type="Comerciante"
+		extends="PersonaResultMap">
+		<id property="idComerciante" column="id" />
+	</resultMap>
+
+	<resultMap id="MontoResultMap" type="Monto" />
+
+	<select id="top_10_puntuales"
+		resultMap="ComercianteResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		from comerciantes A , personas B where A.personas_id =
+		B.id and A.id in(
+		select T.id from (
+		select id,coalesce(total,0) deuda
+		from comerciantes C
+		left join (
+		select A.comerciantes_id, sum(C.monto)
+		total from
+		tickets A
+		inner join puestos B on A.puestos_id = B.id
+		inner
+		join tarifas C on B.conceptos_id = C.conceptos_id and C.estado = 1
+		<where>
+			A.pagado = 0
+			<if test="mercados_id != 0">
+				and A.mercados_id = #{mercados_id}
+			</if>
+		</where>
+		group by A.comerciantes_id) D on C.id = D.comerciantes_id )T where
+		T.deuda = 0)
+		limit 10;
+	</select>
+
+	<select id="top_10_deudores" resultMap="ComercianteResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		from comerciantes A , personas B where A.personas_id =
+		B.id and A.id in(
+		select T.comerciantes_id from (
+		select
+		A.comerciantes_id, sum(C.monto) total from
+		tickets A
+		inner join puestos
+		B on A.puestos_id = B.id
+		inner join tarifas C on B.conceptos_id =
+		C.conceptos_id and C.estado = 1
+		<where>
+			A.pagado = 0
+			<if test="mercados_id != 0">
+				and A.mercados_id = #{mercados_id}
+			</if>
+		</where>
+		group by A.comerciantes_id) T
+		order by T.total desc
+		) limit 10;
+	</select>
+
+	<select id="totalCobrado" resultMap="MontoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select T.fecha_pago fecha, sum(T.monto_pagado) total from (
+		select cast(A.fecha_pago as date) fecha_pago, A.monto_pagado from pagos A
+		inner join tickets_pagos B on A.id = B.pagos_id
+		inner join tickets C on C.id = B.tickets_id
+		<where>
+			<if test="mercados_id != 0">
+				C.mercados_id = #{mercados_id}
+			</if>
+			<if test="fecha_incio != null and fecha_fin != null "  >
+				AND cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date) 
+			</if>
+		</where>
+		) T group by T.fecha_pago
+		order by T.fecha_pago ASC
+	</select>
+
+	<select id="totalPendiente" resultMap="MontoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select A.fecha_ticket fecha, sum(C.monto) total from
+		tickets A
+		inner join
+		puestos B on A.puestos_id = B.id
+		inner join tarifas C on B.conceptos_id
+		= C.conceptos_id and C.estado = 1
+		<where>
+			<if test="mercados_id != 0">
+				A.mercados_id = #{mercados_id}
+			</if>
+			<if test="fecha_incio != null and fecha_fin != null "  >
+				AND cast(A.fecha_ticket as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(A.fecha_ticket as date) 
+			</if>
+		</where>
+		group by A.fecha_ticket
+		order by A.fecha_ticket asc;
+	</select>
+
+	<select id="totalComerciantes" resultType="long"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select count(B.comerciantes_id) from puestos A
+		inner join puestos_comerciantes B on A.id = B.puestos_id
+        <where>
+			<if test="mercados_id != 0">
+				A.mercados_id = #{mercados_id}
+			</if>
+		</where>
+	</select>
+
+	<select id="totalPuestos" resultType="long"
+		parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select count(*) from puestos A 
+		<where>
+			<if test="mercados_id != 0">
+				A.mercados_id = #{mercados_id}
+			</if>
+		</where>
+	</select>
+
+
+</mapper>

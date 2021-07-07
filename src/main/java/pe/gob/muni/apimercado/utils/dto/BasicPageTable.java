@@ -1,7 +1,11 @@
 package pe.gob.muni.apimercado.utils.dto;
 
+import java.util.Date;
+
 public class BasicPageTable {
 	
+	private Date fecha_incio;
+	private Date fecha_fin;
 	private int page;
 	private int offset = 0;
 	private int limit = 10;
@@ -44,6 +48,18 @@ public class BasicPageTable {
 	}
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
+	}
+	public Date getFecha_incio() {
+		return fecha_incio;
+	}
+	public void setFecha_incio(Date fecha_incio) {
+		this.fecha_incio = fecha_incio;
+	}
+	public Date getFecha_fin() {
+		return fecha_fin;
+	}
+	public void setFecha_fin(Date fecha_fin) {
+		this.fecha_fin = fecha_fin;
 	}
 
 }
