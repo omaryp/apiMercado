@@ -43,7 +43,7 @@
 		B.nombres,
 		B.apellidos,
 		B.dni,
-        X.total
+        X.total monto
 		from comerciantes A 
         inner join personas B on A.personas_id = B.id 
         inner join (
