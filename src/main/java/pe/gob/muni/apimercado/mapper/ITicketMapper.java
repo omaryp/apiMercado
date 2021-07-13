@@ -8,7 +8,7 @@ import java.util.List;
 import org.apache.ibatis.annotations.Mapper;
 
 import pe.gob.muni.apimercado.model.Ticket;
-import pe.gob.muni.apimercado.model.dto.DeudaDto;
+import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
@@ -26,5 +26,5 @@ public interface ITicketMapper extends IBasicMapper<Ticket> {
 	
 	int getTicketsFechaMercado(int mercados_id, Date fecha_ticket) throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	List<DeudaDto> deudaConsolidada(PageTableTicket params) throws SQLException,SQLIntegrityConstraintViolationException;
+	List<DeudaPagoDto> deudaConsolidada(PageTableTicket params) throws SQLException,SQLIntegrityConstraintViolationException;
 }

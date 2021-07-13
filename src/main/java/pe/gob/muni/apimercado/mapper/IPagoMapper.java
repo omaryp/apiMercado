@@ -8,6 +8,7 @@ import org.apache.ibatis.annotations.Mapper;
 
 import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.TicketPago;
+import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.utils.dto.PageTablePago;
 
@@ -24,5 +25,5 @@ public interface IPagoMapper extends IBasicMapper<Pago> {
 	
 	PagoDto getEntityPagoDtoTicket(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 	
-	
+	 List<DeudaPagoDto> consolidadoPagos(PageTablePago params) throws SQLException,SQLIntegrityConstraintViolationException;
 }

@@ -9,7 +9,7 @@
 	
 	<resultMap id="TicketDtoResultMap" type="TicketDto" />
 	
-	<resultMap id="DeudaDtoResultMap" type="DeudaDto" />
+	<resultMap id="DeudaPagoDtoResultMap" type="DeudaPagoDto" />
 
 	<select id="getEntity" resultMap="TicketResultMap">
 		select id,

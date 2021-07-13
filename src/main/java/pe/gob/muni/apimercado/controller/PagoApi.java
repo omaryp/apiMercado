@@ -143,11 +143,30 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 	                .contentType(MediaType.APPLICATION_PDF)
 	                .body(rpta);
 		}catch (ApiException e) {
-			logger.error("Error de api al generar tickets - {} - {}",e.getMessage(),e);
+			logger.error("Error de api al generar reporte de pagos - {} - {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
 		} 
 		catch (Exception e) {
-			logger.error("Error interno de api al procesar guardar - {}- {}",e.getMessage(),e);
+			logger.error("Error interno de api al procesar reporte de pagos - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
+	@GetMapping(path="/report/consolidado")
+	public ResponseEntity<?> reportePagosConsolidado(@RequestParam Map<String,String> params) {
+		logger.info("Se recibió parámetro para obtener reporte pagos consolidado - {}",params);
+		try {
+			byte [] rpta = service.reporteConsolidadoPagos(params);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=pagosConsolidado.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar reporte de pagos consolidado - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar reporte de pagos consolidados - {}- {}",e.getMessage(),e);
 			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
 		}
 	}

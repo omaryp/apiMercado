@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 
 import pe.gob.muni.apimercado.mapper.ITicketMapper;
 import pe.gob.muni.apimercado.model.Ticket;
-import pe.gob.muni.apimercado.model.dto.DeudaDto;
+import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -68,7 +68,7 @@ public class TicketRepository extends BasicRepository<Ticket,ITicketMapper> {
 		} 
 	}
 	
-	public List<DeudaDto> deudaConsolidada(PageTableTicket params) throws ApiException {
+	public List<DeudaPagoDto> deudaConsolidada(PageTableTicket params) throws ApiException {
 		try {
 			return mapper.deudaConsolidada(params);
 		}catch (SQLIntegrityConstraintViolationException e) {

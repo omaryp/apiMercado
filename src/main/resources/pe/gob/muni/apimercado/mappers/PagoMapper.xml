@@ -11,6 +11,8 @@
 	
 	<resultMap id="PagoDtoResultMap" type="PagoDto" />
 	
+	<resultMap id="DeudaPagoDtoResultMap" type="DeudaPagoDto" />
+	
 	<select id="getEntity" resultMap="PagoResultMap">
 		select id,
 		fecha_pago,
@@ -238,6 +240,36 @@
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}
 		</if>
+	</select>
+	
+	<select id="consolidadoPagos" resultMap="DeudaPagoDtoResultMap"
+		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">
+	select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni) nroTickets,sum(tarifa) total from(
+select A.id, A.monto_pagado tarifa,A.fecha_pago,E.dni,
+		E.nombres,
+		E.apellidos, 
+        F.descripcion mercado,
+        G.codigo puesto
+from pagos A
+inner join tickets_pagos B on B.pagos_id = A.id
+inner join tickets C on B.tickets_id = C.id
+inner join comerciantes D on D.id = C.comerciantes_id
+inner join personas E on E.id = D.personas_id
+inner join mercados F on F.id = C.mercados_id
+inner join puestos G on G.id = C.puestos_id
+<where>
+			<if test="fecha_incio != null and fecha_fin != null "  >
+				cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date) 
+			</if>
+			<if test="comerciantes_id != '' and comerciantes_id != null">
+				AND C.comerciantes_id = #{comerciantes_id} 
+			</if>
+			<if test="mercados_id != '' and mercados_id != null">
+				AND C.mercados_id = #{mercados_id}
+			</if>
+		</where>
+ ) T
+        group by dni,nombres,apellidos,mercado,puesto,tarifa
 	</select>
 
 </mapper>

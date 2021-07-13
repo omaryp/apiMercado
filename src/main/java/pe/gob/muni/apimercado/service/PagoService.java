@@ -28,6 +28,7 @@ import pe.gob.muni.apimercado.model.Serie;
 import pe.gob.muni.apimercado.model.Tarifa;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
+import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
@@ -407,6 +408,34 @@ public class PagoService implements IPagoService {
 			throw new ApiException("Error generando reporte de pagos ",null);
 		}
 	}
+
+	@Override
+	public byte[] reporteConsolidadoPagos(Map<String, String> datos) throws ApiException, Exception {
+		logger.info("generando reporte consolidado de pagos {} ", objectToJson(datos));
+		try {
+			String titulo = "Reporte Consolidado de Pagos";
+			String mercado = "";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+            PageTablePago pagData = mapToObject(datos, PageTablePago.class);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<DeudaPagoDto> pagos = repository.consolidadoPagos(pagData);
+			mercado = (datos.containsKey("mercados_id")) ? pagos.get(0).getMercado()  : "";
+			params.put("titulo", titulo);
+			params.put("datos", pagos);
+			params.put("imagen", encodstring);
+			params.put("mercado", mercado);
+			params.put("fecha_inicio", pagData.getFecha_incio());
+			params.put("fecha_fin", pagData.getFecha_fin());
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reportePagosConsolidado", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de pagos {} - {} - {}", e.getMessage(), e,datos);
+			throw new ApiException("Error generando reporte de pagos",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de pagos {} - {} - {}", e.getMessage(), datos);
+			throw new ApiException("Error generando reporte de pagos ",null);
+		}	}
 	
 	
 

@@ -26,7 +26,7 @@ import com.github.pagehelper.PageInfo;
 
 import pe.gob.muni.apimercado.model.PuestoComerciante;
 import pe.gob.muni.apimercado.model.Ticket;
-import pe.gob.muni.apimercado.model.dto.DeudaDto;
+import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.model.dto.TicketVisita;
 import pe.gob.muni.apimercado.repository.TicketRepository;
@@ -311,7 +311,7 @@ public class TicketService implements ITicketService {
             String encodstring = encodeFileToBase64Binary(f);
             PageTableTicket pagData = mapToObject(datos, PageTableTicket.class);
 			Map<String, Object> params = new HashMap<String,Object>();
-			List<DeudaDto> deudas = repository.deudaConsolidada(pagData);
+			List<DeudaPagoDto> deudas = repository.deudaConsolidada(pagData);
 			mercado = deudas.get(0).getMercado();
 			params.put("titulo", titulo);
 			params.put("datos", deudas);

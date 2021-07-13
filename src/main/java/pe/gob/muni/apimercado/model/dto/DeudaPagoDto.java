@@ -1,6 +1,6 @@
 package pe.gob.muni.apimercado.model.dto;
 
-public class DeudaDto {
+public class DeudaPagoDto {
 	
 	private String dni;
 	private String nombres;
