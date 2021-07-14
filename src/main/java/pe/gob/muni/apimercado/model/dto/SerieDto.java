@@ -1,22 +1,16 @@
-package pe.gob.muni.apimercado.model;
+package pe.gob.muni.apimercado.model.dto;
 
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.NotNull;
+import pe.gob.muni.apimercado.model.BasicEntity;
 
-public class Serie extends BasicEntity {
+public class SerieDto extends BasicEntity {
 
-	@NotBlank(message="Atributo codigo no debe ser vacío.")
-	@NotNull(message="Atributo codigo no debe ser vacío.")
 	private String codigo;
-	@NotBlank(message="Atributo descripcion no debe ser vacío.")
-	@NotNull(message="Atributo descripcion no debe ser vacío.")
 	private String descripcion;
 	private long correlativo;
-	@Min(value=1, message="Atributo conceptos_id debe ser != 0")
 	private int conceptos_id;
-	@Min(value=1, message="Atributo mercados_id debe ser != 0")
+	private String desConcepto;
 	private int mercados_id;
+	private String desMercado;
 	
 	public String getCodigo() {
 		return codigo;
@@ -47,6 +41,18 @@ public class Serie extends BasicEntity {
 	}
 	public void setMercados_id(int mercados_id) {
 		this.mercados_id = mercados_id;
+	}
+	public String getDesConcepto() {
+		return desConcepto;
+	}
+	public void setDesConcepto(String desConcepto) {
+		this.desConcepto = desConcepto;
+	}
+	public String getDesMercado() {
+		return desMercado;
+	}
+	public void setDesMercado(String desMercado) {
+		this.desMercado = desMercado;
 	}
 
 }

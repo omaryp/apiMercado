@@ -6,6 +6,7 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.ISerieMapper">
 
 	<resultMap id="SerieResultMap" type="Serie" />
+	<resultMap id="SerieDtoResultMap" type="SerieDto"/>
 
 	<select id="getEntity" resultMap="SerieResultMap">
 		select 
@@ -67,15 +68,17 @@
 		where id = #{id}
 	</update>
 
-	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
-		select id,codigo,descripcion,conceptos_id,mercados_id,correlativo,
-		estado,fecha_creacion,creado_por,
-		fecha_modifcacion,	modifcado_por,
-		eliminado_por
-		from series
+	<select id="pagingEntitys" resultMap="SerieDtoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
+		select A.id,A.codigo,A.descripcion,A.conceptos_id,A.mercados_id,A.correlativo,
+		A.estado,A.fecha_creacion,A.creado_por,
+		A.fecha_modifcacion,A.modifcado_por,
+		A.eliminado_por,B.descripcion desConcepto,C.descripcion desMercado
+		from series A
+		inner join conceptos B on B.id = A.conceptos_id
+		inner join mercados C on C.id = A.mercados_id
 		<where>
 			<if test="search != null">
-				CONCAT(descripcion) LIKE CONCAT(#{search},'%')
+				CONCAT(A.descripcion) LIKE CONCAT(#{search},'%')
 			</if>
 		</where>
 		<if test="sort != null and sort != ''">
