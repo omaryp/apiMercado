@@ -71,7 +71,7 @@
 		from tickets
 	</select>
 	
-	<select id="deudaConsolidada" resultMap="DeudaDtoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTableTicket">
+	<select id="deudaConsolidada" resultMap="DeudaPagoDtoResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.PageTableTicket">
 		select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni) nroTickets,sum(tarifa) total from(
 		select
 		D.dni,
