@@ -15,6 +15,8 @@ public class Serie extends BasicEntity {
 	private long correlativo;
 	@Min(value=1, message="Atributo conceptos_id debe ser != 0")
 	private int conceptos_id;
+	@Min(value=1, message="Atributo mercados_id debe ser != 0")
+	private int mercados_id;
 	
 	public String getCodigo() {
 		return codigo;

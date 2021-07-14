@@ -9,7 +9,7 @@
 
 	<select id="getEntity" resultMap="SerieResultMap">
 		select 
-		id,codigo,descripcion,conceptos_id,correlativo,
+		id,codigo,descripcion,conceptos_id,mercados_id,correlativo,
 		estado,fecha_creacion,creado_por,
 		fecha_modifcacion,	modifcado_por,
 		eliminado_por
@@ -18,18 +18,19 @@
 	
 	<select id="getSeriePuesto" resultMap="SerieResultMap">
 		select 
-		A.id,A.codigo,A.descripcion,A.conceptos_id,A.correlativo,
+		A.id,A.codigo,A.descripcion,A.conceptos_id,A.mercados_id,A.correlativo,
 		A.estado,A.fecha_creacion,A.creado_por,
 		A.fecha_modifcacion,A.modifcado_por,
 		A.eliminado_por
 		from series A
 		inner join puestos B on A.conceptos_id = B.conceptos_id
 		where B.id = #{idPuesto} and A.estado = 1
+		and A.mercados_id = B.mercados_id
 	</select>
 	
 	<select id="getAllEntitys" resultMap="SerieResultMap">
 		select 
-		id,codigo,descripcion,conceptos_id,correlativo,
+		id,codigo,descripcion,conceptos_id,mercados_id,correlativo,
 		estado,fecha_creacion,creado_por,
 		fecha_modifcacion,	modifcado_por,
 		eliminado_por
@@ -38,11 +39,11 @@
 
 	<insert id="saveEntity" parameterType="Serie">
 		insert into series(
-		codigo,descripcion,conceptos_id,correlativo,estado,
+		codigo,descripcion,conceptos_id,mercados_id,correlativo,estado,
 		fecha_creacion,	creado_por,
 		fecha_modifcacion,	modifcado_por,	eliminado_por)
 		values(
-		#{codigo},#{descripcion},#{conceptos_id},#{correlativo},#{estado},
+		#{codigo},#{descripcion},#{conceptos_id},#{mercados_id},#{correlativo},#{estado},
 		#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -58,6 +59,7 @@
 		set
 		codigo = #{codigo},descripcion=#{descripcion},
 		conceptos_id=#{conceptos_id},
+		mercados_id = #{mercados_id},
 		correlativo = #{correlativo},
 		estado = #{estado},fecha_creacion = #{fecha_creacion},
 		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
@@ -66,7 +68,7 @@
 	</update>
 
 	<select id="pagingEntitys" resultMap="SerieResultMap" parameterType="pe.gob.muni.apimercado.utils.dto.GeneralPageTable">
-		select id,codigo,descripcion,conceptos_id,correlativo,
+		select id,codigo,descripcion,conceptos_id,mercados_id,correlativo,
 		estado,fecha_creacion,creado_por,
 		fecha_modifcacion,	modifcado_por,
 		eliminado_por
