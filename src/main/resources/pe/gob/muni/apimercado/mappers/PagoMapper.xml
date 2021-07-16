@@ -6,13 +6,16 @@
 <mapper namespace="pe.gob.muni.apimercado.mapper.IPagoMapper">
 
 	<resultMap id="PagoResultMap" type="Pago" />
-	
+
 	<resultMap id="TicketPagoResultMap" type="TicketPago" />
-	
+
 	<resultMap id="PagoDtoResultMap" type="PagoDto" />
-	
+
 	<resultMap id="DeudaPagoDtoResultMap" type="DeudaPagoDto" />
 	
+	<resultMap id="PagoPartidaDtoResultMap" type="PagoPartidaDto" />
+	
+
 	<select id="getEntity" resultMap="PagoResultMap">
 		select id,
 		fecha_pago,
@@ -29,7 +32,7 @@
 		eliminado_por
 		from pagos where id = #{id}
 	</select>
-	
+
 	<select id="getAllEntitys" resultMap="PagoResultMap">
 		select id,
 		fecha_pago,
@@ -47,7 +50,8 @@
 		from pagos
 	</select>
 
-	<insert id="saveEntity" parameterType="Pago" useGeneratedKeys="true" keyProperty="id"  keyColumn="id"> 
+	<insert id="saveEntity" parameterType="Pago"
+		useGeneratedKeys="true" keyProperty="id" keyColumn="id">
 		insert into pagos(
 		fecha_pago,serie,
 		correlativo,monto_pagado,concepto,observaciones,
@@ -58,7 +62,7 @@
 		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
-	
+
 	<insert id="asociarTicketPago" parameterType="java.util.List">
 		insert into tickets_pagos(tickets_id,pagos_id)
 		values
@@ -78,17 +82,21 @@
 		set
 		fecha_pago = #{fecha_pago},
 		serie = #{serie},
-		correlativo = #{correlativo},
+		correlativo =
+		#{correlativo},
 		monto_pagado = #{monto_pagado},
 		concepto = #{concepto},
 		observaciones = #{observaciones},
 		estado = #{estado},
-		fecha_creacion = #{fecha_creacion},
-		creado_por = #{creado_por}, fecha_modifcacion = #{fecha_modifcacion},
-		modifcado_por = #{modifcado_por},eliminado_por = #{eliminado_por}
+		fecha_creacion =
+		#{fecha_creacion},
+		creado_por = #{creado_por}, fecha_modifcacion =
+		#{fecha_modifcacion},
+		modifcado_por = #{modifcado_por},eliminado_por =
+		#{eliminado_por}
 		where id = #{id}
 	</update>
-	
+
 	<select id="getEntityPagoDto" resultMap="PagoDtoResultMap"
 		parameterType="int">
 		select
@@ -100,10 +108,11 @@
 		I.observaciones,
 		A.id tickets_id,
 		A.fecha_ticket,
-        B.id puestos_id,
+		B.id puestos_id,
 		B.codigo codigo_puesto,
 		A.mercados_id,
-		E.descripcion descripcion_mercado,
+		E.descripcion
+		descripcion_mercado,
 		B.conceptos_id,
 		F.descripcion descripcion_concepto,
 		A.ubicaciones_id,
@@ -116,19 +125,20 @@
 		D.apellidos,
 		D.correo,
 		D.telefono
-		from pagos I 
+		from pagos I
 		inner join tickets_pagos J on J.pagos_id = I.id
-		inner join tickets A on A.id = J.tickets_id
+		inner join tickets A on A.id
+		= J.tickets_id
 		inner join puestos B on B.id = A.puestos_id
-        left join comerciantes C on C.id = A.comerciantes_id
-        inner join personas D on D.id = C.personas_id
-        inner join mercados E on E.id = A.mercados_id
-        inner join conceptos F on F.id = B.conceptos_id
-        inner join ubicaciones G on G.id = A.ubicaciones_id	
-        inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
-        where I.id = #{id}
+		left join comerciantes C on C.id = A.comerciantes_id
+		inner join personas D on D.id = C.personas_id
+		inner join mercados E on E.id = A.mercados_id
+		inner join conceptos F on F.id = B.conceptos_id
+		inner join ubicaciones G on G.id = A.ubicaciones_id
+		inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id
+		where I.id = #{id}
 	</select>
-	
+
 	<select id="getEntityPagoDtoTicket" resultMap="PagoDtoResultMap"
 		parameterType="int">
 		select
@@ -140,10 +150,11 @@
 		I.observaciones,
 		A.id tickets_id,
 		A.fecha_ticket,
-        B.id puestos_id,
+		B.id puestos_id,
 		B.codigo codigo_puesto,
 		A.mercados_id,
-		E.descripcion descripcion_mercado,
+		E.descripcion
+		descripcion_mercado,
 		B.conceptos_id,
 		F.descripcion descripcion_concepto,
 		A.ubicaciones_id,
@@ -156,19 +167,20 @@
 		D.apellidos,
 		D.correo,
 		D.telefono
-		from pagos I 
+		from pagos I
 		inner join tickets_pagos J on J.pagos_id = I.id
-		inner join tickets A on A.id = J.tickets_id
+		inner join tickets A on A.id
+		= J.tickets_id
 		inner join puestos B on B.id = A.puestos_id
-        left join comerciantes C on C.id = A.comerciantes_id
-        inner join personas D on D.id = C.personas_id
-        inner join mercados E on E.id = A.mercados_id
-        inner join conceptos F on F.id = B.conceptos_id
-        inner join ubicaciones G on G.id = A.ubicaciones_id	
-        inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
-        where A.id = #{id}
+		left join comerciantes C on C.id = A.comerciantes_id
+		inner join personas D on D.id = C.personas_id
+		inner join mercados E on E.id = A.mercados_id
+		inner join conceptos F on F.id = B.conceptos_id
+		inner join ubicaciones G on G.id = A.ubicaciones_id
+		inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id
+		where A.id = #{id}
 	</select>
-	
+
 	<insert id="saveAllPagos" parameterType="java.util.List">
 		insert into pagos(
 		fecha_pago,serie,
@@ -178,10 +190,10 @@
 		values
 		<foreach item="item" collection="list" separator=",">
 			(#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
-			 #{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})	
+			#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 		</foreach>
 	</insert>
-	
+
 	<select id="pagingPagos" resultMap="PagoDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">
 		select
@@ -193,10 +205,11 @@
 		I.observaciones,
 		A.id tickets_id,
 		A.fecha_ticket,
-        B.id puestos_id,
+		B.id puestos_id,
 		B.codigo codigo_puesto,
 		A.mercados_id,
-		E.descripcion descripcion_mercado,
+		E.descripcion
+		descripcion_mercado,
 		B.conceptos_id,
 		F.descripcion descripcion_concepto,
 		A.ubicaciones_id,
@@ -210,25 +223,28 @@
 		D.correo,
 		D.telefono,
 		I.monto_pagado
-		from pagos I 
+		from pagos I
 		inner join tickets_pagos J on J.pagos_id = I.id
-		inner join tickets A on A.id = J.tickets_id
+		inner join tickets A on A.id
+		= J.tickets_id
 		inner join puestos B on B.id = A.puestos_id
-        left join comerciantes C on C.id = A.comerciantes_id
-        inner join personas D on D.id = C.personas_id
-        inner join mercados E on E.id = A.mercados_id
-        inner join conceptos F on F.id = B.conceptos_id
-        inner join ubicaciones G on G.id = A.ubicaciones_id	
-        inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
-        <where>
-        	<if test="codigo != '' and codigo != null "  >
+		left join comerciantes C on C.id = A.comerciantes_id
+		inner join personas D on D.id = C.personas_id
+		inner join mercados E on E.id = A.mercados_id
+		inner join conceptos F on F.id = B.conceptos_id
+		inner join ubicaciones G on G.id = A.ubicaciones_id
+		inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id
+		<where>
+			<if test="codigo != '' and codigo != null ">
 				I.id = #{codigo}
 			</if>
-			<if test="fecha_incio != null and fecha_fin != null "  >
-				AND cast(I.fecha_pago as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(I.fecha_pago as date) 
+			<if test="fecha_incio != null and fecha_fin != null ">
+				AND
+				cast(I.fecha_pago as date) >= cast(#{fecha_incio} as date) and
+				cast(#{fecha_fin} as date) >= cast(I.fecha_pago as date)
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
-				AND A.comerciantes_id = #{comerciantes_id} 
+				AND A.comerciantes_id = #{comerciantes_id}
 			</if>
 			<if test="mercados_id != '' and mercados_id != null">
 				AND A.mercados_id = #{mercados_id}
@@ -241,65 +257,69 @@
 			ORDER BY ${sort} ${order}
 		</if>
 	</select>
-	
+
 	<select id="consolidadoPagos" resultMap="DeudaPagoDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">
-	select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni) nroTickets,sum(tarifa) total from(
-select A.id, A.monto_pagado tarifa,A.fecha_pago,E.dni,
+		select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni)
+		nroTickets,sum(tarifa) total from(
+		select A.id, A.monto_pagado tarifa,A.fecha_pago,E.dni,
 		E.nombres,
-		E.apellidos, 
-        F.descripcion mercado,
-        G.codigo puesto
-from pagos A
-inner join tickets_pagos B on B.pagos_id = A.id
-inner join tickets C on B.tickets_id = C.id
-inner join comerciantes D on D.id = C.comerciantes_id
-inner join personas E on E.id = D.personas_id
-inner join mercados F on F.id = C.mercados_id
-inner join puestos G on G.id = C.puestos_id
-<where>
-			<if test="fecha_incio != null and fecha_fin != null "  >
-				cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date) 
+		E.apellidos,
+		F.descripcion mercado,
+		G.codigo puesto
+		from pagos A
+		inner join tickets_pagos B on B.pagos_id = A.id
+		inner join tickets C on B.tickets_id = C.id
+		inner join comerciantes D on D.id = C.comerciantes_id
+		inner join personas E on E.id = D.personas_id
+		inner join mercados F on F.id = C.mercados_id
+		inner join puestos G on G.id = C.puestos_id
+		<where>
+			<if test="fecha_incio != null and fecha_fin != null ">
+				cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and
+				cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date)
 			</if>
 			<if test="comerciantes_id != '' and comerciantes_id != null">
-				AND C.comerciantes_id = #{comerciantes_id} 
+				AND C.comerciantes_id = #{comerciantes_id}
 			</if>
 			<if test="mercados_id != '' and mercados_id != null">
 				AND C.mercados_id = #{mercados_id}
 			</if>
 		</where>
- ) T
-        group by dni,nombres,apellidos,mercado,puesto,tarifa
+		) T
+		group by dni,nombres,apellidos,mercado,puesto,tarifa
 	</select>
-	
-	<select id="consolidadoPagosPartida" resultMap="DeudaPagoDtoResultMap"
+
+	<select id="consolidadoPagosPartida"
+		resultMap="PagoPartidaDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">
-	select dni,nombres,apellidos,mercado,puesto,tarifa,count(dni) nroTickets,sum(tarifa) total from(
-select A.id, A.monto_pagado tarifa,A.fecha_pago,E.dni,
-		E.nombres,
-		E.apellidos, 
-        F.descripcion mercado,
-        G.codigo puesto
-from pagos A
-inner join tickets_pagos B on B.pagos_id = A.id
-inner join tickets C on B.tickets_id = C.id
-inner join comerciantes D on D.id = C.comerciantes_id
-inner join personas E on E.id = D.personas_id
-inner join mercados F on F.id = C.mercados_id
-inner join puestos G on G.id = C.puestos_id
-<where>
-			<if test="fecha_incio != null and fecha_fin != null "  >
-				cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date) 
-			</if>
-			<if test="comerciantes_id != '' and comerciantes_id != null">
-				AND C.comerciantes_id = #{comerciantes_id} 
+
+		select mercados_id,nombre,partida,concepto,serie,min(correlativo)
+		min,max(correlativo) max,sum(monto_pagado) total from(
+		select C.mercados_id,G.nombre,F.codigo partida,E.descripcion
+		concepto,A.serie,A.correlativo,A.monto_pagado
+		from pagos A
+		inner join tickets_pagos B on B.pagos_id = A.id
+		inner join tickets C on B.tickets_id = C.id
+		inner join puestos D on D.id = C.puestos_id
+		inner join conceptos E on E.id = D.conceptos_id
+		inner join partidas F on F.id = E.partidas_id
+		inner join mercados G on G.id = C.mercados_id 
+		<where>
+			<if test="fecha_incio != null and fecha_fin != null ">
+				cast(A.fecha_pago as date) >= cast(#{fecha_incio} as date) and
+				cast(#{fecha_fin} as date) >= cast(A.fecha_pago as date)
 			</if>
 			<if test="mercados_id != '' and mercados_id != null">
 				AND C.mercados_id = #{mercados_id}
 			</if>
 		</where>
- ) T
-        group by dni,nombres,apellidos,mercado,puesto,tarifa
+		) T
+		group by mercados_id,partida,concepto,serie;
 	</select>
+
+
+
+
 
 </mapper>

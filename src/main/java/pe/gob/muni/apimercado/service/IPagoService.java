@@ -31,4 +31,6 @@ public interface IPagoService extends IBasicService<Pago>{
 	 byte[] reportePagos(Map<String, String> params) throws ApiException, Exception;
 	 
 	 byte[] reporteConsolidadoPagos(Map<String, String> params) throws ApiException, Exception;
+
+	byte[] reporteConsolidadoPagosPartida(Map<String, String> datos) throws ApiException, Exception;
 }

@@ -11,6 +11,7 @@ import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
+import pe.gob.muni.apimercado.model.dto.PagoPartidaDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.dto.PageTablePago;
 
@@ -70,6 +71,16 @@ public class PagoRepository extends BasicRepository<Pago,IPagoMapper> {
 	public List<DeudaPagoDto> consolidadoPagos(PageTablePago params)throws ApiException {
 		try {
 			return mapper.consolidadoPagos(params);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
+	public List<PagoPartidaDto> consolidadoPagosPartida(PageTablePago params)throws ApiException {
+		try {
+			return mapper.consolidadoPagosPartida(params);
 		}catch (SQLIntegrityConstraintViolationException e) {
 			throw new ApiException(e.getMessage(),e);
 		}catch (SQLException e) {

@@ -30,6 +30,7 @@ import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
+import pe.gob.muni.apimercado.model.dto.PagoPartidaDto;
 import pe.gob.muni.apimercado.repository.PagoRepository;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ResourceProject;
@@ -435,8 +436,37 @@ public class PagoService implements IPagoService {
 		} catch (Exception e) {
 			logger.error("Error general generando reporte de pagos {} - {} - {}", e.getMessage(), datos);
 			throw new ApiException("Error generando reporte de pagos ",null);
-		}	}
+		}	
+	}
 	
+	@Override
+	public byte[] reporteConsolidadoPagosPartida(Map<String, String> datos) throws ApiException, Exception {
+		logger.info("generando reporte consolidado de pagos por partida {} ", objectToJson(datos));
+		try {
+			String titulo = "Reporte Consolidado de Pagos por Partida";
+			String mercado = "";
+			File f = resource.getResource("static/logo_1.png");
+            String encodstring = encodeFileToBase64Binary(f);
+            PageTablePago pagData = mapToObject(datos, PageTablePago.class);
+			Map<String, Object> params = new HashMap<String,Object>();
+			List<PagoPartidaDto> pagos = repository.consolidadoPagosPartida(pagData);
+			mercado = (datos.containsKey("mercados_id")) ? pagos.get(0).getConcepto()  : "";
+			params.put("titulo", titulo);
+			params.put("datos", pagos);
+			params.put("imagen", encodstring);
+			params.put("mercado", mercado);
+			params.put("fecha_inicio", pagData.getFecha_incio());
+			params.put("fecha_fin", pagData.getFecha_fin());
+			params.put("fecha_reporte", new Date());
+			return report.generarReporte("reportePagosPartidaConsolidado", params);
+		} catch (ApiException e) {
+			logger.error("Error api generando reporte de pagos por partida {} - {} - {}", e.getMessage(), e,datos);
+			throw new ApiException("Error generando reporte de pagos por partida",null);
+		} catch (Exception e) {
+			logger.error("Error general generando reporte de pagos por partida {} - {} - {}", e.getMessage(), datos);
+			throw new ApiException("Error generando reporte de pagos por partida",null);
+		}	
+	}
 	
 
 }
