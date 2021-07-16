@@ -24,4 +24,14 @@ public class ComercianteRepository extends BasicRepository<Comerciante,IComercia
 			throw new ApiException(e.getMessage(),e);
 		}
 	}
+	
+	public Comerciante getComercianteDni(String dni)  throws ApiException {
+		try {
+			return mapper.getComercianteDni(dni);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		}
+	}
 }

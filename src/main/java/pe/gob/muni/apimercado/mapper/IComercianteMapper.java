@@ -15,4 +15,6 @@ public interface IComercianteMapper extends IBasicMapper<Comerciante> {
 
 	List<ComercianteDto> getDatosReporte(GeneralPageTable pagData) throws SQLException,SQLIntegrityConstraintViolationException;
 	
+	Comerciante getComercianteDni(String dni) throws SQLException,SQLIntegrityConstraintViolationException;
+	
 }

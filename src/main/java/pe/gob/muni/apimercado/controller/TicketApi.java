@@ -80,21 +80,6 @@ public class TicketApi extends BasicController<Ticket, ITicketService> {
 		}
 	}
 	
-	@GetMapping(path="/deuda")
-	public ResponseEntity<?> deudaComerciante(@RequestParam Map<String, String> params) {
-		logger.info("Se recibió parámetro para generar reporte deuda comerciante - {}",Util.objectToJson(params));
-		try {
-			PageInfo<TicketDto> rpta = service.pagingTickets(params);
-			return respuestaApi(rpta, "Transacción OK.", TRANSACCION_OK, HttpStatus.OK);
-		}catch (ApiException e) {
-			logger.error("Error de api al generar reporte deuda comerciante - {} - {}",e.getMessage(),e);
-			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
-		} 
-		catch (Exception e) {
-			logger.error("Error general de api al procesar reporte deuda comerciante - {}- {}",e.getMessage(),e);
-			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
-		}
-	}
 	
 	@GetMapping(path="/report/deuda/consolidado")
 	public ResponseEntity<?> deudaConsolidado(@RequestParam Map<String, String> params) {

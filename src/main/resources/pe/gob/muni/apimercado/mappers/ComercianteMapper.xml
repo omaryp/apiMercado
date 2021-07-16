@@ -32,6 +32,25 @@
 		B.eliminado_por
 		 from comerciantes A , personas B where A.personas_id = B.id and A.id = #{id}
 	</select>
+	
+	<select id="getComercianteDni" resultMap="ComercianteResultMap" parameterType="String">
+		select A.id,A.ruc,A.razon_social,A.personas_id,
+		B.id,
+		B.nombres,
+		B.apellidos,
+		B.dni,
+		B.telefono,
+		B.direccion,
+		B.correo,
+		B.fecha_nacimiento,
+		B.estado,
+		B.fecha_creacion,
+		B.creado_por,
+		B.fecha_modifcacion,
+		B.modifcado_por,
+		B.eliminado_por
+		 from comerciantes A , personas B where A.personas_id = B.id and B.dni = #{dni}
+	</select>
 		
 	<select id="getAllEntitys" resultMap="ComercianteResultMap">
 		select A.id,A.ruc,A.razon_social,A.personas_id,

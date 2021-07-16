@@ -252,6 +252,9 @@
 			<if test="ubicaciones_id != '' and ubicaciones_id != null">
 				AND A.ubicaciones_id = #{ubicaciones_id}
 			</if>
+			<if test="dni != '' and dni != null">
+				AND D.dni = #{dni}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}

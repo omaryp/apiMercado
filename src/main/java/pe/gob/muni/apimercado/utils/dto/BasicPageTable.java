@@ -12,6 +12,7 @@ public class BasicPageTable {
 	private String sort;
 	private String order;
 	private int mercados_id;
+	private String dni;
 	
 	public int getPage() {
 		return page;
@@ -60,6 +61,12 @@ public class BasicPageTable {
 	}
 	public void setFecha_fin(Date fecha_fin) {
 		this.fecha_fin = fecha_fin;
+	}
+	public String getDni() {
+		return dni;
+	}
+	public void setDni(String dni) {
+		this.dni = dni;
 	}
 
 }

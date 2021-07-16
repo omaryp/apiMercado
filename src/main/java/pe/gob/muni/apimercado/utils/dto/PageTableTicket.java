@@ -9,7 +9,6 @@ public class PageTableTicket extends BasicPageTable {
 	private int ubicaciones_id;
 	private int pagado;
 	private String codigo_qr;
-	private String dni;
 	
 	public int getComerciantes_id() {
 		return comerciantes_id;
@@ -40,12 +39,6 @@ public class PageTableTicket extends BasicPageTable {
 	}
 	public void setCodigo_qr(String codigo_qr) {
 		this.codigo_qr = codigo_qr;
-	}
-	public String getDni() {
-		return dni;
-	}
-	public void setDni(String dni) {
-		this.dni = dni;
 	}
 
 }
