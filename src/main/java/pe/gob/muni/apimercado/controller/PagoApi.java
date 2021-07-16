@@ -171,4 +171,23 @@ public class PagoApi extends BasicController<Pago, IPagoService> {
 		}
 	}
 	
+	@GetMapping(path="/report/partida")
+	public ResponseEntity<?> reportePagosPartida(@RequestParam Map<String,String> params) {
+		logger.info("Se recibió parámetro para obtener reporte pagos consolidado por partida - {}",params);
+		try {
+			byte [] rpta = service.reporteConsolidadoPagosPartida(params);
+			return ResponseEntity.ok()
+					.header(HttpHeaders.CONTENT_DISPOSITION, "attachment; filename=pagosPartida.pdf")
+	                .contentType(MediaType.APPLICATION_PDF)
+	                .body(rpta);
+		}catch (ApiException e) {
+			logger.error("Error de api al generar reporte de pagos consolidado por partida - {} - {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+		} 
+		catch (Exception e) {
+			logger.error("Error interno de api al procesar reporte de pagos consolidados por partida - {}- {}",e.getMessage(),e);
+			return respuestaApi(null, e.getMessage(), ERROR_INTERNO, HttpStatus.INTERNAL_SERVER_ERROR);	
+		}
+	}
+	
 }
