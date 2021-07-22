@@ -3,18 +3,25 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="pe.gob.muni.apimercado.mapper.ICobradorMapper">
+<mapper namespace="pe.gob.muni.apimercado.mapper.ICaptchaMapper">
 
 	<resultMap id="CaptchaResultMap" type="Captcha" />
-	
-	<insert id="saveCaptcha" useGeneratedKeys="true" keyProperty="request_code" parameterType="Captcha" >
-        insert into Request(request_code,captcha) 
-		values(UUID(),#{captcha})
-    </insert>
-    
+
+	<insert id="saveCaptcha" parameterType="Captcha">
+
+		<selectKey keyProperty="request_code" resultType="String"
+			order="BEFORE">
+			select uuid()
+		</selectKey>
+
+		insert into Request(request_code,captcha)
+		values(#{request_code},#{captcha})
+	</insert>
+
 	<select id="getCaptcha">
 		select captcha from Request
-		where request_code = #{code}
+		where request_code =
+		#{code}
 	</select>
 
 </mapper>

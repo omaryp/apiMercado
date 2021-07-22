@@ -36,14 +36,14 @@ public class CaptchaService implements ICaptchaService {
 			//para generar captcha uso interno
 			Captcha datos = new Captcha();
 			
-			ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(111, 66);
+			ShearCaptcha captcha = CaptchaUtil.createShearCaptcha(200, 66);
 			String code = captcha.getCode();
 			
 			datos.setCaptcha(code);
 			repo.saveCaptcha(datos);
 			
 			dto.setImage(captcha.getImageBase64());
-			dto.setKey(datos.getKey());
+			dto.setKey(datos.getRequest_code());
 			
 			return dto;
 		}catch (ApiException e) {
