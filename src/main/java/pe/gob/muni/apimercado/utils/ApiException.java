@@ -16,6 +16,10 @@ public class ApiException extends Exception {
 	public ApiException(String message,Throwable ex) {
 		super(message,ex);
 	}
+	
+	public ApiException(String message) {
+		super(message);
+	}
 
 	public HttpStatus getStatus() {
 		return status;

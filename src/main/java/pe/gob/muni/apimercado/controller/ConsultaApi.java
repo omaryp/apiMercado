@@ -6,19 +6,18 @@ import static pe.gob.muni.apimercado.utils.Constants.ERROR_INTERNO;
 import static pe.gob.muni.apimercado.utils.Constants.TRANSACCION_OK;
 import static pe.gob.muni.apimercado.utils.Util.respuestaApi;
 
-import java.util.Map;
-
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import pe.gob.muni.apimercado.model.dto.ConsultaDto;
+import pe.gob.muni.apimercado.model.dto.RequestDto;
 import pe.gob.muni.apimercado.service.IConsultaService;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.Util;
@@ -33,8 +32,8 @@ public class ConsultaApi {
 	@Autowired
 	private IConsultaService service;
 	
-	@GetMapping(path="/datos")
-	public ResponseEntity<?> deudaComerciante(@RequestParam Map<String, String> params) {
+	@PostMapping(path="/datos")
+	public ResponseEntity<?> deudaComerciante(@RequestBody RequestDto params) {
 		logger.info("Se recibió parámetro para consultar datos de comerciante - {}",Util.objectToJson(params));
 		try {
 			ConsultaDto rpta = service.consultarDatosComerciante(params);
@@ -44,7 +43,7 @@ public class ConsultaApi {
 			return respuestaApi(e.getErrores(), e.getMessage(), DATOS_NO_VALIDOS, HttpStatus.BAD_REQUEST);
 		} catch (ApiException e) {
 			logger.error("Error de api al consultar datos de comerciante - {} - {}",e.getMessage(),e);
-			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.ACCEPTED);
+			return respuestaApi(null, e.getMessage(), ERROR_AL_PROCESAR_PETICION, HttpStatus.UNAUTHORIZED);
 		} 
 		catch (Exception e) {
 			logger.error("Error general de api al consultar datos de comerciante - {}- {}",e.getMessage(),e);

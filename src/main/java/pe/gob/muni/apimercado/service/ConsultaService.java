@@ -1,7 +1,6 @@
 package pe.gob.muni.apimercado.service;
 
 import java.util.List;
-import java.util.Map;
 
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -11,6 +10,7 @@ import org.springframework.stereotype.Service;
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.dto.ConsultaDto;
 import pe.gob.muni.apimercado.model.dto.PagoDto;
+import pe.gob.muni.apimercado.model.dto.RequestDto;
 import pe.gob.muni.apimercado.model.dto.TicketDto;
 import pe.gob.muni.apimercado.repository.ComercianteRepository;
 import pe.gob.muni.apimercado.repository.PagoRepository;
@@ -20,9 +20,7 @@ import pe.gob.muni.apimercado.utils.ValidatorException;
 import pe.gob.muni.apimercado.utils.dto.PageTablePago;
 import pe.gob.muni.apimercado.utils.dto.PageTableTicket;
 
-import static pe.gob.muni.apimercado.utils.Util.mapToObject;
 import static pe.gob.muni.apimercado.utils.Util.objectToJson;
-
 
 @Service
 public class ConsultaService implements IConsultaService {
@@ -35,21 +33,27 @@ public class ConsultaService implements IConsultaService {
 	private TicketRepository ticRepository;
 	@Autowired
 	private ComercianteRepository comRepository;
+	@Autowired
+	private ICaptchaService captcha;
 	
 	@Override
-	public ConsultaDto consultarDatosComerciante(Map<String, String> params) throws ApiException,ValidatorException, Exception {
+	public ConsultaDto consultarDatosComerciante(RequestDto params) throws ApiException,ValidatorException, Exception {
 		try {
 			logger.info("Se inicia carga de datos de comerciante", objectToJson(params));
 			
-			String dni = params.get("dni");
+			captcha.validarCaptcha(params);
+			
+			String dni = params.getDni();
 			if(dni.equals("")) throw new ValidatorException("Dni no debe ser vacío.");
 			
 			logger.info("Obteniendo pagos de comerciante con ", objectToJson(params));
-			PageTablePago parPago = mapToObject(params, PageTablePago.class);
+			PageTablePago parPago = new PageTablePago();
+			parPago.setDni(dni);
 			List<PagoDto> pagos = pagRepository.pagingPagos(parPago);
 			
 			logger.info("Obteniendo deudas de comerciante con ", objectToJson(params));
-			PageTableTicket parTick = mapToObject(params, PageTableTicket.class);
+			PageTableTicket parTick = new PageTableTicket();
+			parTick.setDni(dni);;
 			List<TicketDto> deudas = ticRepository.pagingTickets(parTick);
 			
 			logger.info("Obteniendo datos del comerciante con ", objectToJson(params));
@@ -76,6 +80,4 @@ public class ConsultaService implements IConsultaService {
 		
 	}
 	
-	
-
 }

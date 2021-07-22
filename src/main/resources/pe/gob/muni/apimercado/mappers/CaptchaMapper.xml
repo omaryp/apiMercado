@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="pe.gob.muni.apimercado.mapper.ICobradorMapper">
+
+	<resultMap id="CaptchaResultMap" type="Captcha" />
+	
+	<insert id="saveCaptcha" useGeneratedKeys="true" keyProperty="request_code" parameterType="Captcha" >
+        insert into Request(request_code,captcha) 
+		values(UUID(),#{captcha})
+    </insert>
+    
+	<select id="getCaptcha">
+		select captcha from Request
+		where request_code = #{code}
+	</select>
+
+</mapper>

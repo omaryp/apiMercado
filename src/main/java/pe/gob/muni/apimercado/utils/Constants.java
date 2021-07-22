@@ -48,4 +48,5 @@ public class Constants {
 	public final static int PAGADO = 1;
 	
 	public static final String RESOURCE_DEUDA = "/consulta/datos";
+	public static final String RESOURCE_CAPTCHA = "/captcha";
 }

@@ -2,6 +2,7 @@ package pe.gob.muni.apimercado.config.security;
 
 import static pe.gob.muni.apimercado.utils.Constants.LOGIN_URL;
 import static pe.gob.muni.apimercado.utils.Constants.RESOURCE_DEUDA;
+import static pe.gob.muni.apimercado.utils.Constants.RESOURCE_CAPTCHA;
 
 import java.util.Arrays;
 
@@ -45,8 +46,10 @@ public class WebSecurity extends WebSecurityConfigurerAdapter {
 			.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and()
 			.cors().and()
 			.csrf().disable()
-			.authorizeRequests().antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
+			.authorizeRequests()
+			.antMatchers(HttpMethod.POST, LOGIN_URL).permitAll()
 			.antMatchers(HttpMethod.GET, RESOURCE_DEUDA).permitAll()
+			.antMatchers(HttpMethod.GET, RESOURCE_CAPTCHA).permitAll()
 			.anyRequest().authenticated().and()
 				.addFilter(new JWTAuthenticationFilter(authenticationManager()))
 				.addFilter(new JWTAuthorizationFilter(authenticationManager()));
