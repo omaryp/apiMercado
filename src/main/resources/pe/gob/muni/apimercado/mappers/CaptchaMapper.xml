@@ -18,7 +18,7 @@
 		values(#{request_code},#{captcha})
 	</insert>
 
-	<select id="getCaptcha">
+	<select id="getCaptcha" resultType="String">
 		select captcha from Request
 		where request_code =
 		#{code}
