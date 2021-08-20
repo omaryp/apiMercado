@@ -5,6 +5,7 @@ import java.sql.SQLIntegrityConstraintViolationException;
 
 import org.apache.ibatis.annotations.Mapper;
 import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.UsuarioSessionDto;
 
 @Mapper
 public interface IUsuarioMapper extends IBasicMapper<Usuario> {
@@ -17,4 +18,5 @@ public interface IUsuarioMapper extends IBasicMapper<Usuario> {
 
 	void actualizarUserByUsername(Usuario user) throws SQLException,SQLIntegrityConstraintViolationException;
 
+	UsuarioSessionDto getDatosSession(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 }

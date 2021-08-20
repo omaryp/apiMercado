@@ -10,6 +10,8 @@
 	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap">
 		<id property="idUsuario" column="id"/>	
 	</resultMap>
+	
+	<resultMap id="UsuarioDtoResultMap" type="Usuario" extends="PersonaResultMap"/>
 
 	<select id="findByUsername" resultMap="UsuarioResultMap">
 		select A.id,
@@ -161,6 +163,23 @@
 		B.modifcado_por,
 		B.eliminado_por
 		usuarioMod from usuarios A , personas B where A.personas_id = B.id 
+	</select>
+	
+	<select id="getDatosSession" resultMap="UsuarioDtoResultMap">
+		select A.id,
+		B.dni,
+		B.nombres,
+		B.apellidos,
+		B.direccion,
+		B.telefono,
+		B.correo,
+		B.fecha_nacimiento,
+		A.usuario,
+		A.password,
+		A.personas_id
+		from usuarios A , personas B 
+		where A.personas_id = B.id and 
+		      A.id = #{id}
 	</select>
     
 </mapper>

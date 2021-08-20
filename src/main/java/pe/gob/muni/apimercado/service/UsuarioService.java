@@ -38,6 +38,7 @@ import pe.gob.muni.apimercado.model.Rol;
 import pe.gob.muni.apimercado.model.Usuario;
 import pe.gob.muni.apimercado.model.dto.PermisoDto;
 import pe.gob.muni.apimercado.model.dto.UsuarioDto;
+import pe.gob.muni.apimercado.model.dto.UsuarioSessionDto;
 import pe.gob.muni.apimercado.repository.CobradorRepository;
 import pe.gob.muni.apimercado.repository.ModuloRepository;
 import pe.gob.muni.apimercado.repository.PersonaRepository;
@@ -374,6 +375,12 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			logger.error("Error general obteniendo all entitys usuario  {} - {}", e.getMessage(), e);
 			throw e;
 		}
+	}
+
+	@Override
+	public UsuarioSessionDto getDatosSession(int id) throws Exception, ValidatorException, ApiException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

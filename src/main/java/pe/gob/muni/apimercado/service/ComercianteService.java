@@ -4,7 +4,6 @@ import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_LIST;
 import static pe.gob.muni.apimercado.utils.Constants.RESPONSE_OBJECT;
 
 import java.io.File;
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -71,7 +70,6 @@ public class ComercianteService implements IComercianteService {
 			
 			rptaData =repository.pagingEntitys(pagData);
 			PageInfo<Comerciante> rpta  = new PageInfo<Comerciante>(rptaData);
-			rpta.setList(procesarLista(rpta.getList()));
 			return rpta;
 		}catch (ApiException e) {
 			logger.error("Error api paginando entidades comerciante {} - {}", e.getMessage(), e);
@@ -80,15 +78,6 @@ public class ComercianteService implements IComercianteService {
 			logger.error("Error general paginando entidades comerciante {} - {}", e.getMessage(), e);
 			throw e;
 		}
-	}
-	
-	private List<Comerciante> procesarLista(List<Comerciante> datos){
-		List<Comerciante> rpta = new ArrayList<Comerciante>();
-		datos.forEach((entity) -> {
-			entity.setId(entity.getPersonas_id());
-			rpta.add(entity);
-		});
-		return rpta;
 	}
 
 	@Override
@@ -176,7 +165,7 @@ public class ComercianteService implements IComercianteService {
 						break;
 				}
 			}else
-				rpta = procesarLista(getAllEntitys());
+				rpta = getAllEntitys();
 			
 		}catch (ApiException e) {
 			logger.error("Error api buscando entidad comerciante {} - {}", e.getMessage(), e);

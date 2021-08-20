@@ -1,6 +1,7 @@
 package pe.gob.muni.apimercado.service;
 
 import pe.gob.muni.apimercado.model.Usuario;
+import pe.gob.muni.apimercado.model.dto.UsuarioSessionDto;
 import pe.gob.muni.apimercado.utils.ApiException;
 import pe.gob.muni.apimercado.utils.ValidatorException;
 
@@ -13,5 +14,7 @@ public interface IUsuarioService extends IBasicService<Usuario>{
 	void actualizarUserByUsername(Usuario user) throws Exception, ValidatorException, ApiException;
 
 	int getUserToken();
+	
+	UsuarioSessionDto getDatosSession(int id) throws Exception, ValidatorException, ApiException;
 
 }
