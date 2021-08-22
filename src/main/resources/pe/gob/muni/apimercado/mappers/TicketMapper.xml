@@ -79,14 +79,13 @@
 		D.apellidos,
         E.descripcion mercado,
         B.codigo puesto,
-		J.monto tarifa
+		A.tarifa
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         inner join comerciantes C on C.id = A.comerciantes_id
         inner join personas D on D.id = C.personas_id
         inner join mercados E on E.id = A.mercados_id
 		inner join conceptos F on F.id = B.conceptos_id
-        inner join tarifas J on J.conceptos_id = F.id and J.estado = 1
         <where>
         	A.pagado = 0
 			<if test="fecha_incio != null and fecha_fin != null "  >
@@ -124,11 +123,12 @@
 		comerciantes_id,
 		puestos_id,
 		correlativo,
+		tarifa,
 		estado_visita,observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,
 		modifcado_por,eliminado_por)
 		values(#{mercados_id},#{ubicaciones_id},
-		#{comerciantes_id},#{puestos_id},#{correlativo},#{estado_visita},
+		#{comerciantes_id},#{puestos_id},#{correlativo},#{tarifa},#{estado_visita},
 		#{observaciones},#{pagado},#{estado},#{fecha_ticket},#{fecha_creacion},#{creado_por},
 		#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
 	</insert>
@@ -136,12 +136,12 @@
 	<insert id="saveAllTickets" parameterType="java.util.List" >
 		insert into tickets(
 		mercados_id,ubicaciones_id,
-		comerciantes_id,puestos_id,correlativo,estado_visita,
+		comerciantes_id,puestos_id,correlativo,tarifa,estado_visita,
 		observaciones,pagado,estado,fecha_ticket,fecha_creacion, creado_por,
 		fecha_modifcacion,modifcado_por,eliminado_por) values
 		<foreach item="item" collection="list" separator=",">
 			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},
-			#{item.correlativo},#{item.estado_visita},#{item.observaciones},#{item.pagado},
+			#{item.correlativo},#{tarifa},#{item.estado_visita},#{item.observaciones},#{item.pagado},
 			#{item.estado},#{item.fecha_ticket},#{item.fecha_creacion},#{item.creado_por},
 			#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
 		</foreach>
@@ -176,6 +176,7 @@
 		comerciantes_id = #{comerciantes_id},
 		puestos_id = #{partidas_id},
 		correlativo = #{correlativo},
+		tarifa = #{tarifa},
 		estado_visita = #{estado_visita},
 		observaciones = #{observaciones},
 		pagado = #{pagado},
@@ -217,7 +218,7 @@
 		I.valor_cadena1 descripcion_visita,
 		A.observaciones,
 		A.fecha_obs fecha_visita,
-		J.monto
+		A.tarifa
 		from tickets A
 		inner join puestos B on B.id = A.puestos_id
         left join comerciantes C on C.id = A.comerciantes_id
@@ -227,7 +228,6 @@
         inner join ubicaciones G on G.id = A.ubicaciones_id	
         inner join parametros H on H.codigo=2 and H.subcodigo = B.giro_id 
         inner join parametros I on I.codigo=3 and I.valor_entero = A.estado_visita
-        inner join tarifas J on J.conceptos_id = F.id and J.estado = 1
         <where>
         	<if test="pagado != 2"  >
 				A.pagado = #{pagado}

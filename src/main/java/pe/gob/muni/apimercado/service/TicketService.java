@@ -60,6 +60,9 @@ public class TicketService implements ITicketService {
 	
 	@Autowired
 	private IReportService report;
+	
+	@Autowired
+	private ITarifaService tarService;
 
 	@Override
 	public PageInfo<Ticket> pagingEntitys(Map<String, String> params) throws ApiException, Exception {
@@ -227,7 +230,7 @@ public class TicketService implements ITicketService {
 			if(!params.getFechaProceso().after(fecha_actual)) {
 				if(getTicketsFechaMercado(params.getMercados_id(), params.getFechaProceso()) == 0) {
 					puestos = (params.getMercados_id() == 0) ? pueService.getAllEntitys() : pueService.getAllPuestosMercado(params.getMercados_id());
-					puestos.forEach((puesto) -> {
+					for (PuestoComerciante puesto : puestos) {
 						Ticket nvoTicket = new Ticket();
 						nvoTicket.setComerciantes_id(puesto.getComerciantes_id());
 						nvoTicket.setCorrelativo(puesto.getCorrelativo());
@@ -244,8 +247,9 @@ public class TicketService implements ITicketService {
 						nvoTicket.setObservaciones("");
 						nvoTicket.setUbicaciones_id(puesto.getUbicaciones_id());
 						nvoTicket.setPuestos_id(puesto.getPuestos_id());
+						nvoTicket.setTarifa(tarService.getTarifaPuesto(puesto.getPuestos_id()).getMonto());
 						tickets.add(nvoTicket);
-					});
+					}
 					repository.saveAllTickets(tickets);
 				}else throw new ValidatorException("Ya existen tickets para esta fecha.");
 			} else throw new ValidatorException("Generación de tickets solo se permite hasta la fecha actual.");

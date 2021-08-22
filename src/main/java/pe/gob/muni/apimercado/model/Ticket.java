@@ -15,6 +15,7 @@ public class Ticket extends BasicEntity {
 	private int estado_visita;
 	private String observaciones;
 	private Date fecha_obs;
+	private double tarifa;
 
 	public int getMercados_id() {
 		return mercados_id;
@@ -96,4 +97,12 @@ public class Ticket extends BasicEntity {
 		this.fecha_obs = fecha_obs;
 	}
 
+	public double getTarifa() {
+		return tarifa;
+	}
+
+	public void setTarifa(double tarifa) {
+		this.tarifa = tarifa;
+	}
+	
 }
