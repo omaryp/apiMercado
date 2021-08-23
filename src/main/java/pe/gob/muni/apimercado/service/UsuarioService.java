@@ -140,7 +140,6 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public Usuario findByUsername(String username) throws Exception, ApiException {
 		try {
 			Usuario entity = repository.findByUsername(username);
-			entity.setId(entity.getPersonas_id());
 			return entity;
 		}catch (ApiException e) {
 			logger.error("Error api get usuario by username {} - {} - {}",username, e.getMessage(), e);
