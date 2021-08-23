@@ -13,6 +13,7 @@ public class BasicPageTable {
 	private String order;
 	private int mercados_id;
 	private String dni;
+	private int habilitado;
 	
 	public int getPage() {
 		return page;
@@ -67,6 +68,12 @@ public class BasicPageTable {
 	}
 	public void setDni(String dni) {
 		this.dni = dni;
+	}
+	public int getHabilitado() {
+		return habilitado;
+	}
+	public void setHabilitado(int habilitado) {
+		this.habilitado = habilitado;
 	}
 
 }

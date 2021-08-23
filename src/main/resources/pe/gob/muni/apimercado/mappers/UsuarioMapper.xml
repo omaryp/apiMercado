@@ -73,13 +73,15 @@
     
     <update id="disabledUserbyUsername">
      Update usuarios
-      set activo = 0
+      set activo = 0,
+      set estado = 0
       where usuario = #{username}
     </update>
     
     <update id="deleteEntity">
      Update usuarios
-      set activo = 0
+      set activo = 0,
+      set estado = 0
       where id = #{idUsuario}
     </update>
     
@@ -131,8 +133,11 @@
 		inner join perfiles D on A.perfiles_codigo = D.id
 		<where>
 			<if test="search != null">
-				and 
 				CONCAT(apellidos) LIKE CONCAT(#{search},'%')
+			</if>
+			<if test="habilitado != null">
+				and 
+				B.estado = #{habilitado}
 			</if>
 		</where>
 		<if test="sort != '' and sort != null">
