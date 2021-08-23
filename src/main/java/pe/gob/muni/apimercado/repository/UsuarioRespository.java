@@ -53,4 +53,12 @@ public class UsuarioRespository extends BasicRepository<Usuario, IUsuarioMapper>
 		}
 	}
 	
+	public void updateEntityUsuario(Usuario datos) throws ApiException{
+		try {
+			mapper.updateEntityUsuario(datos);
+		} catch (SQLException e) {
+			throw new ApiException(e.getMessage(), e);
+		}
+	}
+	
 }

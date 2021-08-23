@@ -19,4 +19,6 @@ public interface IUsuarioMapper extends IBasicMapper<Usuario> {
 	void actualizarUserByUsername(Usuario user) throws SQLException,SQLIntegrityConstraintViolationException;
 
 	UsuarioSessionDto getDatosSession(int id) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	void updateEntityUsuario(Usuario datos) throws SQLException,SQLIntegrityConstraintViolationException;
 }

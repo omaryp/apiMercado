@@ -94,8 +94,20 @@
       Update usuarios
       set 
       usuario = #{usuario},
-      password = #{password}, fechaUltAcc = #{fechaUltAcc},
-	  activo = #{activo}, perfiles_codigo = #{perfiles_codigo}
+      password = #{password}, 
+      fechaUltAcc = #{fechaUltAcc},
+	  activo = #{activo}, 
+	  perfiles_codigo = #{perfiles_codigo}
+      where id = #{idUsuario}
+    </update>
+    
+    <update id="updateEntityUsuario" parameterType="Usuario" >
+      Update usuarios
+      set 
+      usuario = #{usuario}, 
+      fechaUltAcc = #{fechaUltAcc},
+	  activo = #{activo}, 
+	  perfiles_codigo = #{perfiles_codigo}
       where id = #{idUsuario}
     </update>
     

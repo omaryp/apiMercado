@@ -272,10 +272,12 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			Persona padre = getPersona(entity);
 			perRepository.updateEntity(padre);
 			
-			if(!entity.getPassword().equals(SECRET_PASSWORD))
+			if(!entity.getPassword().equals(SECRET_PASSWORD)) {
 				entity.setPassword(bCryptPasswordEncoder.encode(entity.getPassword()));
-			repository.updateEntity(entity);
-			
+				repository.updateEntity(entity);
+			}else
+				repository.updateEntityUsuario(entity);
+				
 			if(entity.getPerfiles_codigo() == PERFIL_COBRADOR) {
 				Cobrador cob = new Cobrador();
 				cob.setMercados_id(entity.getMercados_id());
