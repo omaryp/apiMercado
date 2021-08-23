@@ -13,7 +13,7 @@ public class BasicPageTable {
 	private String order;
 	private int mercados_id;
 	private String dni;
-	private int habilitado;
+	private int habilitado = 1;
 	
 	public int getPage() {
 		return page;

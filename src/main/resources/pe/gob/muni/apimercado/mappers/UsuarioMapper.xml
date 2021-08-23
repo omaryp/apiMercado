@@ -7,9 +7,7 @@
 	
 	<resultMap id="PersonaResultMap" type="Persona" />
 	
-	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap">
-		<id property="idUsuario" column="id"/>	
-	</resultMap>
+	<resultMap id="UsuarioResultMap" type="Usuario" extends="PersonaResultMap"/>
 	
 	<resultMap id="UsuarioDtoResultMap" type="Usuario" extends="PersonaResultMap"/>
 
