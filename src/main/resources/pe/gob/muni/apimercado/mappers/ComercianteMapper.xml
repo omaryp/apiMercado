@@ -8,9 +8,7 @@
 	
 	<resultMap id="PersonaResultMap" type="Persona" />
 	
-	<resultMap id="ComercianteResultMap" type="Comerciante" extends="PersonaResultMap">
-		<id property="idComerciante" column="id"/>
-	</resultMap>
+	<resultMap id="ComercianteResultMap" type="Comerciante" extends="PersonaResultMap"/>
 	
 	<resultMap id="ComercianteDtoResultMap" type="ComercianteDto" />
 
