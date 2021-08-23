@@ -96,7 +96,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			perfil = perfilService.getEntity(user.getPerfiles_codigo());
 
 			userDto = new UsuarioDto(user.getUsuario(), user.getPassword(), user.isActivo(), true, true, true, roles);
-			userDto.setId(user.getIdUsuario());
+			userDto.setId(user.getId());
 			userDto.setNombres(user.getNombres());
 			userDto.setApellidos(user.getApellidos());
 			userDto.setCorreo(user.getCorreo());
@@ -205,7 +205,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	private List<Usuario> procesarLista(List<Usuario> datos){
 		List<Usuario> rpta = new ArrayList<Usuario>();
 		datos.forEach((entity) -> {
-			entity.setId(entity.getPersonas_id());
+			entity.setIdUsuario(entity.getId());
 			entity.setPassword(SECRET_PASSWORD);
 			entity.setPassword2(SECRET_PASSWORD);
 			rpta.add(entity);
@@ -352,7 +352,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	public Usuario getEntity(int id) throws ApiException, Exception {
 		try {
 			Usuario entity = repository.getEntity(id);
-			entity.setId(entity.getPersonas_id());
+			entity.setIdUsuario(entity.getId());
 			entity.setPassword(SECRET_PASSWORD);
 			entity.setPassword2(SECRET_PASSWORD);
 			return entity;
