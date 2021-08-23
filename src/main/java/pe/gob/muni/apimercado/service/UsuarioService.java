@@ -296,7 +296,9 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	@Override
 	public void deleteEntity(int id) throws ApiException, Exception {
 		try {
+			Usuario userTmp = repository.getEntity(id);
 			repository.deleteEntity(id);
+			perRepository.deleteEntity(userTmp.getPersonas_id());
 		}catch (ApiException e) {
 			logger.error("Error api eliminando usuario by username {} - {} - {}",id, e.getMessage(), e);
 			throw e;
