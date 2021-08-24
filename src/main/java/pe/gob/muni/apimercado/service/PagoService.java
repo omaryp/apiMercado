@@ -25,7 +25,6 @@ import pe.gob.muni.apimercado.config.ParametrosApiRest;
 import pe.gob.muni.apimercado.model.Comerciante;
 import pe.gob.muni.apimercado.model.Pago;
 import pe.gob.muni.apimercado.model.Serie;
-import pe.gob.muni.apimercado.model.Tarifa;
 import pe.gob.muni.apimercado.model.Ticket;
 import pe.gob.muni.apimercado.model.TicketPago;
 import pe.gob.muni.apimercado.model.dto.DeudaPagoDto;
@@ -61,8 +60,6 @@ public class PagoService implements IPagoService {
 	private ISerieService ser;
 	@Autowired
 	private IComercianteService com;
-	@Autowired
-	private ITarifaService tar;
 	@Autowired
 	private ITicketService ticketSer;
 	@Autowired
@@ -210,7 +207,6 @@ public class PagoService implements IPagoService {
 		try {
 			for (Ticket ticket : tickets) {
 				Serie serie = ser.getSeriePuesto(ticket.getPuestos_id());
-				Tarifa tarifa = tar.getTarifaPuesto(ticket.getPuestos_id());
 				
 				Pago pag = new Pago();
 				pag.setFecha_creacion(new Date());
@@ -218,7 +214,7 @@ public class PagoService implements IPagoService {
 				pag.setSerie(serie.getCodigo());
 				pag.setFecha_pago(new Date());
 				pag.setCorrelativo(serie.getCorrelativo()+1);
-				pag.setMonto_pagado(tarifa.getMonto());
+				pag.setMonto_pagado(ticket.getTarifa());
 				
 				repository.saveEntity(pag);
 				
