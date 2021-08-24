@@ -146,6 +146,9 @@
 			<if test="filter != '' and filter != null">
 				mercados_id = #{filter}
 			</if>
+			<if test="habilitado != null">
+				AND estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY #{sort} #{order}
@@ -194,6 +197,9 @@
 			</if>
 			<if test="mercados_id != '' and mercados_id != null">
 				and A.mercados_id = #{mercados_id}
+			</if>
+			<if test="habilitado != null">
+				AND B.estado = #{habilitado}
 			</if>
 		</where>
 		Order by LPAD(A.codigo,20,'0') ASC,ubicaciones_id

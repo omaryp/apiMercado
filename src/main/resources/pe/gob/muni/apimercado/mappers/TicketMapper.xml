@@ -250,6 +250,9 @@
 			<if test="ubicaciones_id != '' and ubicaciones_id != null">
 				AND A.ubicaciones_id = #{ubicaciones_id}
 			</if>
+			<if test="habilitado != null">
+				AND A.estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}

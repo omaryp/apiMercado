@@ -255,6 +255,9 @@
 			<if test="dni != '' and dni != null">
 				AND D.dni = #{dni}
 			</if>
+			<if test="habilitado != null">
+				AND I.estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}

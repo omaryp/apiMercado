@@ -104,6 +104,9 @@
 			<if test="search != null">
 				CONCAT(nombre) LIKE CONCAT(#{search},'%')
 			</if>
+			<if test="habilitado != null">
+				AND estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != null and sort != ''">
 			ORDER BY ${sort} ${order}

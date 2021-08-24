@@ -65,6 +65,9 @@
 			<if test="search != null">
 				CONCAT(A.descripcion) LIKE CONCAT(#{search},'%')
 			</if>
+			<if test="habilitado != null">
+				and A.estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort}  ${order}

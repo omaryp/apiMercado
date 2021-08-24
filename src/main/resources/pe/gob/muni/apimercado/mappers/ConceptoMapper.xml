@@ -71,6 +71,9 @@
 			<if test="search != null">
 				descripcion LIKE CONCAT(#{search},'%')
 			</if>
+			<if test="habilitado != null">
+				AND estado = #{habilitado}
+			</if>
 		</where>
 		<if test="sort != '' and sort != null">
 			ORDER BY ${sort} ${order}
