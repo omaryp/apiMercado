@@ -137,7 +137,7 @@
 				apellidos LIKE CONCAT(#{search},'%')
 			</if>
 			<if test="habilitado != null">
-				AND B.estado = #{habilitado}
+				and estado = #{habilitado}
 			</if>
 		</where>
 		<if test="sort != '' and sort != null">

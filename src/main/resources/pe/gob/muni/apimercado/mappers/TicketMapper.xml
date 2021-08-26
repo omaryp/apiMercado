@@ -141,7 +141,7 @@
 		fecha_modifcacion,modifcado_por,eliminado_por) values
 		<foreach item="item" collection="list" separator=",">
 			(#{item.mercados_id},#{item.ubicaciones_id},#{item.comerciantes_id},#{item.puestos_id},
-			#{item.correlativo},#{tarifa},#{item.estado_visita},#{item.observaciones},#{item.pagado},
+			#{item.correlativo},#{item.tarifa},#{item.estado_visita},#{item.observaciones},#{item.pagado},
 			#{item.estado},#{item.fecha_ticket},#{item.fecha_creacion},#{item.creado_por},
 			#{item.fecha_modifcacion},#{item.modifcado_por},#{item.eliminado_por})
 		</foreach>
