@@ -381,9 +381,32 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 	}
 
 	@Override
-	public UsuarioSessionDto getDatosSession(int id) throws Exception, ValidatorException, ApiException {
+	public UsuarioSessionDto getDatosSession() throws Exception, ValidatorException, ApiException {
 		// TODO Auto-generated method stub
-		return null;
+		try {
+			int id = getUserToken();
+			Usuario user = repository.getEntity(id);
+			UsuarioSessionDto dto = new UsuarioSessionDto();
+			dto.setApellidos(user.getApellidos());
+			dto.setCorreo(user.getCorreo());
+			dto.setDireccion(user.getDireccion());
+			dto.setDni(user.getDni());
+			dto.setFecha_nacimiento(user.getFecha_nacimiento());
+			dto.setId(user.getId());
+			dto.setNombres(user.getNombres());
+			dto.setPassword(SECRET_PASSWORD);
+			dto.setPersonas_id(user.getPersonas_id());
+			dto.setTelefono(user.getTelefono());
+			dto.setUsuario(user.getUsuario());
+			return dto;
+		}catch (ApiException e) {
+			logger.error("Error api obteniendo datos de session usuario {} - {}",e.getMessage(), e);
+			throw e;
+		}catch (Exception e) {
+			logger.error("Error general obteniendo datos session usuario  {} - {}", e.getMessage(), e);
+			throw e;
+		}
+		
 	}
 
 }

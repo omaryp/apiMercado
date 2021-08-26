@@ -15,6 +15,6 @@ public interface IUsuarioService extends IBasicService<Usuario>{
 
 	int getUserToken();
 	
-	UsuarioSessionDto getDatosSession(int id) throws Exception, ValidatorException, ApiException;
+	UsuarioSessionDto getDatosSession() throws Exception, ValidatorException, ApiException;
 
 }
