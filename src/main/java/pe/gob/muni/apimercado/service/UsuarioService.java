@@ -270,6 +270,7 @@ public class UsuarioService implements UserDetailsService, IUsuarioService {
 			entity.setModifcado_por(getUserToken());
 			
 			Persona padre = getPersona(entity);
+			padre.setId(entity.getPersonas_id());
 			perRepository.updateEntity(padre);
 			
 			if(!entity.getPassword().equals(SECRET_PASSWORD)) {
