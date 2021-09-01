@@ -35,4 +35,24 @@ public class PuestoRepository extends BasicRepository<Puesto,IPuestoMapper> {
 		}
 	}
 	
+	public int tieneSerie(int idConcepto)throws ApiException {
+		try {
+			return mapper.tieneSerie(idConcepto);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		} 
+	}
+	
+	public int tieneTarifa(int idConcepto) throws ApiException{
+		try {
+			return mapper.tieneTarifa(idConcepto);
+		}catch (SQLIntegrityConstraintViolationException e) {
+			throw new ApiException(e.getMessage(),e);
+		}catch (SQLException e) {
+			throw new ApiException(e.getMessage(),e);
+		}
+	}
+	
 }

@@ -62,6 +62,19 @@
 		#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},
 		#{modifcado_por},#{eliminado_por})
 	</insert>
+	
+	<insert id="saveAllPagos" parameterType="java.util.List">
+		insert into pagos(
+		fecha_pago,serie,
+		correlativo,monto_pagado,concepto,observaciones,
+		estado,fecha_creacion, creado_por, fecha_modifcacion,
+		modifcado_por,eliminado_por)
+		values
+		<foreach item="item" collection="list" separator=",">
+			(#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
+			#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
+		</foreach>
+	</insert>
 
 	<insert id="asociarTicketPago" parameterType="java.util.List">
 		insert into tickets_pagos(tickets_id,pagos_id)
@@ -181,18 +194,7 @@
 		where A.id = #{id}
 	</select>
 
-	<insert id="saveAllPagos" parameterType="java.util.List">
-		insert into pagos(
-		fecha_pago,serie,
-		correlativo,monto_pagado,concepto,observaciones,
-		estado,fecha_creacion, creado_por, fecha_modifcacion,
-		modifcado_por,eliminado_por)
-		values
-		<foreach item="item" collection="list" separator=",">
-			(#{fecha_pago},#{serie},#{correlativo},#{monto_pagado},#{concepto},#{observaciones},
-			#{estado},#{fecha_creacion},#{creado_por},#{fecha_modifcacion},#{modifcado_por},#{eliminado_por})
-		</foreach>
-	</insert>
+	
 
 	<select id="pagingPagos" resultMap="PagoDtoResultMap"
 		parameterType="pe.gob.muni.apimercado.utils.dto.PageTablePago">

@@ -17,4 +17,7 @@ public interface IPuestoMapper extends IBasicMapper<Puesto> {
 	
 	List<PuestoDto> pagingDtoEntitys(GeneralPageTable params) throws SQLException,SQLIntegrityConstraintViolationException;
 	
+	int tieneTarifa(int id) throws SQLException,SQLIntegrityConstraintViolationException;
+	
+	int tieneSerie(int id) throws SQLException,SQLIntegrityConstraintViolationException;
 }

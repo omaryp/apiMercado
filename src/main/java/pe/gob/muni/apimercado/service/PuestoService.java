@@ -76,6 +76,10 @@ public class PuestoService implements IPuestoService {
 			validadorPuesto.validarModelo(entity);
 			if (validadorPuesto.isHayErrores())
 				throw new ValidatorException("Hay Errores de validación", validadorPuesto.getErrores());
+			if(repository.tieneSerie(entity.getConceptos_id()) == 0)
+				throw new ValidatorException("El concepto seleccionado no tiene una serie asignada.");
+			if(repository.tieneTarifa(entity.getConceptos_id()) == 0)
+				throw new ValidatorException("El concepto seleccionado no tiene una tarifa asignada.");
 			entity.setFecha_creacion(new Date());
 			entity.setCreado_por(auth.getUserToken());
 			repository.saveEntity(entity);

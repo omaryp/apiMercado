@@ -203,14 +203,11 @@ public class PagoService implements IPagoService {
 	public void pagoTickets(List<Ticket> tickets) throws ValidatorException, ApiException, Exception {
 		logger.info("pagando tickets {}.", objectToJson(tickets));
 		List<TicketPago> tiPags = new ArrayList<TicketPago>();
-		List<Pago> pagos = new ArrayList<Pago>();
 		List<EnvioDto> envios = new ArrayList<EnvioDto>();
 		try {
 			for (Ticket ticket : tickets) {
 				
 				Serie serie = ser.getSeriePuesto(ticket.getPuestos_id());
-				
-				if(null == serie) throw new ValidatorException("El puesto "+ticket.getPuestos_id()+" del mercado "+ticket.getMercados_id() +", no tiene asociado una serie para registrar su pago.");
 				
 				Pago pag = new Pago();
 				pag.setFecha_creacion(new Date());
@@ -220,7 +217,7 @@ public class PagoService implements IPagoService {
 				pag.setCorrelativo(serie.getCorrelativo()+1);
 				pag.setMonto_pagado(ticket.getTarifa());
 				
-				pagos.add(pag);
+				repository.saveEntity(pag);
 				
 				serie.setCorrelativo(pag.getCorrelativo());
 				ser.updateEntity(serie);
@@ -243,7 +240,6 @@ public class PagoService implements IPagoService {
 				envio.setId_pago(pag.getId());
 				envios.add(envio);
 			}
-			repository.saveAllPagos(pagos);
 			repository.asociarTicketPago(tiPags);
 			enviarCorreosMasivo(envios);
 		}catch(ValidatorException e) {

@@ -39,7 +39,7 @@
 		fecha_modifcacion,
 		modifcado_por
 		from puestos_comerciantes
-		where comerciantes_id = #{id} and estado = 1 and mercados_id = #{mercados_id}
+		where comerciantes_id = #{comerciantes_id} and estado = 1 and mercados_id = #{mercados_id}
 	</select>
 
 	<select id="getAllPuestosActive" resultMap="PuestoComercianteResultMap">

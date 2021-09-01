@@ -93,6 +93,20 @@
 		from puestos
 		where mercados_id = #{id}
 	</select>
+	
+	<select id="tieneSerie" resultType="int" parameterType="int">
+		select
+		count(*)
+		from series B 
+		where B.conceptos_id = #{id}
+	</select>
+	
+	<select id="tieneTarifa" resultType="int" parameterType="int">
+		select
+		count(*)
+		from tarifas B 
+		where B.conceptos_id = #{id}
+	</select>
 
 	<insert id="saveEntity" parameterType="Puesto">
 		insert into puestos(
