@@ -9,5 +9,5 @@ import pe.gob.muni.apimercado.service.IConceptoService;
 @RestController
 @RequestMapping("/concepto")
 public class ConceptoApi extends BasicController<Concepto, IConceptoService> {
-
+	
 }

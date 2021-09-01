@@ -33,6 +33,13 @@
 		from conceptos
 	</select>
 	
+	<select id="verificarConcepto" resultType="int" parameterType="int">
+		select count(*)
+		from conceptos A
+		inner join puestos B on A.id = B.conceptos_id
+		where A.estado = 1 and A.id = #{id}
+	</select>
+	
 	<insert id="saveEntity" parameterType="Concepto">
 		insert into conceptos(
 		descripcion,partidas_id,estado,fecha_creacion, creado_por, fecha_modifcacion,

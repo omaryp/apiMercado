@@ -96,10 +96,16 @@ public class ConceptoService implements IConceptoService {
 	}
 
 	@Override
-	public void deleteEntity(int id) throws ApiException, Exception {
+	public void deleteEntity(int id) throws ValidatorException, ApiException, Exception {
 		try {
+			if(repository.verificarConcepto(id) != 0)
+				throw new ValidatorException("No se puede eliminar concepto cuando es utilizado por un puesto");
 			repository.deleteEntity(id);
-		} catch (ApiException e) {
+		} catch(ValidatorException e) {
+			logger.error("Error de validación al eliminar entidad concepto {} - {}", e.getMessage(), e);
+			throw e;
+		}
+		catch (ApiException e) {
 			logger.error("Error api eliminando entidad concepto {} - {}", e.getMessage(), e);
 			throw e;
 		} catch (Exception e) {
