@@ -1,5 +1,5 @@
 # apiMercado
-Api REST mercado para la cobranza de tributos de la municipalidad 26 de octubre.
+Api REST mercado para la cobranza de tributos de una municipalidad.
 
 Java 8 , Spring-Boot, Spring , MyBatis , Mysql.
 
